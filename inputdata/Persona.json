@@ -1,0 +1,9 @@
+{
+	"label": "TestLabel",
+	"description": "TestDescription",
+	"ActivityProfile": "TestActivityProfile",
+	"Adjustmentrule": "TestAdjustmentProfile",
+	"CategoryProfile": "TestCategoryprofile",
+	"Editlabel":"EditTestLabel"
+
+}

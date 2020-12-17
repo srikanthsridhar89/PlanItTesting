@@ -1,0 +1,12 @@
+{
+	"Label": "TestLabel",
+	"Description":"TestDescription",
+	"prefix":"Test_Prefix",
+	"suffix":"Test_suffix",
+	"DisplayKey":"TestDisplay",
+	"UpdatedLabel":"EditLabel",
+	"UpdatedDescription":"UpdatedDescription",
+	"columntype":"Integer"
+	
+
+}

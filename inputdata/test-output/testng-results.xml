@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="0" passed="0">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="613" started-at="2020-08-23T00:34:17 IST" finished-at="2020-08-23T00:34:18 IST">
+    <groups>
+      <group name="cucumber">
+        <method signature="AbstractTestNGCucumberTests.runScenario(io.cucumber.testng.PickleWrapper, io.cucumber.testng.FeatureWrapper)[pri:0, instance:runnerfile.TestRunner@587d1d39]" name="runScenario" class="io.cucumber.testng.AbstractTestNGCucumberTests"/>
+      </group> <!-- cucumber -->
+    </groups>
+    <test name="Default test" duration-ms="613" started-at="2020-08-23T00:34:17 IST" finished-at="2020-08-23T00:34:18 IST">
+      <class name="runnerfile.TestRunner">
+        <test-method status="PASS" signature="setUpClass()[pri:0, instance:runnerfile.TestRunner@587d1d39]" name="setUpClass" is-config="true" duration-ms="531" started-at="2020-08-23T00:34:17 IST" finished-at="2020-08-23T00:34:18 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpClass -->
+        <test-method status="PASS" signature="tearDownClass()[pri:0, instance:runnerfile.TestRunner@587d1d39]" name="tearDownClass" is-config="true" duration-ms="10" started-at="2020-08-23T00:34:18 IST" finished-at="2020-08-23T00:34:18 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDownClass -->
+      </class> <!-- runnerfile.TestRunner -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
