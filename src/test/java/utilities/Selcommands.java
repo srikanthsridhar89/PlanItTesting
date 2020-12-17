@@ -22,37 +22,23 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
 import com.cucumber.listener.Reporter;
 
 public class Selcommands {
 //	public static final String ImagesPath = null;
 	public static WebDriver driver;
+
 	public Selcommands(WebDriver driver) {
 		this.driver = driver;
 	}
 
 	public static void openbrowser(String url) throws FileNotFoundException {
 
-		try {
-			System.setProperty("webdriver.chrome.driver","/Users/admin/Documents/Agilea/OneDrive - Agilea Solutions, Inc/Automation/chromedriver");
-			driver = new ChromeDriver();
-			driver.get(url);
-			driver.manage().window().maximize();
-			Reporter.addStepLog("welcome to " + url);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	public static void highlightWebElement(WebElement webElement) {
-		try {
-			JavascriptExecutor js = (JavascriptExecutor) driver;
-			js.executeScript("arguments[0].setAttribute('style', arguments[1]);", webElement,
-					"color: black; border: 4px solid red;");
-		} catch (Exception e) {
-			Reporter.addStepLog("Element not highlighted");
-		}
+		System.setProperty("webdriver.chrome.driver","./src/test/resources/drivers/chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.get(url);
+		driver.manage().window().maximize();
+		Reporter.addStepLog("welcome to " + url);
 	}
 
 	public void quitBrowser() {
@@ -62,7 +48,8 @@ public class Selcommands {
 
 	public void captureScreenshot(String filename) throws IOException {
 		String Base64StringofScreenshot = "";
-		String path = new String("/Users/admin/Documents/Agilea/OneDrive - Agilea Solutions, Inc/Automation/TestAssurePro/target/screenshots/" + filename + ".png");
+		String path = new String(
+				"./target/screenshots/" + filename + ".png");
 		TakesScreenshot oScn = (TakesScreenshot) driver;
 		File oScnShot = oScn.getScreenshotAs(OutputType.FILE);
 		byte[] fileContent = FileUtils.readFileToByteArray(oScnShot);
@@ -71,18 +58,70 @@ public class Selcommands {
 		try {
 			FileUtils.copyFile(oScnShot, oDest);
 			Reporter.addScreenCaptureFromPath(path, "hello123");
+			// Reporter.("Details",
+			// MediaEntityBuilder.createScreenCaptureFromPath(Paths.get("").toAbsolutePath().toString()
+			// + "/screenshotFolder/screenshot.png").build());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public static String getElementString(By Locator) {
+
+		return driver.findElement(Locator).getText();
+
+	}
+
+	public static void clickElement(By signinlink, String element) {
+		WebDriverWait wait = new WebDriverWait(driver, 120);
+		wait.until(ExpectedConditions.elementToBeClickable(signinlink));
+		driver.findElement(signinlink).click();
+		Reporter.addStepLog("User Clicked on " + element);
+	}
+
+	public static void enterText(By wb, String text) {
+		driver.findElement(wb).sendKeys(text);
+		Reporter.addStepLog("User Entered Text as  " + text);
+	}
+
+	public static List<WebElement> getElements(By listOfElements) {
+		return driver.findElements(listOfElements);
+	}
+
+	public static void selectByIndex(By by, int index) {
+		waitForElementPresent(by, 10);
+		Select select = new Select(driver.findElement(by));
+		select.selectByIndex(index);
+		Reporter.addStepLog("Selected " + index + " Index list from Drop Down");
+
+	}
+
+	public static void scrollInToViewElement(By by) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView();", driver.findElement(by));
+		Reporter.addStepLog("Scrolling down to Element");
+
+	}
+
+	public static void Drag_Drop(By source, By target) {
+		Actions actions = new Actions(driver);
+		actions.dragAndDrop(driver.findElement(source), driver.findElement(target)).build().perform();
+		Reporter.addStepLog("Element is dragged from" + source + " and dropped to" + target);
+	}
+
+	public static void submit(By by) {
+		driver.findElement(by).submit();
+		Reporter.addStepLog("Submitting the Form");
+
+	}
+
 	public static void captureScreenshot() throws IOException {
 		String Base64StringofScreenshot = "";
 		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss");
 		Date date = new Date();
 		System.out.println(formatter.format(date));
 		String path = new String(
-				"/Users/admin/Documents/Agilea/OneDrive - Agilea Solutions, Inc/Automation/TestAssurePro/target/screenshots/"
+				"./target/screenshots/"
 						+ formatter.format(date) + ".png");
 		TakesScreenshot oScn = (TakesScreenshot) driver;
 		File oScnShot = oScn.getScreenshotAs(OutputType.FILE);
@@ -98,87 +137,6 @@ public class Selcommands {
 			e.printStackTrace();
 		}
 	}
-
-	public static String getElementString(By Locator) {
-
-		return driver.findElement(Locator).getText();
-
-	}
-
-	public static void clickElement(By signinlink, String element) {
-		try {
-			WebDriverWait wait = new WebDriverWait(driver, 120);
-			wait.until(ExpectedConditions.elementToBeClickable(signinlink));
-			driver.findElement(signinlink).click();
-			Reporter.addStepLog("Successfully clicked on element " + element);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public static void enterText(By wb, String text) {
-		try {
-			highlightWebElement(driver.findElement(wb));
-			driver.findElement(wb).sendKeys(text);
-			Reporter.addStepLog(" Entered Text as  " + text);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public static List<WebElement> getElements(By listOfElements) {
-		return driver.findElements(listOfElements);
-	}
-
-	public static void selectByIndex(By by, int index) {
-		try {
-			waitForElementPresent(by, 10);
-			Select select = new Select(driver.findElement(by));
-			select.selectByIndex(index);
-			Reporter.addStepLog("Selected " + index + " Index list from Drop Down");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void scrollInToViewElement(By by) {
-		try {
-			JavascriptExecutor js = (JavascriptExecutor) driver;
-			js.executeScript("arguments[0].scrollIntoView();", driver.findElement(by));
-			Reporter.addStepLog("Scrolling down to Element");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void Drag_Drop(By source, By target) {
-		try {
-			Actions actions = new Actions(driver);
-			actions.dragAndDrop(driver.findElement(source), driver.findElement(target)).build().perform();
-			Reporter.addStepLog("Element is dragged from" + source + " and dropped to" + target);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public static void submit(By by) {
-		try {
-			driver.findElement(by).submit();
-			Reporter.addStepLog("Submitting the Form");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
 
 	public static boolean isAlertPresent() {
 		try {
@@ -207,48 +165,27 @@ public class Selcommands {
 	}
 
 	public static void javascript_click(By by, String fieldName) {
-		try {
-			waitForElementPresent(by, 10);
-			JavascriptExecutor executor = (JavascriptExecutor) driver;
-			executor.executeScript("arguments[0].click();", driver.findElement(by));
-			Reporter.addStepLog("User Clicks on " + fieldName);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		waitForElementPresent(by, 10);
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+		executor.executeScript("arguments[0].click();", driver.findElement(by));
+		Reporter.addStepLog("User Clicks on " + fieldName);
 	}
 
 	public static void ScrollintoView(WebElement ele) {
 
-		try {
-			JavascriptExecutor executor = (JavascriptExecutor) driver;
-			executor.executeScript("arguments[0].scrollIntoView(true);", ele);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+		executor.executeScript("arguments[0].scrollIntoView(true);", ele);
 	}
 
 	public static void waitForElementPresent(By by, int time) {
-		try {
-			WebDriverWait wait = new WebDriverWait(driver, 120);
+		WebDriverWait wait = new WebDriverWait(driver, 120);
 
-			wait.until(ExpectedConditions.elementToBeClickable(by));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		wait.until(ExpectedConditions.elementToBeClickable(by));
 	}
 
 	public static String getTitle() {
-		String title = null;
-		try {
-			title = driver.getTitle();
-			Reporter.addStepLog("Getting Title of Window" + title);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String title = driver.getTitle();
+		Reporter.addStepLog("Getting Title of Window" + title);
 
 		return title;
 	}
@@ -256,40 +193,22 @@ public class Selcommands {
 	
 	public static void getPageSource()
 	{
-		String pagesource = null;
-		try {
-			pagesource = driver.getPageSource();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String pagesource=driver.getPageSource();
 		Reporter.addStepLog ("Getting PageSource"+pagesource);
 	}
 	public static String getText(By by, String fieldName) {
-		String text = null;
-		try {
-			waitForElementPresent(by, 10);
-			text = driver.findElement(by).getText();
-			Reporter.addStepLog("Field Name is :" + text);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		waitForElementPresent(by, 10);
+		String text = driver.findElement(by).getText();
+		Reporter.addStepLog("Field Name is :" + text);
 
 		return text;
 	}
 
 	public static String getAttribute(By by, String attributeName, String fieldName) {
-		String attributeValue= null;
-		try {
-			waitForElementPresent(by, 10);
-			attributeValue = driver.findElement(by).getAttribute(attributeName);
+		waitForElementPresent(by, 10);
+		String attributeValue = driver.findElement(by).getAttribute(attributeName);
 
-			Reporter.addStepLog("Getting Text" + attributeValue);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Reporter.addStepLog("Getting Text" + attributeValue);
 		return attributeValue;
 	}
 
@@ -307,16 +226,10 @@ public class Selcommands {
 	}
 
 	public static boolean isEnabled(By by, String fieldName) {
-		boolean editable = false;
-		try {
-			waitForElementPresent(by, 60);
-			editable = driver.findElement(by).isEnabled();
+		waitForElementPresent(by, 60);
+		boolean editable = driver.findElement(by).isEnabled();
 
-			Reporter.addStepLog("Checking " + fieldName + "is Enabled");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Reporter.addStepLog("Checking " + fieldName + "is Enabled");
 
 		return editable;
 	}
@@ -335,34 +248,19 @@ public class Selcommands {
 	}
 
 	public static void closeWindow() {
-		try {
-			driver.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		driver.close();
 		Reporter.addStepLog("Closing Current Window ");
 
 	}
 
 	
 	public void refreshPage() {
-		try {
-			driver.navigate().refresh();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		driver.navigate().refresh();
 		Reporter.addStepLog("Refreshing Page");
 	}
 
 	public void navigate_back() {
-		try {
-			driver.navigate().back();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		driver.navigate().back();
 		Reporter.addStepLog("Navigating to back");
 	}
 

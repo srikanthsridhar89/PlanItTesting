@@ -59,10 +59,9 @@ public class Persona  extends Selcommands {
 		
 	}
 
-public static void userclicksonnewpersona() throws InterruptedException {
+public static void userclicksonnewpersona() {
 		
-		Thread.sleep(4000);	
-		By NewPersona=	By.xpath("//*[@id='createPersonaIconId']");		
+		By NewPersona=	By.xpath("//*[@id='createPersonaIconId']");
 		click(NewPersona, "New Persona");
 	} 
 	

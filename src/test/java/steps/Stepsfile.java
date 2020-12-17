@@ -84,6 +84,19 @@ public class Stepsfile {
 		Scenario.userclicksonpersonalink();
 	}
 	
+	
+	
+
+
+@When("^User Navigates to TestPlanWorkspace$")
+	public void usernavigatestotestplanworkspace() throws InterruptedException {
+
+		TestSuite.userclicksonregressiontestsuite();
+		TestSuite.userselectdesiredtestsuitecreated();
+		TestPlan.click_testplantab();
+		
+}
+	
 	@When("^User Navigates to Scenario Detail Page$")
 	public void usernavigatestoscenariodetailpage() throws InterruptedException {
 
@@ -111,8 +124,14 @@ public class Stepsfile {
 
 	}
 
+	
+	@Then("^User see SharedScenario$")
+	public void userseessharedscenario() throws IOException {
+		
+		Scenario.userseesharedscenario();
+	}
 	@When("^User Shares ScenarioLink$")
-	public void usersharesscenariolink() throws IOException {
+	public void usersharesscenariolink() throws IOException, InterruptedException {
 
 		Scenario.usersharesscenariolink();
 		sel.captureScreenshot("Share Link");
@@ -733,7 +752,7 @@ System.out.println("Value is"+btn);
 	}
 
 	@When("^User clicks on NewPersona$")
-	public static void userclicksonnewpersona() throws InterruptedException {
+	public static void userclicksonnewpersona() {
 
 		Persona.userclicksonnewpersona();
 	}
@@ -955,13 +974,7 @@ String btn = sel.getElementString(PersonaCreated);
 
 	}
 
-	@When("^User fills details in TestPlan$")
-	public void userfillsdetailsintestplan() throws InterruptedException {
-		TestPlan.filldetails_testplan(JsonReader.readJson("TestPlan", "Name"),
-				JsonReader.readJson("TestPlan", "description"));
-
-	}
-
+	
 	@When("User selects testsuite")
 	public void userselectstestsuite() {
 		TestPlan.userselecttestsuite();
@@ -969,7 +982,7 @@ String btn = sel.getElementString(PersonaCreated);
 	}
 
 	@When("^User Clicks on TestPlan$")
-	public void userclicksontestplan() {
+	public void userclicksontestplan() throws InterruptedException {
 
 		TestPlan.click_testplantab();
 	}
@@ -978,6 +991,72 @@ String btn = sel.getElementString(PersonaCreated);
 	public void userclicksoncreatetestplan() {
 		TestPlan.click_createnewtestplan();
 
+	}
+	
+	@Then("User see TestPlan Created")
+	public void userseetestplancreated() throws InterruptedException, IOException {
+		
+		Thread.sleep(6000);
+		By PlanTab=By.xpath("//a[@id='testPlans']");
+		sel.click(PlanTab, "Plan Tab");
+		
+		By TestSuiteCreated = By.xpath("//td[text()='" + JsonReader.readJson("TestPlan", "Name") + "']");
+		String btn = sel.getElementString(TestSuiteCreated);
+
+		Assert.assertEquals(JsonReader.readJson("TestPlan", "Name"), btn);
+		Reporter.addStepLog("User Sees TestPlan Created : " + btn);
+		sel.captureScreenshot();
+	}
+	@When("^User Clicks on CommitTestPlan$")
+	public void userclicksoncommittestplan() {
+		
+		TestPlan.click_committestplan();
+	}
+	
+	@When("^User Edits TestPlanDetail$")
+	public void usereditstestplandetails() throws InterruptedException {
+		
+		TestPlan.usereditstestplandetails(JsonReader.readJson("TestPlan", "Name"),
+				JsonReader.readJson("TestPlan", "EditDescription"));
+		
+		
+	}
+	
+	@When("^User Clicks on UpdateTestPlan$")
+	public void  userclicksonupdatetestplan() throws InterruptedException {
+		
+		TestPlan.click_updatetestplan();
+	}
+	@When("^User Deletes TestPlan$")
+	public void userdeletestestplan() throws IOException {
+		
+		TestPlan.click_deletetestplan();
+	}
+	
+	@When("^Enter Details for TestPlanCreation$")
+	public void enterdetailsfortestplancreation() throws InterruptedException, IOException {
+		
+		
+
+		
+		TestPlan.filldetails_testplan(JsonReader.readJson("TestPlan", "Name"),
+				JsonReader.readJson("TestPlan", "description"));
+		sel.captureScreenshot();
+	}
+	
+	@Then("^User does not see TestPlanDeleted$")
+	public void userdoesnotseetestplandeleted() throws InterruptedException {
+		Thread.sleep(6000);
+		String deletedplan=JsonReader.readJson("TestPlan", "DeleteName");
+		
+		if(!deletedplan.isEmpty()) {
+			Reporter.addStepLog("User Does not see TestPlan Deleted");
+		}
+		else {
+			
+			Reporter.addStepLog("User Sees  TestPlan Deleted");
+		}
+		
 	}
 @When("^User Navigates to Persona Workspace$")
 public void usernavigatestopersonaworkspace() throws InterruptedException {

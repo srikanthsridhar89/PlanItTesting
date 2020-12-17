@@ -18,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cucumber.listener.Reporter;
 
+import cucumber.api.java.en.Then;
 import junit.framework.Assert;
 import net.bytebuddy.utility.RandomString;
 import utilities.JsonReader;
@@ -38,6 +39,7 @@ public class Scenario extends Selcommands {
 	public static String sUpdateWhenData = "My overtime for today is approved";
 	public static String sUpdateThenData = "My shift does not have an exception flag";
 	private static By RequirementNotesfield;
+public static String url="";
 
 	public Scenario(WebDriver driver) {
 		super(driver);
@@ -138,7 +140,7 @@ public class Scenario extends Selcommands {
 
 	}
 
-	public static void usersharesscenariolink() {
+	public static void usersharesscenariolink() throws InterruptedException {
 
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 
@@ -155,16 +157,17 @@ public class Scenario extends Selcommands {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#create-scenario-onEnterPress")));
 		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(sTestScenario);
 		action.sendKeys(Keys.ENTER).perform();
-
-		Reporter.addStepLog("User Creates TestScenario :" + sTestScenario);
+        Reporter.addStepLog("User Creates TestScenario :" + sTestScenario);
 		wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")));
 
 		driver.findElement(By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")).click();
 
+		
+		Thread.sleep(4000);
 		By ShareIcon = By.xpath("//button[@class='share-icon']");
 		click(ShareIcon, "ShareIcon");
-		String url=driver.findElement(ShareIcon).getAttribute("data-clipboard-text");
+		 url=driver.findElement(ShareIcon).getAttribute("data-clipboard-text");
 		
 		((JavascriptExecutor) driver).executeScript("window.open()");
 		ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
@@ -181,6 +184,19 @@ public class Scenario extends Selcommands {
 		Reporter.addStepLog("User Sees LinkCopied Text Correctly");
 	}
 
+	
+	
+	public static  void userseesharedscenario() throws IOException {
+		
+		if(!url.isEmpty()) {
+			Reporter.addStepLog("User see Shared Scenario Correctly :"+url);
+		}
+		else {
+			
+			Reporter.addStepLog("User does not  see Shared Scenario Correctly");
+		}
+		Selcommands.captureScreenshot();
+	}
 	public static void usercreatesrequirementnotes(String Requirementnotes) {
 
 		By Save = By.xpath("//button[text()='Save']");
