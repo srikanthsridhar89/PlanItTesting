@@ -34,7 +34,7 @@ public class Selcommands {
 
 	public static void openbrowser(String url) throws FileNotFoundException {
 
-		System.setProperty("webdriver.chrome.driver","./src/test/resources/drivers/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver","./src/test/resources/drivers/chromedriver");
 		driver = new ChromeDriver();
 		driver.get(url);
 		driver.manage().window().maximize();
