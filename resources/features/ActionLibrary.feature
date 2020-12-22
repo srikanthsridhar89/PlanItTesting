@@ -4,7 +4,7 @@ Feature: Action Library
 @regression
 @actionlibrary
 @addaction
-Scenario: This Scenario is to Add action for Given  without parameters and table columns  
+Scenario: This Scenario is to Add action for Step without parameters and table columns  
 Given User launches the Application
 When User Navigates to ActionLibrary
 And User Enter details for ActionCreation
