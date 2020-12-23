@@ -151,7 +151,7 @@ public class Selcommands {
 
 	public static void click(By by, String fieldName) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, 240);
+			WebDriverWait wait = new WebDriverWait(driver, 120);
 			wait.until(ExpectedConditions.elementToBeClickable(by));
 			wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 			driver.findElement(by).click();

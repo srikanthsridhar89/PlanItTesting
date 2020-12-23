@@ -908,7 +908,7 @@ String btn = sel.getElementString(PersonaCreated);
 	public void user_Enter_Details_for_Creating_Test_Suite_with(String arg1) throws Throwable {
 
 		Thread.sleep(4000);
-		title = JsonReader.readJson("AddTestSuite", "TestSuiteTitle") + new RandomString(4).nextString();
+		title = JsonReader.readJson("AddTestSuite", "TestSuiteTitle");
 		TestSuite.enteraddtestsuitedetails(title, JsonReader.readJson("AddTestSuite", "Description"), arg1);
 		sel.captureScreenshot("Test Suite Creation Detail");
 	}

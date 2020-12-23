@@ -24,11 +24,19 @@ public static void usernavigatestotesttargettab() throws InterruptedException {
 		Thread.sleep(4000);
 		By HomeDropDown=By.xpath("//button[@id='bdd_menu_trigger_button_id']");
 		By Setting=By.xpath("//a[contains(text(),'Settings')]");
-		By TestTarget_Tab=By.xpath("//a[text()='Test Targets']");
+	//	By TestTarget_Tab=By.xpath("//a[text()='Test Targets']");
+		By TestTarget_Tab=By.xpath("//a[@id='TestTargets']");
 		
-		click(HomeDropDown, " Home Drop Down");
-		click(Setting, " Setting");
-		click(TestTarget_Tab, " TestTarget Tab");
+		
+		try {
+			click(HomeDropDown, " Home Drop Down");
+			click(Setting, " Setting");
+			click(TestTarget_Tab, " TestTarget Tab");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			driver.quit();
+		}
 
 		
 	}
