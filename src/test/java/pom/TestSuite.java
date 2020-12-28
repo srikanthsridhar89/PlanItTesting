@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cucumber.listener.Reporter;
 
+import cucumber.api.java.en.When;
 import junit.framework.Assert;
 import utilities.Selcommands;
 
@@ -25,6 +26,7 @@ public class TestSuite extends Selcommands {
 		Reporter.addStepLog("User Clicked on Regression Test Suite");
 	}
 
+	
 	public static void userselectdesiredtestsuitecreated() throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[contains(text(),'Automation WFD')]")));

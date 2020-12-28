@@ -17,7 +17,8 @@ import cucumber.api.junit.Cucumber;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/features/",
 				  glue= {"steps"},
-				  tags= {"@addnewtarget"},
+				  tags= {"@regression"},
+				  format={"json:target/cucumber.json"},
 				  plugin = { "com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html"}, 
 				  	monochrome = true)
  
@@ -38,9 +39,8 @@ SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss");
 Date date = new Date();  
 System.out.println(formatter.format(date));
 
-
-File file=new File(System.getProperty("user.dir")+"/eclipse-workspace/TestAssurePro/target/cucumber-reports/report.html");
-file.renameTo(new File(System.getProperty("user.dir")+"eclipse-workspace/TestAssurePro/target/cucumber-reports/report"+formatter.format(date)+".html"));
+File file=new File("./target/cucumber-reports/report.html");
+file.renameTo(new File("./target/cucumber-reports/report"+formatter.format(date)+".html"));
 }
 
 }

@@ -150,7 +150,7 @@ TestSuite.userselectdesiredtestsuitecreated();
 		By ActionTablePrefix = By.xpath("(//input[@placeholder='Prefix'])[1]");
 		By ActionTableSuffix = By.xpath("(//input[@placeholder='Suffix'])[1]");
 By Folder=By.xpath("//div[@id='ACTION_FOLDERS']");
-By DesiredFolder=By.xpath("//div[text()='UAT ']");
+By DesiredFolder=By.xpath("//div[text()='UAT']");
 
 
 

@@ -33,6 +33,7 @@ import utilities.Selcommands;
 import net.bytebuddy.utility.RandomString;
 
 public class Stepsfile {
+	private static final String String = null;
 	static WebDriver driver;
 	static Selcommands sel = new Selcommands(driver);
 
@@ -49,6 +50,16 @@ public class Stepsfile {
 	public static String prefix = "";
 	public static String suffix = "";
 	public static String UpdatedActionLibrarylabel = "";
+	public static String dashboard_Personacount="";
+	
+	public static String dashboard_Actionscount="";
+	public static String dashboard_Scenariocount="";
+	
+	
+
+
+
+
 
 	public static String DisplayKey = "";
 
@@ -97,13 +108,107 @@ public class Stepsfile {
 		
 }
 	
-	@When("^User Navigates to Scenario Detail Page$")
-	public void usernavigatestoscenariodetailpage() throws InterruptedException {
 
+@Then("^User Naviagates to SummaryDetailPage and Verifies the Count$")
+public void usernavigatestosummarydetailpageandverifiedthecount() throws IOException {
+	By Summary=By.xpath("//a[@id='summary']");
+	sel.click(Summary, "Dashboard Summary Tab");
+	
+	
+	By Persona_Count=By.xpath("(//a[text()='Personas'])[2]/preceding::div[@class='number']");	
+By Action_Count=By.xpath("//a[text()='Actions']/preceding::div[@class='number'][1]");
+By Scenario_Count=By.xpath("//a[text()='Scenarios']/preceding::div[@class='number'][1]");
+	
+	String personacount = sel.getElementString(Persona_Count);
+	String Actionscount = sel.getElementString(Action_Count);
+		String	Scenariocount = sel.getElementString(Scenario_Count);
+	
+if(personacount.equals(dashboard_Personacount)) {
+	Reporter.addStepLog("User see Persona Count as" +personacount);
+}
+	
+
+
+if(Actionscount.equals(dashboard_Actionscount)) {
+Reporter.addStepLog("User see Actions Count as" +Actionscount);
+}
+
+
+
+
+if(dashboard_Scenariocount.equals(Scenariocount)) {
+Reporter.addStepLog("User see Scenario Count" +Scenariocount);
+}
+sel.captureScreenshot();
+	
+	
+}
+
+@When("^User Navigates to Persona and Creates Persona$")
+public void usernavigatestopersonaandcreatespersona() throws InterruptedException, IOException {
+	Thread.sleep(4000);
+	By Persona_Tab=By.xpath("//a[@id='personas']");
+	
+	
+	sel.click(Persona_Tab, "Persona Tab");
+
+	Persona.userclicksonnewpersona();
+
+	Persona.userfillspersonadetails(JsonReader.readJson("Persona", "label"),
+			JsonReader.readJson("Persona", "description"), JsonReader.readJson("Persona", "ActivityProfile"),
+			JsonReader.readJson("Persona", "Adjustmentrule"), JsonReader.readJson("Persona", "CategoryProfile"));
+	
+
+	Persona.userclick_submit();
+	
+	
+}
+
+
+
+
+@When("^User Navigates to Actions and Creates Actions$")
+public void usernavigatestoactionandcreateaction() throws InterruptedException, IOException {
+	By ActionLibrary = By.xpath("//a[text()='Action Library']");
+	sel.click(ActionLibrary, "Action Library");
+	userenterdetailsforactionlibrarywithtabledata(null);
+	
+	userclicksonsubmitinactionlibrary();
+
+	
+
+	
+	
+}
+	@When("^User Navigates to Scenario Detail Page$")
+	public void usernavigatestoscenariodetailpage() throws InterruptedException, IOException {
+
+	Thread.sleep(4000);
+		Scenario.userclicksonscenariotab();
+		usercreatesscenario();
+	}
+	
+	@When("^User Navigates to Dashboard Detail Page$")
+	public static void usernaviagestosummarydetailpage() throws InterruptedException {
 		TestSuite.userclicksonregressiontestsuite();
 		TestSuite.userselectdesiredtestsuitecreated();
-		Scenario.userclicksonscenariotab();
-		useredirectstoscenariodetailpage();
+		
+		
+	By Persona_Count=By.xpath("(//a[text()='Personas'])[2]/preceding::div[@class='number']");	
+By Action_Count=By.xpath("//a[text()='Actions']/preceding::div[@class='number'][1]");
+By Scenario_Count=By.xpath("//a[text()='Scenarios']/preceding::div[@class='number'][1]");
+
+				
+				
+
+
+
+		 dashboard_Personacount = sel.getElementString(Persona_Count);
+		 dashboard_Actionscount = sel.getElementString(Action_Count);
+		 dashboard_Scenariocount = sel.getElementString(Scenario_Count);
+		
+		
+
 	}
 
 	@When("^User Creates Scenario with MultipleCondition$")
@@ -683,7 +788,7 @@ System.out.println("Value is"+btn);
 		suffix = JsonReader.readJson("ActionLibrary", "suffix") + new RandomString(4).nextString();
 		DisplayKey = JsonReader.readJson("ActionLibrary", "DisplayKey") + new RandomString(4).nextString();
 		Actionlibrarylabel = JsonReader.readJson("ActionLibrary", "Label") + new RandomString(4).nextString();
-		//String columntype = JsonReader.readJson("ActionLibrary", arg1) + new RandomString(4).nextString();
+		String columntype = JsonReader.readJson("ActionLibrary", arg1) + new RandomString(4).nextString();
 		ActionlibraryDescription = JsonReader.readJson("ActionLibrary", "Description")
 				+ new RandomString(4).nextString();
 
@@ -908,7 +1013,7 @@ String btn = sel.getElementString(PersonaCreated);
 	public void user_Enter_Details_for_Creating_Test_Suite_with(String arg1) throws Throwable {
 
 		Thread.sleep(4000);
-		title = JsonReader.readJson("AddTestSuite", "TestSuiteTitle");
+		title = JsonReader.readJson("AddTestSuite", "TestSuiteTitle") + new RandomString(4).nextString();
 		TestSuite.enteraddtestsuitedetails(title, JsonReader.readJson("AddTestSuite", "Description"), arg1);
 		sel.captureScreenshot("Test Suite Creation Detail");
 	}
