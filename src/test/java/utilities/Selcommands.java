@@ -17,6 +17,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -35,7 +36,13 @@ public class Selcommands {
 	public static void openbrowser(String url) throws FileNotFoundException {
 
 		System.setProperty("webdriver.chrome.driver","./src/test/resources/drivers/chromedriver");
-		driver = new ChromeDriver();
+		//driver = new ChromeDriver();
+		
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("headless", "--disable-gpu","--ignore-certificate-errors");
+		options.addArguments("headless");
+		driver = new ChromeDriver(options);
+		
 		driver.get(url);
 		driver.manage().window().maximize();
 		Reporter.addStepLog("welcome to " + url);
