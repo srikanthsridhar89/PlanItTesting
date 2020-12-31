@@ -17,7 +17,7 @@ import cucumber.api.junit.Cucumber;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/features/",
 				  glue= {"steps"},
-				  tags= {"@regression"},
+				  tags= {"@AddWFDTestSuite"},
 				  format={"json:target/cucumber.json"},
 				  plugin = { "com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html"}, 
 				  	monochrome = true)

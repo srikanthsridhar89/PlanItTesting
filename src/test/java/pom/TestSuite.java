@@ -173,7 +173,7 @@ public class TestSuite extends Selcommands {
 		By SelectProjectVersion = By.xpath("//div[contains(text(),'" + WorkforceDimensionsversion + "')]");
 
 		By TestTarget = By.xpath("//div[@id='PROJECT_TEST_TARGET']/div");
-		By SelectTarget = By.xpath("//div[contains(text(),'Dev Kronos Tenant w/ Boomi')]");
+		By SelectTarget = By.xpath("//div[contains(text(),'Test Kronos Tenant w/ Boomi')]");
 
 		By TestSuitePurpose = By.xpath("//div[@id='PROJECT_PRUPOSE']/div");
 		By SelectPurpose = By.xpath("//div[contains(text(),'Functional Testing')]");
@@ -194,7 +194,7 @@ public class TestSuite extends Selcommands {
 		click(SelectProjectVersion, "Desired Project Version : '" + WorkforceDimensionsversion + "'");
 
 		click(TestTarget, "TestTarget Dropdown");
-		click(SelectTarget, "Desired TestTarget as Dev Kronos Tenant w/ Boomi ");
+		click(SelectTarget, "Desired TestTarget as Test Kronos Tenant w/ Boomi ");
 
 		click(TestSuitePurpose, "TestSuitePurpose Dropdown");
 		System.out.println("---->locator   " + SelectPurpose);
@@ -215,13 +215,14 @@ public class TestSuite extends Selcommands {
 		By SelectVendor = By.xpath("//div[contains(text(),'Kronos')]");
 
 		By TestActionLibrary = By.xpath("//div[@id='PROJECT_SOFTWARE']/div");
-		By SelectActionLibrary = By.xpath("//div[contains(text(),'Workforce Central')]");
+		By SelectActionLibrary = By.xpath("//div[contains(text(),'Workforce Dimensions Timekeeping')]");
 
 		By ProjectVersion = By.xpath("//div[@id='PROJECT_VERSION']/div");
 		By SelectProjectVersion = By.xpath("//div[contains(text(),'R1')]");
 
+
 		By TestTarget = By.xpath("//div[@id='PROJECT_TEST_TARGET']/div");
-		By SelectTarget = By.xpath("//div[contains(text(),'WFC Dev')]");
+		By SelectTarget = By.xpath("//div[contains(text(),'Test Kronos Tenant w/ Boomi')]");
 
 		By TestSuitePurpose = By.xpath("//div[@id='PROJECT_PRUPOSE']/div");
 		By SelectPurpose = By.xpath("//div[contains(text(),'" + typetesting + "')]");

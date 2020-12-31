@@ -46,6 +46,25 @@ Examples:
 
 
 
+
+@ignore
+@regression
+@canceltesttarget
+@testtarget
+Scenario Outline: Cancel TestTarget
+Given User launches the Application
+When User Navigates to TestTarget CreationPage
+And User Enter details for TestTarget with "<Software>" 
+And User Clicks on Cancel in TestTarget
+Then quit browser
+
+Examples:
+
+	|Software|
+	|Workforce Central|
+	|Workforce Dimensions Timekeeping|
+
+
 @ignore
 @regression
 @deletetesttarget
@@ -66,22 +85,25 @@ Examples:
 	|Software|
 	|Workforce Central|
 	|Workforce Dimensions Timekeeping|
-
-
+	
 
 @ignore
 @regression
-@canceltesttarget
-@testtarget
-Scenario Outline: Cancel TestTarget
+@TestSuite
+Scenario Outline: Add TestSuite
+
 Given User launches the Application
-When User Navigates to TestTarget CreationPage
-And User Enter details for TestTarget with "<Software>" 
-And User Clicks on Cancel in TestTarget
-Then quit browser
+When User Navigates to TestSuite CreationPage
+And User Enter Details for Creating Test Suite with "<typeoftest>"
+And User Clicks on Create New TestSuite
+Then User Created TestSuite Succesfully
+And quit browser
 
 Examples:
-
-	|Software|
-	|Workforce Central|
-	|Workforce Dimensions Timekeeping|
+	|typeoftest|
+	|Parallel Testing|
+	|Regression Testing|
+	|Integration Testing|
+	|Functional Testing|
+	
+	
