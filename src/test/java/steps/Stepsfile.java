@@ -51,11 +51,11 @@ public class Stepsfile {
 	public static String suffix = "";
 	public static String UpdatedActionLibrarylabel = "";
 	public static String dashboard_Personacount="";
-	
+
 	public static String dashboard_Actionscount="";
 	public static String dashboard_Scenariocount="";
-	
-	
+
+
 
 
 
@@ -91,123 +91,123 @@ public class Stepsfile {
 
 	@When("^User Clicks on Persona Link$")
 	public void userclicksonpersonalink() throws InterruptedException {
-		
+
 		Scenario.userclicksonpersonalink();
 	}
-	
-	
-	
 
 
-@When("^User Navigates to TestPlanWorkspace$")
+
+
+
+	@When("^User Navigates to TestPlanWorkspace$")
 	public void usernavigatestotestplanworkspace() throws InterruptedException {
 
 		TestSuite.userclicksonregressiontestsuite();
 		TestSuite.userselectdesiredtestsuitecreated();
 		TestPlan.click_testplantab();
-		
-}
-	
 
-@Then("^User Naviagates to SummaryDetailPage and Verifies the Count$")
-public void usernavigatestosummarydetailpageandverifiedthecount() throws IOException {
-	By Summary=By.xpath("//a[@id='summary']");
-	sel.click(Summary, "Dashboard Summary Tab");
-	
-	
-	By Persona_Count=By.xpath("(//a[text()='Personas'])[2]/preceding::div[@class='number']");	
-By Action_Count=By.xpath("//a[text()='Actions']/preceding::div[@class='number'][1]");
-By Scenario_Count=By.xpath("//a[text()='Scenarios']/preceding::div[@class='number'][1]");
-	
-	String personacount = sel.getElementString(Persona_Count);
-	String Actionscount = sel.getElementString(Action_Count);
+	}
+
+
+	@Then("^User Naviagates to SummaryDetailPage and Verifies the Count$")
+	public void usernavigatestosummarydetailpageandverifiedthecount() throws IOException {
+		By Summary=By.xpath("//a[@id='summary']");
+		sel.click(Summary, "Dashboard Summary Tab");
+
+
+		By Persona_Count=By.xpath("(//a[text()='Personas'])[2]/preceding::div[@class='number']");
+		By Action_Count=By.xpath("//a[text()='Actions']/preceding::div[@class='number'][1]");
+		By Scenario_Count=By.xpath("//a[text()='Scenarios']/preceding::div[@class='number'][1]");
+
+		String personacount = sel.getElementString(Persona_Count);
+		String Actionscount = sel.getElementString(Action_Count);
 		String	Scenariocount = sel.getElementString(Scenario_Count);
-	
-if(personacount.equals(dashboard_Personacount)) {
-	Reporter.addStepLog("User see Persona Count as" +personacount);
-}
-	
 
-
-if(Actionscount.equals(dashboard_Actionscount)) {
-Reporter.addStepLog("User see Actions Count as" +Actionscount);
-}
+		if(personacount.equals(dashboard_Personacount)) {
+			Reporter.addStepLog("User see Persona Count as" +personacount);
+		}
 
 
 
-
-if(dashboard_Scenariocount.equals(Scenariocount)) {
-Reporter.addStepLog("User see Scenario Count" +Scenariocount);
-}
-sel.captureScreenshot();
-	
-	
-}
-
-@When("^User Navigates to Persona and Creates Persona$")
-public void usernavigatestopersonaandcreatespersona() throws InterruptedException, IOException {
-	Thread.sleep(4000);
-	By Persona_Tab=By.xpath("//a[@id='personas']");
-	
-	
-	sel.click(Persona_Tab, "Persona Tab");
-
-	Persona.userclicksonnewpersona();
-
-	Persona.userfillspersonadetails(JsonReader.readJson("Persona", "label"),
-			JsonReader.readJson("Persona", "description"), JsonReader.readJson("Persona", "ActivityProfile"),
-			JsonReader.readJson("Persona", "Adjustmentrule"), JsonReader.readJson("Persona", "CategoryProfile"));
-	
-
-	Persona.userclick_submit();
-	
-	
-}
+		if(Actionscount.equals(dashboard_Actionscount)) {
+			Reporter.addStepLog("User see Actions Count as" +Actionscount);
+		}
 
 
 
 
-@When("^User Navigates to Actions and Creates Actions$")
-public void usernavigatestoactionandcreateaction() throws InterruptedException, IOException {
-	By ActionLibrary = By.xpath("//a[text()='Action Library']");
-	sel.click(ActionLibrary, "Action Library");
-	userenterdetailsforactionlibrarywithtabledata(null);
-	
-	userclicksonsubmitinactionlibrary();
+		if(dashboard_Scenariocount.equals(Scenariocount)) {
+			Reporter.addStepLog("User see Scenario Count" +Scenariocount);
+		}
+		sel.captureScreenshot();
 
-	
 
-	
-	
-}
+	}
+
+	@When("^User Navigates to Persona and Creates Persona$")
+	public void usernavigatestopersonaandcreatespersona() throws InterruptedException, IOException {
+		Thread.sleep(4000);
+		By Persona_Tab=By.xpath("//a[@id='personas']");
+
+
+		sel.click(Persona_Tab, "Persona Tab");
+
+		Persona.userclicksonnewpersona();
+
+		Persona.userfillspersonadetails(JsonReader.readJson("Persona", "label"),
+				JsonReader.readJson("Persona", "description"), JsonReader.readJson("Persona", "ActivityProfile"),
+				JsonReader.readJson("Persona", "Adjustmentrule"), JsonReader.readJson("Persona", "CategoryProfile"));
+
+
+		Persona.userclick_submit();
+
+
+	}
+
+
+
+
+	@When("^User Navigates to Actions and Creates Actions$")
+	public void usernavigatestoactionandcreateaction() throws InterruptedException, IOException {
+		By ActionLibrary = By.xpath("//a[text()='Action Library']");
+		sel.click(ActionLibrary, "Action Library");
+		userenterdetailsforactionlibrarywithtabledata(null);
+
+		userclicksonsubmitinactionlibrary();
+
+
+
+
+
+	}
 	@When("^User Navigates to Scenario Detail Page$")
 	public void usernavigatestoscenariodetailpage() throws InterruptedException, IOException {
 
-	Thread.sleep(4000);
+		Thread.sleep(4000);
 		Scenario.userclicksonscenariotab();
 		usercreatesscenario();
 	}
-	
+
 	@When("^User Navigates to Dashboard Detail Page$")
 	public static void usernaviagestosummarydetailpage() throws InterruptedException {
 		TestSuite.userclicksonregressiontestsuite();
 		TestSuite.userselectdesiredtestsuitecreated();
-		
-		
-	By Persona_Count=By.xpath("(//a[text()='Personas'])[2]/preceding::div[@class='number']");	
-By Action_Count=By.xpath("//a[text()='Actions']/preceding::div[@class='number'][1]");
-By Scenario_Count=By.xpath("//a[text()='Scenarios']/preceding::div[@class='number'][1]");
 
-				
-				
+
+		By Persona_Count=By.xpath("(//a[text()='Personas'])[2]/preceding::div[@class='number']");
+		By Action_Count=By.xpath("//a[text()='Actions']/preceding::div[@class='number'][1]");
+		By Scenario_Count=By.xpath("//a[text()='Scenarios']/preceding::div[@class='number'][1]");
 
 
 
-		 dashboard_Personacount = sel.getElementString(Persona_Count);
-		 dashboard_Actionscount = sel.getElementString(Action_Count);
-		 dashboard_Scenariocount = sel.getElementString(Scenario_Count);
-		
-		
+
+
+
+		dashboard_Personacount = sel.getElementString(Persona_Count);
+		dashboard_Actionscount = sel.getElementString(Action_Count);
+		dashboard_Scenariocount = sel.getElementString(Scenario_Count);
+
+
 
 	}
 
@@ -229,10 +229,10 @@ By Scenario_Count=By.xpath("//a[text()='Scenarios']/preceding::div[@class='numbe
 
 	}
 
-	
+
 	@Then("^User see SharedScenario$")
 	public void userseessharedscenario() throws IOException {
-		
+
 		Scenario.userseesharedscenario();
 	}
 	@When("^User Shares ScenarioLink$")
@@ -647,9 +647,9 @@ By Scenario_Count=By.xpath("//a[text()='Scenarios']/preceding::div[@class='numbe
 	@When("^User Enter details for TestTarget with \"([^\"]*)\"$")
 	public void userenterdetailsfortesttarget(String args1) throws InterruptedException, IOException {
 
-		testtarget = JsonReader.readJson("TestTarget", "Name") + new RandomString(4).nextString();
+		testtarget = JsonReader.readJson("TestTarget", "Name");
 		testtargetuname = JsonReader.readJson("TestTarget", "Username");
-		testtargetpwd = JsonReader.readJson("TestTarget", "Password") + new RandomString(4).nextString();
+		testtargetpwd = JsonReader.readJson("TestTarget", "Password");
 
 		String host = JsonReader.readJson("TestTarget", "Host");
 
@@ -767,16 +767,16 @@ By Scenario_Count=By.xpath("//a[text()='Scenarios']/preceding::div[@class='numbe
 
 	@Then("^User sees Action Created$")
 	public void userseesactionlibrarycreated() throws IOException, InterruptedException {
-		
+
 		Thread.sleep(6000);
 		By ActionLibraryDetail = By.xpath("//div[contains(text(),'" + Actionlibrarylabel + "')]");
-		
+
 
 		String btn = sel.getElementString(ActionLibraryDetail);
-System.out.println("Value is"+btn);
+		System.out.println("Value is"+btn);
 		Assert.assertEquals(Actionlibrarylabel, btn);
 		Reporter.addStepLog("User Sees Action Library Created Correctly with Label :" + Actionlibrarylabel);
-		
+
 
 	}
 
@@ -794,7 +794,7 @@ System.out.println("Value is"+btn);
 
 		ActionLibrary.userfillsactionlibrarywithtabledata_Integer(Actionlibrarylabel, ActionlibraryDescription, prefix, suffix,
 				DisplayKey, arg1);
-	
+
 
 	}
 
@@ -862,7 +862,7 @@ System.out.println("Value is"+btn);
 		Persona.userclicksonnewpersona();
 	}
 
-	
+
 
 	@When("^User Clicked on Submit$")
 	public void userclickedonsubmit() {
@@ -895,39 +895,39 @@ System.out.println("Value is"+btn);
 		Persona.userfillspersonadetails(JsonReader.readJson("Persona", "label"),
 				JsonReader.readJson("Persona", "description"), JsonReader.readJson("Persona", "ActivityProfile"),
 				JsonReader.readJson("Persona", "Adjustmentrule"), JsonReader.readJson("Persona", "CategoryProfile"));
-		
+
 	}
 	@Then("^User sees Persona Updated$")
 	public void userseesperonaupdated() throws IOException {
-	By PersonaUpdated=By.xpath("//span[text()='EditTestLabel']");
-		
-	String  UpdatedPersona= JsonReader.readJson("Persona", "Editlabel"); 
+		By PersonaUpdated=By.xpath("//span[text()='EditTestLabel']");
+
+		String  UpdatedPersona= JsonReader.readJson("Persona", "Editlabel");
 		String btn = sel.getElementString(PersonaUpdated);
-      Assert.assertEquals(UpdatedPersona, btn);
+		Assert.assertEquals(UpdatedPersona, btn);
 		Reporter.addStepLog("User sees Persona Updated as"+UpdatedPersona);
 		sel.captureScreenshot("Persona Verification");
 	}
-	
+
 	@Then("^User does not see Persona Deleted$")
 	public void userdoesnotseepersonadeleted() {
-By PersonaCreated=By.xpath("//span[text()='TestLabel']");
-		
-String btn = sel.getElementString(PersonaCreated);
+		By PersonaCreated=By.xpath("//span[text()='TestLabel']");
 
-		
+		String btn = sel.getElementString(PersonaCreated);
+
+
 	}
 	@Then("^User sees Persona Created")
 	public void userseespersonacreated() throws IOException {
-		
+
 		By PersonaCreated=By.xpath("//span[text()='TestLabel']");
-		
+
 
 		String btn = sel.getElementString(PersonaCreated);
 
 		Assert.assertEquals("TestLabel", btn);
 		Reporter.addStepLog("User sees Persona Created as "+btn);
 		sel.captureScreenshot("Persona Verification");
-		
+
 	}
 
 	@When("^User Clicks on Submit in CreatePersonaPage$")
@@ -1079,7 +1079,7 @@ String btn = sel.getElementString(PersonaCreated);
 
 	}
 
-	
+
 	@When("User selects testsuite")
 	public void userselectstestsuite() {
 		TestPlan.userselecttestsuite();
@@ -1097,14 +1097,14 @@ String btn = sel.getElementString(PersonaCreated);
 		TestPlan.click_createnewtestplan();
 
 	}
-	
+
 	@Then("User see TestPlan Created")
 	public void userseetestplancreated() throws InterruptedException, IOException {
-		
+
 		Thread.sleep(6000);
 		By PlanTab=By.xpath("//a[@id='testPlans']");
 		sel.click(PlanTab, "Plan Tab");
-		
+
 		By TestSuiteCreated = By.xpath("//td[text()='" + JsonReader.readJson("TestPlan", "Name") + "']");
 		String btn = sel.getElementString(TestSuiteCreated);
 
@@ -1114,60 +1114,60 @@ String btn = sel.getElementString(PersonaCreated);
 	}
 	@When("^User Clicks on CommitTestPlan$")
 	public void userclicksoncommittestplan() {
-		
+
 		TestPlan.click_committestplan();
 	}
-	
+
 	@When("^User Edits TestPlanDetail$")
 	public void usereditstestplandetails() throws InterruptedException {
-		
+
 		TestPlan.usereditstestplandetails(JsonReader.readJson("TestPlan", "Name"),
 				JsonReader.readJson("TestPlan", "EditDescription"));
-		
-		
+
+
 	}
-	
+
 	@When("^User Clicks on UpdateTestPlan$")
 	public void  userclicksonupdatetestplan() throws InterruptedException {
-		
+
 		TestPlan.click_updatetestplan();
 	}
 	@When("^User Deletes TestPlan$")
 	public void userdeletestestplan() throws IOException {
-		
+
 		TestPlan.click_deletetestplan();
 	}
-	
+
 	@When("^Enter Details for TestPlanCreation$")
 	public void enterdetailsfortestplancreation() throws InterruptedException, IOException {
-		
-		
 
-		
+
+
+
 		TestPlan.filldetails_testplan(JsonReader.readJson("TestPlan", "Name"),
 				JsonReader.readJson("TestPlan", "description"));
 		sel.captureScreenshot();
 	}
-	
+
 	@Then("^User does not see TestPlanDeleted$")
 	public void userdoesnotseetestplandeleted() throws InterruptedException {
 		Thread.sleep(6000);
 		String deletedplan=JsonReader.readJson("TestPlan", "DeleteName");
-		
+
 		if(!deletedplan.isEmpty()) {
 			Reporter.addStepLog("User Does not see TestPlan Deleted");
 		}
 		else {
-			
+
 			Reporter.addStepLog("User Sees  TestPlan Deleted");
 		}
-		
+
 	}
-@When("^User Navigates to Persona Workspace$")
-public void usernavigatestopersonaworkspace() throws InterruptedException {
-	
-	Persona.userclicksonpersonaworkspace();
-}
+	@When("^User Navigates to Persona Workspace$")
+	public void usernavigatestopersonaworkspace() throws InterruptedException {
+
+		Persona.userclicksonpersonaworkspace();
+	}
 	@When("^User Navigates to Users Workspace$")
 	public void usernaviagtestousertab() throws InterruptedException, IOException {
 
@@ -1205,22 +1205,22 @@ public void usernavigatestopersonaworkspace() throws InterruptedException {
 		AddNewUser.userclicksonaddnewuser();
 
 	}
-	
+
 	@Then("^User sees Created Persona$")
 	public void userseescreatedpersona() throws IOException {
-		
+
 		Scenario.userseescreatedpersona();
 	}
-@Then("User sees Details Updated$")
-public void userseesdetailsupdated() {
-	
-	By UpdatedUserRecord=By.xpath("(//td[contains(text(),'" + Uname + "')/following::td[@class='clickable-row attribute-key-col'])[2]");
-	driver.findElement(UpdatedUserRecord).getText();
-	
-	String btn = sel.getElementString(UpdatedUserRecord);
-System.out.println("Value is"+btn);
-	
-}
+	@Then("User sees Details Updated$")
+	public void userseesdetailsupdated() {
+
+		By UpdatedUserRecord=By.xpath("(//td[contains(text(),'" + Uname + "')/following::td[@class='clickable-row attribute-key-col'])[2]");
+		driver.findElement(UpdatedUserRecord).getText();
+
+		String btn = sel.getElementString(UpdatedUserRecord);
+		System.out.println("Value is"+btn);
+
+	}
 	@When("^User Clicks on UpdateUser$")
 	public void userclicksonupdateuser() {
 
@@ -1250,11 +1250,11 @@ System.out.println("Value is"+btn);
 		Assert.assertEquals(Uname, btn);
 		Reporter.addStepLog("User Created  Succesfully with  : " + Uname);
 	}
-	
+
 	@Then("^User does not see Deleted Record$")
 	public void userdoesnotseeuserdeleted() {
-		
-		
+
+
 		if(!Uname.isEmpty()) {
 			Reporter.addStepLog("User Deleted  Succesfully with  : " + Uname);
 		}
@@ -1262,7 +1262,7 @@ System.out.println("Value is"+btn);
 			Reporter.addStepLog("User does not Get Deleted");
 		}
 
-		
+
 	}
 
 	@When("^User Clicks on Create New User$")
