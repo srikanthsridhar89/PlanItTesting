@@ -4,13 +4,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import bean.TestTargetConfig;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cucumber.listener.Reporter;
 
@@ -36,26 +35,26 @@ public class Stepsfile {
 	private static final String String = null;
 	static WebDriver driver;
 	static Selcommands sel = new Selcommands(driver);
-
+	private TestTargetConfig testTargetConfig = new TestTargetConfig();
 	public static String title = "";
 	public static String Uname = "";
 	public static String UserEmail = "";
-	public static String testtargetWFDName = "";
-	public static String testtargetWFCName = "";
-	public static String testtargetpwd = "";
-	public static String testtargetuname = "";
-	public static String testtargetwfcpwd = "";
-	public static String testtargetwfcuname = "";
-	public static String testtargetwfdhost="";
-	public static String testtargetwfchost="";
-	public static String testtargetappkey="";
-	public static String testtargetclientid="";
-	public static String testtargetclientsecret = "";
-	public static String testtargetsftphost = "";
-	public static String testtargetsftpusername = "";
-	public static String testtargetsftppassword ="";
-	public static String testtargetsftpport = "";
-	public static String testtargetpgppublickey = "";
+//	public static String testTargetConfig.getTestTargetWFDName() = "";
+//	public static String testtargetWFCName = "";
+//	public static String testtargetpwd = "";
+//	public static String testtargetuname = "";
+//	public static String testtargetwfcpwd = "";
+//	public static String testtargetwfcuname = "";
+//	public static String testtargetwfdhost="";
+//	public static String testtargetwfchost="";
+//	public static String testtargetappkey="";
+//	public static String testtargetclientid="";
+//	public static String testtargetclientsecret = "";
+//	public static String testtargetsftphost = "";
+//	public static String testtargetsftpusername = "";
+//	public static String testtargetsftppassword ="";
+//	public static String testtargetsftpport = "";
+//	public static String testtargetpgppublickey = "";
 	public static String Actionlibrarylabel = "";
 	public static String ActionlibraryDescription = "";
 	public static String Updatetestsuitetitle = "";
@@ -68,10 +67,15 @@ public class Stepsfile {
 	public static String dashboard_Scenariocount="";
 
 
-
-
-
-
+	public Stepsfile() {
+		ObjectMapper obj = new ObjectMapper();
+		try {
+			testTargetConfig = obj.readValue(JsonReader.getFile("TestTarget"), TestTargetConfig.class);
+		}catch(Exception e){
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
 
 	public static String DisplayKey = "";
 
@@ -79,8 +83,8 @@ public class Stepsfile {
 
 	@Given("^User launches the Application$")
 	public void userlaunchesapplication() throws FileNotFoundException, InterruptedException {
-		Selcommands.openbrowser(JsonReader.readJson("env", "url"));
 
+		Selcommands.openbrowser(JsonReader.readJson("env", "url"));
 		loginpage.logindetails(JsonReader.readJson("env", "Username"), JsonReader.readJson("env", "Password"));
 		loginpage.click_Signin();
 		loginpage.verifyLogin();
@@ -595,25 +599,25 @@ public class Stepsfile {
 	}
 
 	@When("^User Updates TestTarget details$")
-	public static void userupdatestesttargetdetails() {
+	public void userupdatestesttargetdetails() {
 		sUpdateTestTargetname = JsonReader.readJson("TestTarget", "UpdatedName") + new RandomString(4).nextString();
 		TestTarget.userupdatedtesttargetdetails(sUpdateTestTargetname);
 	}
 
 	@Then("^User Sees Created TestTarget details with \"([^\"]*)\"$")
-	public static void userseestesttargetdetails(String args1) throws InterruptedException, IOException {
+	public void userseestesttargetdetails(String args1) throws InterruptedException, IOException {
 
 		Thread.sleep(4000);
 		String btn = "";
 		if(args1.equals("Workforce Dimensions Timekeeping")) {
-			By TestTarget = By.xpath("//*[text()='" + testtargetWFDName + "']");
+			By TestTarget = By.xpath("//*[text()='" + testTargetConfig.getTestTargetWFDName() + "']");
 			 btn = sel.getElementString(TestTarget);
-			Assert.assertEquals(testtargetWFDName, btn);
+			Assert.assertEquals(testTargetConfig.getTestTargetWFDName(), btn);
 		}
 			else if(args1.equals("Workforce Central")) {
-			By TestTarget = By.xpath("//*[text()='" + testtargetWFCName + "']");
+			By TestTarget = By.xpath("//*[text()='" + testTargetConfig.getTestTargetWFCName() + "']");
 			 btn = sel.getElementString(TestTarget);
-			Assert.assertEquals(testtargetWFCName, btn);
+			Assert.assertEquals(testTargetConfig.getTestTargetWFCName(), btn);
 		}
 
 		Reporter.addStepLog("User Created TestTarget Succesfully with  : " + btn);
@@ -634,7 +638,7 @@ public class Stepsfile {
 			targets.add(wb.getText());
 		}
 
-		if (targets.toString().contains(testtargetWFDName)) {
+		if (targets.toString().contains(testTargetConfig.getTestTargetWFDName())) {
 
 			Reporter.addStepLog("User Sees Deleted TestTarget Record");
 
@@ -646,7 +650,7 @@ public class Stepsfile {
 	}
 
 	@Then("^User Sees TestTarget Updated$")
-	public static void userseestesttargetupdated() throws InterruptedException {
+	public void userseestesttargetupdated() throws InterruptedException {
 
 		Thread.sleep(4000);
 		By TestTarget = By.xpath("//*[text()='" + sUpdateTestTargetname + "']");
@@ -666,26 +670,11 @@ public class Stepsfile {
 	@When("^User Enter details for TestTarget with \"([^\"]*)\"$")
 	public void userenterdetailsfortesttarget(String args1) throws InterruptedException, IOException {
 
-		testtargetWFDName = JsonReader.readJson("TestTarget", "WFDName");
-		testtargetWFCName = JsonReader.readJson("TestTarget", "WFCName");
-		testtargetuname = JsonReader.readJson("TestTarget", "Username");
-		testtargetpwd = JsonReader.readJson("TestTarget", "Password");
-		testtargetwfcuname = JsonReader.readJson("TestTarget", "WFCUsername");
-		testtargetwfcpwd = JsonReader.readJson("TestTarget", "WFCPassword");
-		testtargetwfdhost = JsonReader.readJson("TestTarget", "WFDHost");
-		testtargetwfchost = JsonReader.readJson("TestTarget", "WFCHost");
-		testtargetappkey = JsonReader.readJson("TestTarget", "AppKey");
-		testtargetclientid = JsonReader.readJson("TestTarget", "ClientID");
-		testtargetclientsecret = JsonReader.readJson("TestTarget", "ClientSecret");
-		testtargetsftphost = JsonReader.readJson("TestTarget", "SFTPHost");
-		testtargetsftpusername = JsonReader.readJson("TestTarget", "SFTPUserName");
-		testtargetsftppassword = JsonReader.readJson("TestTarget", "SFTPPassword");
-		testtargetsftpport = JsonReader.readJson("TestTarget", "SFTPPort");
-		testtargetpgppublickey = JsonReader.readJson("TestTarget", "PGPPublicKey");
 		if(args1.equals("Workforce Dimensions Timekeeping"))
-			TestTarget.userfillswfdtesttargetdetails(testtargetWFDName,testtargetappkey, testtargetwfdhost, testtargetuname, testtargetpwd,testtargetclientid,testtargetclientsecret,testtargetsftphost,testtargetsftpusername,testtargetsftppassword,testtargetsftpport,testtargetpgppublickey, args1);
-		else if(args1.equals("Workforce Central"))
-			TestTarget.userfillswfctesttargetdetails(testtargetWFCName, testtargetwfchost, testtargetwfcuname, testtargetwfcpwd, args1);
+			//TestTarget.userfillswfdtesttargetdetails(testTargetConfig.getTestTargetWFDName(),testtargetappkey, testtargetwfdhost, testtargetuname, testtargetpwd,testtargetclientid,testtargetclientsecret,testtargetsftphost,testtargetsftpusername,testtargetsftppassword,testtargetsftpport,testtargetpgppublickey, args1);
+			TestTarget.userfillswfdtesttargetdetails(testTargetConfig, args1);
+			else if(args1.equals("Workforce Central"))
+			TestTarget.userfillswfctesttargetdetails(testTargetConfig, args1);
 		sel.captureScreenshot("TestTarget Detail");
 
 	}
@@ -699,7 +688,7 @@ public class Stepsfile {
 	@When("^User Clicks on Delete TestTarget$")
 	public void userclicksondeletetesttarget() {
 
-		By deletetestarget = By.xpath("//*[text()='" + testtargetWFDName + "']/following::a[@class='edit-test-target'][2]	");
+		By deletetestarget = By.xpath("//*[text()='" + testTargetConfig.getTestTargetWFDName() + "']/following::a[@class='edit-test-target'][2]	");
 
 		sel.javascript_click(deletetestarget, "User Clicked on Delete TestTarget");
 
@@ -728,7 +717,7 @@ public class Stepsfile {
 	@When("^User Deletes TestTargetCreated$")
 	public void userdeletestestargetcreated() {
 
-		By edittesttarget = By.xpath("//*[text()='" + testtargetWFDName + "']/following::a[@class='edit-test-target'][2]	");
+		By edittesttarget = By.xpath("//*[text()='" + testTargetConfig.getTestTargetWFDName() + "']/following::a[@class='edit-test-target'][2]	");
 
 		sel.javascript_click(edittesttarget, "User Clicked on Edit Test Target");
 	}
@@ -736,14 +725,14 @@ public class Stepsfile {
 	@When("^User Clicks on Edit TestTarget$")
 	public void userclicksonedittesttarget() {
 
-		By edittesttarget = By.xpath("//*[text()='" + testtargetWFDName + "']/following::a[@class='edit-test-target'][1]	");
+		By edittesttarget = By.xpath("//*[text()='" + testTargetConfig.getTestTargetWFDName() + "']/following::a[@class='edit-test-target'][1]	");
 
 		sel.javascript_click(edittesttarget, "User Clicked on Edit Test Target");
 	}
 
 	@When("^User Edits CreatedTestTarget$")
 	public void usereditscreatedtesttarget() {
-		By edittesttarget = By.xpath("//*[text()='" + testtargetWFDName + "']/following::a[@class='edit-test-target'][1]	");
+		By edittesttarget = By.xpath("//*[text()='" + testTargetConfig.getTestTargetWFDName() + "']/following::a[@class='edit-test-target'][1]	");
 
 		sel.javascript_click(edittesttarget, "User Clicked on Edit Test Target");
 

@@ -11,7 +11,10 @@ import java.util.Iterator;
 
 public class JsonReader {
 
-
+	public static File getFile(String fileName){
+		File file=new File("inputdata"+File.separator+fileName+".json");
+		return file;
+	}
 	
 	public static String readJson(String filepathwithName,String requiredValue) 
 

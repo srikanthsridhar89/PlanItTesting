@@ -1,10 +1,9 @@
 package pom;
 
 
+import bean.TestTargetConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
 import com.cucumber.listener.Reporter;
 
@@ -94,52 +93,54 @@ public static void userredirectstocreatetesttarget() {
 	
 
 	
-	public static void userfillswfdtesttargetdetails(String name, String host, String username, String pwd, String clientId, String clientSecret, String sftpHost, String sftpUserName, String sftpPassword, String sftpPort, String pgPublicKey, String Software, String args1) throws InterruptedException {
+	public static void userfillswfdtesttargetdetails(TestTargetConfig testTargetConfig, String software) throws InterruptedException {
 		
 		Thread.sleep(4000);
 		By Name=By.xpath("//input[@name='name']");
-		type(Name, name, "Name Field");
+		type(Name, testTargetConfig.getTestTargetWFDName(), "Name Field");
 		By softwaredropdown=By.xpath("//i[@class='dropdown icon']");
-		By DesiredSoftware=By.xpath("//div[contains(text(),'" + Software + "')]");
+		By DesiredSoftware=By.xpath("//div[contains(text(),'" + software + "')]");
 		click(softwaredropdown, "Software Drop Down");
 		javascript_click(DesiredSoftware, "Desired Software");
+		By DesiredAppKey=By.id("appKey");
+		type(DesiredAppKey, testTargetConfig.getTestTargetAppkey(), "AppKey Field");
 		By DesiredHost=By.id("host");
-		type(DesiredHost, host, "Host Field");
+		type(DesiredHost, testTargetConfig.getTestTargetWFDHost(), "Host Field");
 		By DesiredUsername=By.id("username");
-		type(DesiredUsername, username, "Username Field");
+		type(DesiredUsername, testTargetConfig.getTestTargetUserName(), "Username Field");
 		By DesiredPassword=By.id("password");
-		type(DesiredPassword, pwd, "Password Field");
+		type(DesiredPassword, testTargetConfig.getTestTargetPassword(), "Password Field");
 		By DesiredClientID=By.id("clientId");
-		type(DesiredClientID, clientId, "Client ID Field");
+		type(DesiredClientID, testTargetConfig.getTestTargetClientId(), "Client ID Field");
 		By DesiredClientSecret=By.id("clientSecret");
-		type(DesiredClientSecret, clientSecret, "client Secret Field");
+		type(DesiredClientSecret, testTargetConfig.getTestTargetClientSecret(), "client Secret Field");
 		By DesiredSftpHost=By.id("sftpHost");
-		type(DesiredSftpHost, sftpHost, "SFTP Host Field");
+		type(DesiredSftpHost, testTargetConfig.getTestTargetSFTPHost(), "SFTP Host Field");
 		By DesiredSftpUserName=By.id("sftpUsername");
-		type(DesiredSftpUserName, sftpUserName, "SFTP UserName Field");
+		type(DesiredSftpUserName, testTargetConfig.getTestTargetSFTPUserName(), "SFTP UserName Field");
 		By DesiredSftpPassword=By.id("sftpPassword");
-		type(DesiredSftpPassword, sftpPassword, "SFTP Password Field");
+		type(DesiredSftpPassword, testTargetConfig.getTestTargetSFTPPassword(), "SFTP Password Field");
 		By DesiredSftpPort=By.id("sftpPort");
-		type(DesiredSftpPort, sftpPort, "SFTP Port Field");
+		type(DesiredSftpPort, testTargetConfig.getTestTargetSFTPPort(), "SFTP Port Field");
 		By DesiredPGPublicKey=By.id("pgpPublicKey");
-		type(DesiredPGPublicKey, pgPublicKey, "SFTP Port Field");
+		type(DesiredPGPublicKey, testTargetConfig.getTestTargetPGPublicKey(), "SFTP Port Field");
 	}
 
-	public static void userfillswfctesttargetdetails(String name,String host,String username,String pwd, String Software) throws InterruptedException {
+	public static void userfillswfctesttargetdetails(TestTargetConfig testTargetConfig, String software) throws InterruptedException {
 
 		Thread.sleep(4000);
 		By Name=By.xpath("//input[@name='name']");
-		type(Name, name, "Name Field");
+		type(Name, testTargetConfig.getTestTargetWFCName(), "Name Field");
 		By softwaredropdown=By.xpath("//i[@class='dropdown icon']");
-		By DesiredSoftware=By.xpath("//div[contains(text(),'" + Software + "')]");
+		By DesiredSoftware=By.xpath("//div[contains(text(),'" + software + "')]");
 		click(softwaredropdown, "Software Drop Down");
 		javascript_click(DesiredSoftware, "Desired Software");
 		By DesiredHost=By.id("host");
-		type(DesiredHost, host, "Host Field");
+		type(DesiredHost, testTargetConfig.getTestTargetWFCHost(), "Host Field");
 		By DesiredUsername=By.id("username");
-		type(DesiredUsername, username, "Username Field");
+		type(DesiredUsername, testTargetConfig.getTestTargetWFCUserName(), "Username Field");
 		By DesiredPassword=By.id("password");
-		type(DesiredPassword, pwd, "Password Field");
+		type(DesiredPassword, testTargetConfig.getTestTargetWFCPassword(), "Password Field");
 	}
 
 	public static void userclicksoncreatetesttarget() {
