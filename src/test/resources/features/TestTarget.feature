@@ -2,7 +2,7 @@ Feature: TestTarget
 
 	@ignore
 		@regression
-		@AddWFDTarget
+		@AddWFDTestTarget
 		@testtarget
 	Scenario Outline: Add NewTestTarget
 
@@ -10,13 +10,14 @@ Feature: TestTarget
 		When User Navigates to TestTarget CreationPage
 		And User Enter details for TestTarget with "<Software>"
 		And User Clicks on CreateTestTarget
-		Then User Sees Created TestTarget details
+		Then User Sees Created TestTarget details with "<Software>"
 		And quit browser
 
 		Examples:
 
 			|Software|
 			|Workforce Dimensions Timekeeping|
+
 
 	@ignore
 		@regression
@@ -28,7 +29,7 @@ Feature: TestTarget
 		When User Navigates to TestTarget CreationPage
 		And User Enter details for TestTarget with "<Software>"
 		And User Clicks on CreateTestTarget
-		Then User Sees Created TestTarget details
+		Then User Sees Created TestTarget details with "<Software>"
 		And quit browser
 
 		Examples:
@@ -101,24 +102,5 @@ Feature: TestTarget
 			|Workforce Central|
 			|Workforce Dimensions Timekeeping|
 
-
-	@ignore
-		@regression
-		@TestSuite
-	Scenario Outline: Add TestSuite
-
-		Given User launches the Application
-		When User Navigates to TestSuite CreationPage
-		And User Enter Details for Creating Test Suite with "<typeoftest>"
-		And User Clicks on Create New TestSuite
-		Then User Created TestSuite Succesfully
-		And quit browser
-
-		Examples:
-			|typeoftest|
-			|Parallel Testing|
-			|Regression Testing|
-			|Integration Testing|
-			|Functional Testing|
 	
 	

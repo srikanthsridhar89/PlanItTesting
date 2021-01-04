@@ -64,7 +64,7 @@ public class Selcommands {
 		File oDest = new File(path);
 		try {
 			FileUtils.copyFile(oScnShot, oDest);
-			Reporter.addScreenCaptureFromPath(path, "hello123");
+			Reporter.addScreenCaptureFromPath(path, "Screenshot");
 			// Reporter.("Details",
 			// MediaEntityBuilder.createScreenCaptureFromPath(Paths.get("").toAbsolutePath().toString()
 			// + "/screenshotFolder/screenshot.png").build());

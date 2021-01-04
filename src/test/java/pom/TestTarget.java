@@ -94,32 +94,53 @@ public static void userredirectstocreatetesttarget() {
 	
 
 	
-	public static void userfillstesttargetdetails(String name,String host,String username,String pwd,String Software) throws InterruptedException {
-		
+	public static void userfillswfdtesttargetdetails(String name, String host, String username, String pwd, String clientId, String clientSecret, String sftpHost, String sftpUserName, String sftpPassword, String sftpPort, String pgPublicKey, String Software, String args1) throws InterruptedException {
 		
 		Thread.sleep(4000);
 		By Name=By.xpath("//input[@name='name']");
-	    type(Name, name, "Name Field");
-		
-	    
-	    By softwaredropdown=By.xpath("//i[@class='dropdown icon']");
-	    By DesiredSoftware=By.xpath("//div[contains(text(),'" + Software + "')]");
-	    
-	    click(softwaredropdown, "Software Drop Down");
-	    javascript_click(DesiredSoftware, "Desired Software");
-		
+		type(Name, name, "Name Field");
+		By softwaredropdown=By.xpath("//i[@class='dropdown icon']");
+		By DesiredSoftware=By.xpath("//div[contains(text(),'" + Software + "')]");
+		click(softwaredropdown, "Software Drop Down");
+		javascript_click(DesiredSoftware, "Desired Software");
 		By DesiredHost=By.id("host");
-		
-		  type(DesiredHost, host, "Host Field");
-		  
-		  By DesiredUsername=By.id("username");
-		  type(DesiredUsername, username, "Username Field");
-		  
-		  By DesiredPassword=By.id("password");
-		  type(DesiredPassword, pwd, "Password Field");
-		  
+		type(DesiredHost, host, "Host Field");
+		By DesiredUsername=By.id("username");
+		type(DesiredUsername, username, "Username Field");
+		By DesiredPassword=By.id("password");
+		type(DesiredPassword, pwd, "Password Field");
+		By DesiredClientID=By.id("clientId");
+		type(DesiredClientID, clientId, "Client ID Field");
+		By DesiredClientSecret=By.id("clientSecret");
+		type(DesiredClientSecret, clientSecret, "client Secret Field");
+		By DesiredSftpHost=By.id("sftpHost");
+		type(DesiredSftpHost, sftpHost, "SFTP Host Field");
+		By DesiredSftpUserName=By.id("sftpUsername");
+		type(DesiredSftpUserName, sftpUserName, "SFTP UserName Field");
+		By DesiredSftpPassword=By.id("sftpPassword");
+		type(DesiredSftpPassword, sftpPassword, "SFTP Password Field");
+		By DesiredSftpPort=By.id("sftpPort");
+		type(DesiredSftpPort, sftpPort, "SFTP Port Field");
+		By DesiredPGPublicKey=By.id("pgpPublicKey");
+		type(DesiredPGPublicKey, pgPublicKey, "SFTP Port Field");
 	}
-	
+
+	public static void userfillswfctesttargetdetails(String name,String host,String username,String pwd, String Software) throws InterruptedException {
+
+		Thread.sleep(4000);
+		By Name=By.xpath("//input[@name='name']");
+		type(Name, name, "Name Field");
+		By softwaredropdown=By.xpath("//i[@class='dropdown icon']");
+		By DesiredSoftware=By.xpath("//div[contains(text(),'" + Software + "')]");
+		click(softwaredropdown, "Software Drop Down");
+		javascript_click(DesiredSoftware, "Desired Software");
+		By DesiredHost=By.id("host");
+		type(DesiredHost, host, "Host Field");
+		By DesiredUsername=By.id("username");
+		type(DesiredUsername, username, "Username Field");
+		By DesiredPassword=By.id("password");
+		type(DesiredPassword, pwd, "Password Field");
+	}
 
 	public static void userclicksoncreatetesttarget() {
 		

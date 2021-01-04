@@ -40,9 +40,22 @@ public class Stepsfile {
 	public static String title = "";
 	public static String Uname = "";
 	public static String UserEmail = "";
-	public static String testtarget = "";
+	public static String testtargetWFDName = "";
+	public static String testtargetWFCName = "";
 	public static String testtargetpwd = "";
 	public static String testtargetuname = "";
+	public static String testtargetwfcpwd = "";
+	public static String testtargetwfcuname = "";
+	public static String testtargetwfdhost="";
+	public static String testtargetwfchost="";
+	public static String testtargetappkey="";
+	public static String testtargetclientid="";
+	public static String testtargetclientsecret = "";
+	public static String testtargetsftphost = "";
+	public static String testtargetsftpusername = "";
+	public static String testtargetsftppassword ="";
+	public static String testtargetsftpport = "";
+	public static String testtargetpgppublickey = "";
 	public static String Actionlibrarylabel = "";
 	public static String ActionlibraryDescription = "";
 	public static String Updatetestsuitetitle = "";
@@ -51,7 +64,6 @@ public class Stepsfile {
 	public static String suffix = "";
 	public static String UpdatedActionLibrarylabel = "";
 	public static String dashboard_Personacount="";
-
 	public static String dashboard_Actionscount="";
 	public static String dashboard_Scenariocount="";
 
@@ -588,18 +600,25 @@ public class Stepsfile {
 		TestTarget.userupdatedtesttargetdetails(sUpdateTestTargetname);
 	}
 
-	@Then("^User Sees Created TestTarget details$")
-	public static void userseestesttargetdetails() throws InterruptedException, IOException {
+	@Then("^User Sees Created TestTarget details with \"([^\"]*)\"$")
+	public static void userseestesttargetdetails(String args1) throws InterruptedException, IOException {
 
 		Thread.sleep(4000);
-		By TestTarget = By.xpath("//*[text()='" + testtarget + "']");
-		String btn = sel.getElementString(TestTarget);
-
-		Assert.assertEquals(testtarget, btn);
+		String btn = "";
+		if(args1.equals("Workforce Dimensions Timekeeping")) {
+			By TestTarget = By.xpath("//*[text()='" + testtargetWFDName + "']");
+			 btn = sel.getElementString(TestTarget);
+			Assert.assertEquals(testtargetWFDName, btn);
+		}
+			else if(args1.equals("Workforce Central")) {
+			By TestTarget = By.xpath("//*[text()='" + testtargetWFCName + "']");
+			 btn = sel.getElementString(TestTarget);
+			Assert.assertEquals(testtargetWFCName, btn);
+		}
 
 		Reporter.addStepLog("User Created TestTarget Succesfully with  : " + btn);
 
-		sel.captureScreenshot("TestTarget Verfication");
+		sel.captureScreenshot("TestTarget Verification");
 	}
 
 	@Then("^User Does not  Sees TestTarget Deleted$")
@@ -615,7 +634,7 @@ public class Stepsfile {
 			targets.add(wb.getText());
 		}
 
-		if (targets.toString().contains(testtarget)) {
+		if (targets.toString().contains(testtargetWFDName)) {
 
 			Reporter.addStepLog("User Sees Deleted TestTarget Record");
 
@@ -647,14 +666,26 @@ public class Stepsfile {
 	@When("^User Enter details for TestTarget with \"([^\"]*)\"$")
 	public void userenterdetailsfortesttarget(String args1) throws InterruptedException, IOException {
 
-		testtarget = JsonReader.readJson("TestTarget", "Name");
+		testtargetWFDName = JsonReader.readJson("TestTarget", "WFDName");
+		testtargetWFCName = JsonReader.readJson("TestTarget", "WFCName");
 		testtargetuname = JsonReader.readJson("TestTarget", "Username");
 		testtargetpwd = JsonReader.readJson("TestTarget", "Password");
-
-		String host = JsonReader.readJson("TestTarget", "Host");
-
-		TestTarget.userfillstesttargetdetails(testtarget, host, testtargetuname, testtargetpwd, args1);
-
+		testtargetwfcuname = JsonReader.readJson("TestTarget", "WFCUsername");
+		testtargetwfcpwd = JsonReader.readJson("TestTarget", "WFCPassword");
+		testtargetwfdhost = JsonReader.readJson("TestTarget", "WFDHost");
+		testtargetwfchost = JsonReader.readJson("TestTarget", "WFCHost");
+		testtargetappkey = JsonReader.readJson("TestTarget", "AppKey");
+		testtargetclientid = JsonReader.readJson("TestTarget", "ClientID");
+		testtargetclientsecret = JsonReader.readJson("TestTarget", "ClientSecret");
+		testtargetsftphost = JsonReader.readJson("TestTarget", "SFTPHost");
+		testtargetsftpusername = JsonReader.readJson("TestTarget", "SFTPUserName");
+		testtargetsftppassword = JsonReader.readJson("TestTarget", "SFTPPassword");
+		testtargetsftpport = JsonReader.readJson("TestTarget", "SFTPPort");
+		testtargetpgppublickey = JsonReader.readJson("TestTarget", "PGPPublicKey");
+		if(args1.equals("Workforce Dimensions Timekeeping"))
+			TestTarget.userfillswfdtesttargetdetails(testtargetWFDName,testtargetappkey, testtargetwfdhost, testtargetuname, testtargetpwd,testtargetclientid,testtargetclientsecret,testtargetsftphost,testtargetsftpusername,testtargetsftppassword,testtargetsftpport,testtargetpgppublickey, args1);
+		else if(args1.equals("Workforce Central"))
+			TestTarget.userfillswfctesttargetdetails(testtargetWFCName, testtargetwfchost, testtargetwfcuname, testtargetwfcpwd, args1);
 		sel.captureScreenshot("TestTarget Detail");
 
 	}
@@ -668,7 +699,7 @@ public class Stepsfile {
 	@When("^User Clicks on Delete TestTarget$")
 	public void userclicksondeletetesttarget() {
 
-		By deletetestarget = By.xpath("//*[text()='" + testtarget + "']/following::a[@class='edit-test-target'][2]	");
+		By deletetestarget = By.xpath("//*[text()='" + testtargetWFDName + "']/following::a[@class='edit-test-target'][2]	");
 
 		sel.javascript_click(deletetestarget, "User Clicked on Delete TestTarget");
 
@@ -697,7 +728,7 @@ public class Stepsfile {
 	@When("^User Deletes TestTargetCreated$")
 	public void userdeletestestargetcreated() {
 
-		By edittesttarget = By.xpath("//*[text()='" + testtarget + "']/following::a[@class='edit-test-target'][2]	");
+		By edittesttarget = By.xpath("//*[text()='" + testtargetWFDName + "']/following::a[@class='edit-test-target'][2]	");
 
 		sel.javascript_click(edittesttarget, "User Clicked on Edit Test Target");
 	}
@@ -705,14 +736,14 @@ public class Stepsfile {
 	@When("^User Clicks on Edit TestTarget$")
 	public void userclicksonedittesttarget() {
 
-		By edittesttarget = By.xpath("//*[text()='" + testtarget + "']/following::a[@class='edit-test-target'][1]	");
+		By edittesttarget = By.xpath("//*[text()='" + testtargetWFDName + "']/following::a[@class='edit-test-target'][1]	");
 
 		sel.javascript_click(edittesttarget, "User Clicked on Edit Test Target");
 	}
 
 	@When("^User Edits CreatedTestTarget$")
 	public void usereditscreatedtesttarget() {
-		By edittesttarget = By.xpath("//*[text()='" + testtarget + "']/following::a[@class='edit-test-target'][1]	");
+		By edittesttarget = By.xpath("//*[text()='" + testtargetWFDName + "']/following::a[@class='edit-test-target'][1]	");
 
 		sel.javascript_click(edittesttarget, "User Clicked on Edit Test Target");
 
@@ -1156,8 +1187,7 @@ public class Stepsfile {
 
 		if(!deletedplan.isEmpty()) {
 			Reporter.addStepLog("User Does not see TestPlan Deleted");
-		}
-		else {
+		} else {
 
 			Reporter.addStepLog("User Sees  TestPlan Deleted");
 		}
