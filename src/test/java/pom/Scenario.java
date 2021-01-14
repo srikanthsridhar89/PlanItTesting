@@ -13,18 +13,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cucumber.listener.Reporter;
 
-import cucumber.api.java.en.Then;
-import junit.framework.Assert;
 import net.bytebuddy.utility.RandomString;
-import utilities.JsonReader;
-import utilities.Selcommands;
+import utilities.SelCommands;
 
-public class Scenario extends Selcommands {
+public class Scenario extends SelCommands {
 
 	public static String sFolderName = "TestFolder" + new RandomString(4).nextString();
 	public static String sParentFolderName="ParentFolder"+ new RandomString(4).nextString();
@@ -46,7 +42,7 @@ public static String url="";
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void duplictescenario() {
+	public static void duplicateScenario() {
 
 		By DuplicateScenario = By.xpath("//span[@data-tip='Duplicate Scenario']");
 		By Submitbutton = By.xpath("//button[text()='Submit']");
@@ -78,7 +74,7 @@ public static String url="";
 		driver.findElement(Submitbutton).click();
 	}
 
-	public static void usercreatestemplate() {
+	public static void userCreatesTemplate() {
 
 		By CreateTemplateIcon = By.xpath("//span[@data-tip='Create Template']");
 		By CreateTemplateConfirmation = By.xpath("//button[@id='createTemplate']");
@@ -140,7 +136,7 @@ public static String url="";
 
 	}
 
-	public static void usersharesscenariolink() throws InterruptedException {
+	public static void userSharesScenarioLink() throws InterruptedException {
 
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 
@@ -186,7 +182,7 @@ public static String url="";
 
 	
 	
-	public static  void userseesharedscenario() throws IOException {
+	public static  void userSeeSharedScenario() throws IOException {
 		
 		if(!url.isEmpty()) {
 			Reporter.addStepLog("User see Shared Scenario Correctly :"+url);
@@ -195,9 +191,9 @@ public static String url="";
 			
 			Reporter.addStepLog("User does not  see Shared Scenario Correctly");
 		}
-		Selcommands.captureScreenshot();
+		SelCommands.captureScreenshot();
 	}
-	public static void usercreatesrequirementnotes(String Requirementnotes) {
+	public static void userCreatesRequirementNotes(String Requirementnotes) {
 
 		By Save = By.xpath("//button[text()='Save']");
 		By RequirementNotefield = By.xpath("//*[@placeholder='Enter requirements or notes for this folder']");
@@ -457,7 +453,7 @@ public static String url="";
 
 		Reporter.addStepLog("User Selects When  Scenario Statement");
 
-		Selcommands.javascript_click(AddEmployeeAction, "AddEmployeeAction");
+		SelCommands.javascript_click(AddEmployeeAction, "AddEmployeeAction");
 
 		By WhenAnd = By.xpath("//div[text()='Select an action...']");
 		wait.until(ExpectedConditions.presenceOfElementLocated(WhenAnd));
@@ -475,7 +471,7 @@ public static String url="";
 
 		Reporter.addStepLog("User Selects Then Scenario Statement ");
 
-		Selcommands.javascript_click(AddValidationAction, "AddValidationAction");
+		SelCommands.javascript_click(AddValidationAction, "AddValidationAction");
 
 		By ThenAnd = By.xpath("//div[text()='Select an action...']");
 
@@ -487,7 +483,7 @@ public static String url="";
 		
 	
 				
-				Selcommands.captureScreenshot();
+				SelCommands.captureScreenshot();
 		
 		click(Save, "Save");
 
@@ -590,7 +586,7 @@ public static String url="";
 		else {
 			Reporter.addStepLog("User does not sees Created Persona");
 		}
-		Selcommands.captureScreenshot();
+		SelCommands.captureScreenshot();
 	}
 
 	public static void userseescenariocreatedwithsimplestring() {
@@ -781,7 +777,7 @@ public static String url="";
 		
 		
 		Reporter.addStepLog("User Renames Parent Folder as "+sParentFolderName);
-		Selcommands.captureScreenshot();
+		SelCommands.captureScreenshot();
 	
 		
 	
@@ -956,7 +952,7 @@ public static String url="";
 		// reviewoptions.selectByVisibleText("'" + typeofreviewopts + "'");
 		type(Comments, Comment, "Comment Field");
 
-		Selcommands.captureScreenshot();
+		SelCommands.captureScreenshot();
 
 		click(Save, "Save Button");
 	}

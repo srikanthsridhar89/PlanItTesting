@@ -1,7 +1,6 @@
 package pom;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,22 +10,22 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cucumber.listener.Reporter;
 
-import utilities.Selcommands;
+import utilities.SelCommands;
 
-public class ActionLibrary extends Selcommands {
+public class ActionLibrary extends SelCommands {
 
 	public ActionLibrary(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void cancelactionlibrary() {
+	public static void cancelAction() {
 
 		By Cancel = By.xpath("//button[@label='Cancel']");
 		click(Cancel, "Cancel");
 	}
 
-	public static void userseeactionlibrarymessage() {
+	public static void userSeeActionMessage() {
 
 		By MessageCreated = By.xpath("//div[contains(text(),'Created')]");
 		WebElement ele = driver.findElement(MessageCreated);
@@ -41,7 +40,7 @@ public class ActionLibrary extends Selcommands {
 
 	}
 
-	public static void userdeletesactionlibrary() {
+	public static void userDeletesAction() {
 
 		By ActionLibraryDelete = By.xpath("//*[@id='ACTION_TRASH_ICON']");
 		By ActionLibraryDeleteConfirmation = By.xpath("//button[text()='Confirm']");
@@ -50,7 +49,7 @@ public class ActionLibrary extends Selcommands {
 		click(ActionLibraryDeleteConfirmation, "ActionLibraryDeleteConfirmation");
 	}
 
-	public static void userupdatesactionlibrary(String desc, String label) {
+	public static void userUpdatesAction(String desc, String label) {
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 	
 		By ActionLibraryEdit = By.xpath("//*[@id='ACTION_EDIT_ICON']");
@@ -65,21 +64,21 @@ public class ActionLibrary extends Selcommands {
 		type(Descriptionfield, desc, "Descriptionfield");
 
 		type(Labelfield, label, "Labelfield");
-		userclicksonsubmit();
+		userClicksOnSubmit();
 	}
 
-	public static void usernavigatestoactionlibrary(String typetesting) {
+	public static void userNavigatesToActionLibrary(String typetesting) {
 
 		By ActionLibrary = By.xpath("//a[text()='Action Library']");
 		click(ActionLibrary, "Action Library");
 
 	}
 
-	public static void usernavigatestoactionlibrary_regressiontesting() throws InterruptedException {
+	public static void userNavigatesToActionLibrary_RegressionTesting() throws InterruptedException {
 Thread.sleep(4000);
 
-TestSuite.userclicksonregressiontestsuite();
-TestSuite.userselectdesiredtestsuitecreated();
+TestSuite.userClicksOnRegressionTestSuite();
+TestSuite.userSelectDesiredTestSuiteCreated();
 		By ActionLibrary = By.xpath("//a[text()='Action Library']");
 		click(ActionLibrary, "Action Library");
 
@@ -87,7 +86,7 @@ TestSuite.userselectdesiredtestsuitecreated();
 
 	
 
-	public static void userclicksonaddaction() throws InterruptedException {
+	public static void userClicksOnAddAction() throws InterruptedException {
 		By AddAction = By.xpath("//*[@id='createActionIconId']");
 
 		WebDriverWait wait = new WebDriverWait(driver, 240);
@@ -97,8 +96,8 @@ TestSuite.userselectdesiredtestsuitecreated();
 	}
 	
 	
-	public static void userfillsactionlibrarywithtabledata_String(String label, String Description, String prefix,
-			String suffix, String DisplayKey, String columntype) throws InterruptedException {
+	public static void userFillsActionWithTableData_String(String label, String Description, String prefix,
+														   String suffix, String DisplayKey, String columntype) throws InterruptedException {
 
 		Thread.sleep(4000);
 		By Labelfield = By.xpath("//input[@id='ACTION_CUSTOM_LABEL']");
@@ -136,8 +135,8 @@ TestSuite.userselectdesiredtestsuitecreated();
 	}
 
 
-	public static void userfillsactionlibrarywithtabledata_Integer(String label, String Description, String prefix,
-			String suffix, String DisplayKey, String type) throws InterruptedException {
+	public static void userFillsActionWithTableData_Integer(String label, String Description, String prefix,
+															String suffix, String DisplayKey, String type) throws InterruptedException {
 
 		Thread.sleep(4000);
 		By Labelfield = By.xpath("//input[@id='ACTION_CUSTOM_LABEL']");
@@ -182,7 +181,7 @@ By DesiredFolder=By.xpath("//div[text()='UAT']");
 
 	}
 
-	public static void userfillsactionlibrary(String label, String Description) throws InterruptedException {
+	public static void userFillsAction(String label, String Description) throws InterruptedException {
 		Thread.sleep(4000);
 		By Labelfield = By.xpath("//input[@id='ACTION_CUSTOM_LABEL']");
 		By DescriptionField = By.xpath("//textarea[@id='ACTION_DESCRIPTION']");
@@ -197,7 +196,7 @@ By DesiredFolder=By.xpath("//div[text()='UAT']");
 
 	}
 
-	public static void userclicksonsubmit() {
+	public static void userClicksOnSubmit() {
 
 		By Submit = By.xpath("//button[@label='Submit']");
 		javascript_click(Submit, "Submit");

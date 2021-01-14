@@ -6,16 +6,16 @@ import org.openqa.selenium.WebDriver;
 import com.cucumber.listener.Reporter;
 
 import junit.framework.Assert;
-import utilities.Selcommands;
+import utilities.SelCommands;
 
-public class SwitchTenant extends Selcommands {
+public class SwitchTenant extends SelCommands {
 
 	public SwitchTenant(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void userclicksonswitchtenant() {
+	public static void userClicksOnSwitchTenant() {
 
 		By HomeDropDown = By.xpath("//button[@id='bdd_menu_trigger_button_id']");
 		By SwitchTenant = By.xpath("//a[contains(text(),'Switch Tenant')]");
@@ -24,14 +24,14 @@ public class SwitchTenant extends Selcommands {
 
 	}
 
-	public static void userredirectstoswitchtenant() {
+	public static void userRedirectsToSwitchTenant() {
 		String btn = getElementString(By.xpath("//h2[text()='Welcome back. Please select a tenant:']"));
 		Assert.assertEquals("Welcome back. Please select a tenant:", btn);
 		Reporter.addStepLog("User Redirected to Switch Tenant  Successful");
 
 	}
 
-	public static void userselectsdesiredtenant() {
+	public static void userSelectsDesiredTenant() {
 		By DesiredTenant = By.xpath("//*[@alt='Kroger logo']");
 
 		click(DesiredTenant, "Desired Tenant");

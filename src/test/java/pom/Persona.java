@@ -5,22 +5,21 @@ import java.io.IOException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import cucumber.api.java.en.When;
-import utilities.Selcommands;
+import utilities.SelCommands;
 
-public class Persona  extends Selcommands {
+public class Persona  extends SelCommands {
 
 	public Persona(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
 	
-	public static void userclicksondelete() {
+	public static void userClicksOnDelete() {
 		By Delete=By.xpath("//*[@id='delete-persona-image-id']");
 		click(Delete, "Delete");
 		
 	}
-	public static void user_editpersonadetails(String label) {
+	public static void userEditsPersonaDetails(String label) {
 		
 		By Persona_edit=By.xpath("//*[contains(@class,'icon-edit-persona')]");
 		By Label = By.xpath("//input[@name='label']");
@@ -30,16 +29,16 @@ public class Persona  extends Selcommands {
 	}
 	
 	
-	public static void user_selectpersonacreated() {
+	public static void userSelectsPersonaCreated() {
 		By Select_Persona=By.xpath("//span[contains(text(),'TestPersona')]");
 		click(Select_Persona, "Desired Persona");
 	}
-	public  static void userclicksonpersonaworkspace() throws InterruptedException {
+	public  static void userClicksOnPersonaWorkspace() throws InterruptedException {
 		
 		Thread.sleep(4000);
 
-		TestSuite.userclicksonregressiontestsuite();
-		TestSuite.userselectdesiredtestsuitecreated();
+		TestSuite.userClicksOnRegressionTestSuite();
+		TestSuite.userSelectDesiredTestSuiteCreated();
 		By Persona_Tab=By.xpath("//a[@id='personas']");
 		
 		
@@ -49,17 +48,17 @@ public class Persona  extends Selcommands {
 	}
 	
 	
-	public static void userclick_submit() {
+	public static void userClicksOnSubmit() {
 		By Submit=By.xpath("//button[@type='submit']");
 		
 		
-		Selcommands.javascript_click(Submit, "Submit button");
+		SelCommands.javascript_click(Submit, "Submit button");
 		
 		
 		
 	}
 
-public static void userclicksonnewpersona() {
+public static void userClicksOnNewPersona() {
 		
 		By NewPersona=	By.xpath("//*[@id='createPersonaIconId']");
 		click(NewPersona, "New Persona");
@@ -67,7 +66,7 @@ public static void userclicksonnewpersona() {
 	
 	
 	
-	public static void  userfillspersonadetails(String label,String description,String ActivityProfile,String Adjustmentrule,String CategoryProfile) throws IOException { 
+	public static void userFillsPersonaDetails(String label, String description, String ActivityProfile, String Adjustmentrule, String CategoryProfile) throws IOException {
 		By buildfromscratch = By.xpath("//div[text()='I would like to build my Persona from scratch']");
 		click(buildfromscratch, "build from Scratch");
 
@@ -83,10 +82,10 @@ public static void userclicksonnewpersona() {
 
 		type(Activity_Profile, ActivityProfile, "Actvity Profile Field");
       type(Adjustment_Role, Adjustmentrule, "Adjustmentrule Field");
-      Selcommands.captureScreenshot();
+      SelCommands.captureScreenshot();
 	}
 
-	public static void userclicksonsubmitincreatepersonapage() {
+	public static void userClicksOnSubmitInCreatePersonaPage() {
 		By Submit = By.xpath("//button[@type='submit']");
 		click(Submit, "Submit in New Persona Page");
 

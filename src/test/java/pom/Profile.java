@@ -2,21 +2,19 @@ package pom;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cucumber.listener.Reporter;
 
 import junit.framework.Assert;
-import utilities.Selcommands;
+import utilities.SelCommands;
 
-public class Profile extends Selcommands{
+public class Profile extends SelCommands {
 	public Profile(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
 	} 
 	
-	public static void usernavigatesprofile() {
+	public static void userNavigatesToProfile() {
 
 		By Setting=By.xpath("//button[@id='bdd_menu_trigger_button_id']");
 		By Profile=By.xpath("//a[text()='Profile']");
@@ -26,13 +24,13 @@ public class Profile extends Selcommands{
 	}
 	
 	
-	public static void userclicksonsubmit() {
+	public static void userClicksOnSubmit() {
 		
 		By Submit=By.xpath("//button[text()='Submit'] ");
 		click(Submit, "Submit");
 	}
 	
-	public static void userinputs_emailrecovery(String Emailaddress) {
+	public static void userInputsEmailRecovery(String Emailaddress) {
 		
 		By EmailField=By.xpath("//input[@name='email']");
 		
@@ -42,7 +40,7 @@ public class Profile extends Selcommands{
 	
 	
 	
-public static void verifyforgotpasswordpage() throws InterruptedException {
+public static void verifyForgotPasswordpage() throws InterruptedException {
 		
 		Thread.sleep(6000);
 		String btn = getElementString(By.xpath("//*[text()='Forgot password']"));
@@ -51,13 +49,13 @@ public static void verifyforgotpasswordpage() throws InterruptedException {
 		
 	}
 	
-	public static void userclicksonforgotpassword() {
+	public static void userClicksOnForgotPassword() {
 		
 		By PasswordLink=By.xpath("//a[text()='Forgot password?']");
 		click(PasswordLink, "PasswordLink");
 	}
 	
-	public static void userverifyprofilepage() throws InterruptedException {
+	public static void userVerifiesProfilePage() throws InterruptedException {
 		
 		Thread.sleep(6000);
 		String button = getElementString(By.xpath("//h3[text()='Profile']"));
@@ -65,7 +63,7 @@ public static void verifyforgotpasswordpage() throws InterruptedException {
 		Assert.assertEquals("Profile", button);
 		Reporter.addStepLog("Profile verification is successful");
 	}
-	public static void userfillspassworddetailfields(String newpassword,String Confirmpassword,String currentpassword) {
+	public static void userFillsPasswordDetailFields(String newpassword, String Confirmpassword, String currentpassword) {
 		
 
 		By CurrentPwd=By.xpath("//input[@id='pwd-existing']");

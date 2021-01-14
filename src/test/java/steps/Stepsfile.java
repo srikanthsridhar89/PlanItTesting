@@ -1,18 +1,14 @@
 package steps;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import bean.TestTargetConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import com.cucumber.listener.Reporter;
-
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -26,20 +22,20 @@ import pom.Scenario;
 import pom.SwitchTenant;
 import pom.TestPlan;
 import pom.TestTarget;
-import pom.loginpage;
+import pom.LoginPage;
 import utilities.JsonReader;
-import utilities.Selcommands;
+import utilities.SelCommands;
 import net.bytebuddy.utility.RandomString;
 
 public class Stepsfile {
 	private static final String String = null;
 	static WebDriver driver;
-	static Selcommands sel = new Selcommands(driver);
+	static SelCommands sel = new SelCommands(driver);
 	private TestTargetConfig testTargetConfig = new TestTargetConfig();
 	public static String title = "";
 	public static String Uname = "";
 	public static String UserEmail = "";
-//	public static String testTargetConfig.getTestTargetWFDName() = "";
+	//	public static String testTargetConfig.getTestTargetWFDName() = "";
 //	public static String testtargetWFCName = "";
 //	public static String testtargetpwd = "";
 //	public static String testtargetuname = "";
@@ -82,251 +78,191 @@ public class Stepsfile {
 	public static String sRequirementnotes = "TestRequirement";
 
 	@Given("^User launches the Application$")
-	public void userlaunchesapplication() throws FileNotFoundException, InterruptedException {
-
-		Selcommands.openbrowser(JsonReader.readJson("env", "url"));
-		loginpage.logindetails(JsonReader.readJson("env", "Username"), JsonReader.readJson("env", "Password"));
-		loginpage.click_Signin();
-		loginpage.verifyLogin();
+	public void userLaunchesApplication() throws FileNotFoundException, InterruptedException {
+		SelCommands.openbrowser(JsonReader.readJson("env", "url"));
+		LoginPage.loginDetails(JsonReader.readJson("env", "Username"), JsonReader.readJson("env", "Password"));
+		LoginPage.clickSignin();
+		LoginPage.verifyLogin();
 
 	}
 
 	@When("^User Creates Folder and Scenario$")
-	public void usercreatesfolderandscenario() throws InterruptedException, IOException {
-
+	public void user_Creates_Folder_and_Scenario() throws InterruptedException, IOException {
 		Scenario.usercreatesfolderandscenario();
 		sel.captureScreenshot("Folder and Scenario Creation");
 	}
 
 	@When("^User Searches for Scenario Created$")
-	public void usersearchesforscenariocreated() throws InterruptedException, IOException {
-
+	public void user_Searches_for_Scenario_Created() throws InterruptedException, IOException {
 		Scenario.usersearchesscenario();
 		sel.captureScreenshot("User Search For Scenario");
 	}
 
 	@When("^User Clicks on Persona Link$")
-	public void userclicksonpersonalink() throws InterruptedException {
-
+	public void User_Clicks_On_Persona_Link() throws InterruptedException {
 		Scenario.userclicksonpersonalink();
 	}
 
-
-
-
-
 	@When("^User Navigates to TestPlanWorkspace$")
-	public void usernavigatestotestplanworkspace() throws InterruptedException {
-
-		TestSuite.userclicksonregressiontestsuite();
-		TestSuite.userselectdesiredtestsuitecreated();
-		TestPlan.click_testplantab();
-
+	public void User_Navigates_to_TestPlanWorkspace() throws InterruptedException {
+		TestSuite.userClicksOnRegressionTestSuite();
+		TestSuite.userSelectDesiredTestSuiteCreated();
+		TestPlan.clickTestPlanTab();
 	}
 
 
 	@Then("^User Naviagates to SummaryDetailPage and Verifies the Count$")
-	public void usernavigatestosummarydetailpageandverifiedthecount() throws IOException {
+	public void User_Navigates_to_SummaryDetailPage_and_Verifies_the_Count() throws IOException {
 		By Summary=By.xpath("//a[@id='summary']");
 		sel.click(Summary, "Dashboard Summary Tab");
-
-
 		By Persona_Count=By.xpath("(//a[text()='Personas'])[2]/preceding::div[@class='number']");
 		By Action_Count=By.xpath("//a[text()='Actions']/preceding::div[@class='number'][1]");
 		By Scenario_Count=By.xpath("//a[text()='Scenarios']/preceding::div[@class='number'][1]");
-
 		String personacount = sel.getElementString(Persona_Count);
 		String Actionscount = sel.getElementString(Action_Count);
 		String	Scenariocount = sel.getElementString(Scenario_Count);
-
 		if(personacount.equals(dashboard_Personacount)) {
 			Reporter.addStepLog("User see Persona Count as" +personacount);
 		}
-
-
-
 		if(Actionscount.equals(dashboard_Actionscount)) {
 			Reporter.addStepLog("User see Actions Count as" +Actionscount);
 		}
-
-
-
-
 		if(dashboard_Scenariocount.equals(Scenariocount)) {
 			Reporter.addStepLog("User see Scenario Count" +Scenariocount);
 		}
 		sel.captureScreenshot();
-
-
 	}
 
 	@When("^User Navigates to Persona and Creates Persona$")
-	public void usernavigatestopersonaandcreatespersona() throws InterruptedException, IOException {
+	public void User_Navigates_to_Persona_and_Creates_Persona() throws InterruptedException, IOException {
 		Thread.sleep(4000);
 		By Persona_Tab=By.xpath("//a[@id='personas']");
-
-
 		sel.click(Persona_Tab, "Persona Tab");
-
-		Persona.userclicksonnewpersona();
-
-		Persona.userfillspersonadetails(JsonReader.readJson("Persona", "label"),
+		Persona.userClicksOnNewPersona();
+		Persona.userFillsPersonaDetails(JsonReader.readJson("Persona", "label"),
 				JsonReader.readJson("Persona", "description"), JsonReader.readJson("Persona", "ActivityProfile"),
 				JsonReader.readJson("Persona", "Adjustmentrule"), JsonReader.readJson("Persona", "CategoryProfile"));
-
-
-		Persona.userclick_submit();
-
-
+		Persona.userClicksOnSubmit();
 	}
-
-
 
 
 	@When("^User Navigates to Actions and Creates Actions$")
-	public void usernavigatestoactionandcreateaction() throws InterruptedException, IOException {
+	public void User_Navigates_to_Action_and_Creates_Actions() throws InterruptedException, IOException {
 		By ActionLibrary = By.xpath("//a[text()='Action Library']");
 		sel.click(ActionLibrary, "Action Library");
-		userenterdetailsforactionlibrarywithtabledata(null);
-
-		userclicksonsubmitinactionlibrary();
-
-
-
-
-
+		User_Enter_details_for_Action_Creation_with_TableData(null);
+		User_Clicks_on_Submit_in_ActionCreationPage();
 	}
+
 	@When("^User Navigates to Scenario Detail Page$")
-	public void usernavigatestoscenariodetailpage() throws InterruptedException, IOException {
+	public void user_Navigates_to_Scenario_Detail_Page() throws InterruptedException, IOException {
 
 		Thread.sleep(4000);
 		Scenario.userclicksonscenariotab();
-		usercreatesscenario();
+		User_CreatesScenario_with_Simple_String();
 	}
 
 	@When("^User Navigates to Dashboard Detail Page$")
-	public static void usernaviagestosummarydetailpage() throws InterruptedException {
-		TestSuite.userclicksonregressiontestsuite();
-		TestSuite.userselectdesiredtestsuitecreated();
-
-
+	public static void User_Naviages_to_Dashboard_Detail_Page() throws InterruptedException {
+		TestSuite.userClicksOnRegressionTestSuite();
+		TestSuite.userSelectDesiredTestSuiteCreated();
 		By Persona_Count=By.xpath("(//a[text()='Personas'])[2]/preceding::div[@class='number']");
 		By Action_Count=By.xpath("//a[text()='Actions']/preceding::div[@class='number'][1]");
 		By Scenario_Count=By.xpath("//a[text()='Scenarios']/preceding::div[@class='number'][1]");
-
-
-
-
-
-
 		dashboard_Personacount = sel.getElementString(Persona_Count);
 		dashboard_Actionscount = sel.getElementString(Action_Count);
 		dashboard_Scenariocount = sel.getElementString(Scenario_Count);
-
-
-
 	}
 
 	@When("^User Creates Scenario with MultipleCondition$")
-	public void usercreatesscenariowithmuliplecondition() throws InterruptedException, IOException {
+	public void User_Creates_Scenario_with_MulipleCondition() throws InterruptedException, IOException {
 		Scenario.usercreatesscenario_multiplecondition();
 	}
 
 	@When("^User CreatesDuplicateTemplate$")
-	public void usercreatesduplicatetemplate() {
-
-		Scenario.duplictescenario();
+	public void User_CreatesDuplicateTemplate() {
+		Scenario.duplicateScenario();
 	}
 
 	@When("^User Creates Template$")
-	public void usercreatestemplate() {
-
-		Scenario.usercreatestemplate();
-
+	public void User_Creates_Template() {
+		Scenario.userCreatesTemplate();
 	}
-
 
 	@Then("^User see SharedScenario$")
-	public void userseessharedscenario() throws IOException {
+	public void User_see_SharedScenario() throws IOException {
 
-		Scenario.userseesharedscenario();
+		Scenario.userSeeSharedScenario();
 	}
 	@When("^User Shares ScenarioLink$")
-	public void usersharesscenariolink() throws IOException, InterruptedException {
-
-		Scenario.usersharesscenariolink();
+	public void User_Shares_Scenariolink() throws IOException, InterruptedException {
+		Scenario.userSharesScenarioLink();
 		sel.captureScreenshot("Share Link");
 	}
 
 	@When("^User Cancels CreatedScenario$")
-	public void usercancelscreatedscenario() throws InterruptedException, IOException {
-
+	public void User_Cancels_CreatedScenario() throws InterruptedException, IOException {
 		Scenario.usercreatesscenariowithsimplestring();
 		Scenario.userclicksoncancel();
 		sel.captureScreenshot("Cancel CreatedScenario");
-
 	}
 
 	@When("^User Creates RequirementNotes$")
-	public void usercreatesrequirementnotes() throws IOException {
-
-		Scenario.usercreatesrequirementnotes(sRequirementnotes);
+	public void User_Creates_RequirementNotes() throws IOException {
+		Scenario.userCreatesRequirementNotes(sRequirementnotes);
 		sel.captureScreenshot("Requirement Notes");
 	}
 
 	@Given("^User lands into DashboardPortal After TestSuiteCreation$")
-	public void userlandsintodashboardportalaftertestsuitecreation()
+	public void User_Lands_into_DashboardPortal_After_TestSuiteCreation()
 			throws FileNotFoundException, InterruptedException {
-		Selcommands.openbrowser(JsonReader.readJson("env", "url"));
-
-		loginpage.logindetails(JsonReader.readJson("env", "Username"), JsonReader.readJson("env", "Password"));
-		loginpage.click_Signin();
-
-		TestSuite.userclicksonregressiontestsuite();
-
-		TestSuite.userselectdesiredtestsuitecreated();
+		SelCommands.openbrowser(JsonReader.readJson("env", "url"));
+		LoginPage.loginDetails(JsonReader.readJson("env", "Username"), JsonReader.readJson("env", "Password"));
+		LoginPage.clickSignin();
+		TestSuite.userClicksOnRegressionTestSuite();
+		TestSuite.userSelectDesiredTestSuiteCreated();
 
 	}
 
 	@Given("^User Launched application$")
-	public void userlaunchedapplication() throws FileNotFoundException {
-		Selcommands.openbrowser(JsonReader.readJson("env", "url"));
+	public void User_Launched_application() throws FileNotFoundException {
+		SelCommands.openbrowser(JsonReader.readJson("env", "url"));
 	}
 
 	@Then("^User redirects to createuser$")
-	public void userredirectstocreateuser() {
-		AddNewUser.userredirectstocreateuser();
+	public void User_redirects_to_createuser() {
+		AddNewUser.userRedirectsToCreateUser();
 
 	}
 
 	@When("^User Copies TestSuite$")
-	public void usercopiestestsuite() throws InterruptedException, IOException {
-
+	public void user_Copies_TestSuite() throws InterruptedException, IOException {
 		Scenario.copytestsuite();
 		sel.captureScreenshot("Copy TestSuite");
 	}
 
 	@Then("^User redirects to Switch Tenant Page$")
-	public void userredirectstoswitchtenantpage() {
+	public void User_redirects_to_Switch_Tenant_Page() throws IOException {
 
-		SwitchTenant.userredirectstoswitchtenant();
+		SwitchTenant.userRedirectsToSwitchTenant();
+		sel.captureScreenshot("Switch TestSuite");
 
 	}
 
 	@When("^User Renames CreatedFolder$")
-	public void userrenamescreatedfolder() throws InterruptedException, IOException {
+	public void User_Renames_CreatedFolder() throws InterruptedException, IOException {
 		Scenario.userrenamescreatedfolder();
 		sel.captureScreenshot("RenameFolder");
 	}
 
 	@Then("^User will not see Folder Deleted$")
-	public void userwillnotseefolder() throws IOException {
+	public void User_will_not_see_Folder_Deleted() throws IOException {
 		Scenario.userwillnotseefolderdeleted();
 		sel.captureScreenshot("Delete Folder Verification");
 	}
 
 	@Then("^User sees Parent Folder Deleted$")
-	public void userseesparentfolderdeleted() throws IOException, InterruptedException {
+	public void User_sees_Parent_Folder_Deleted() throws IOException, InterruptedException {
 
 		Scenario.userwillseeParentfolderdeleted();
 
@@ -340,40 +276,40 @@ public class Stepsfile {
 	}
 
 	@When("^User Deletes Folder Excluding children")
-	public void userdeletesfolderexcludingchildren() throws InterruptedException, IOException {
+	public void User_Deletes_Folder_Excluding_Children() throws InterruptedException, IOException {
 
 		Scenario.user_deletesfolder_excluding_children();
 		sel.captureScreenshot("Delete Folder Excluding Children");
 	}
 
 	@When("^User Deletes Folder including children$")
-	public void userdeletesfolderincludingchildren() throws InterruptedException, IOException {
+	public void User_Deletes_Folder_including_children() throws InterruptedException, IOException {
 		Scenario.user_deletesfolder_including_children();
 		sel.captureScreenshot("Delete Folder Incluing Children");
 
 	}
 
 	@Then("^User sees FolderRenamed$")
-	public void userseesfolderrenamed() throws IOException, InterruptedException {
+	public void User_sees_Folder_Renamed() throws IOException, InterruptedException {
 		Scenario.thenuserseefolderrenamed();
 		sel.captureScreenshot("Rename Folder Verification");
 
 	}
 
 	@Then("^User sees Folder Created Successfully$")
-	public void userseesfoldercreatedsuccessfully() throws InterruptedException {
+	public void User_sees_Folder_Created_Successfully() throws InterruptedException {
 
 		Scenario.userseefoldercreated();
 	}
 
 	@When("^User creates child folder$")
-	public void usercreateschildfolder() throws IOException, InterruptedException {
+	public void User_creates_child_folder() throws IOException, InterruptedException {
 		Scenario.usercreateschildfolder();
 		sel.captureScreenshot("Child Folder Creation");
 	}
 
 	@When("^User Copies CreatedFolder$")
-	public void Usercopiescreatedfolder() throws InterruptedException, IOException {
+	public void User_Copies_CreatedFolder() throws InterruptedException, IOException {
 
 		Scenario.usercopiesfolder();
 
@@ -381,35 +317,35 @@ public class Stepsfile {
 	}
 
 	@Then("^User sees Exported Folder$")
-	public void userseesexportedfolder() throws IOException, InterruptedException {
+	public void User_sees_Exported_Folder() throws IOException, InterruptedException {
 
 		Scenario.thenuserseesexportedfolder();
 		sel.captureScreenshot("Export Folder");
 	}
 
 	@Then("^User sees Exported FeatureFile$")
-	public void userseesexportedfeaturefile() throws IOException, InterruptedException {
+	public void User_sees_Exported_FeatureFile() throws IOException, InterruptedException {
 
 		Scenario.thenuserseesexportedfeaturefile();
 		sel.captureScreenshot("Export Folder");
 	}
 
 	@When("^User Creates SubFolder$")
-	public void usercretessubfolder() throws InterruptedException, IOException {
+	public void User_Cretes_SubFolder() throws InterruptedException, IOException {
 
 		Scenario.usercreatessubfolder();
 		sel.captureScreenshot("SubFolder Creation");
 	}
 
 	@Then("^User sees CopiedFolder$")
-	public void userseescopiedfolder() throws InterruptedException, IOException {
+	public void User_sees_CopiedFolder() throws InterruptedException, IOException {
 
 		Scenario.thenuserseescopiedfolder();
 		sel.captureScreenshot("CopyFolder Verification");
 	}
 
 	@When("^User CreatesScenario with Simple String$")
-	public void usercreatesscenario() throws InterruptedException, IOException {
+	public void User_CreatesScenario_with_Simple_String() throws InterruptedException, IOException {
 
 		Scenario.usercreatesscenariowithsimplestring();
 		Scenario.userclicksonsave();
@@ -419,7 +355,7 @@ public class Stepsfile {
 	}
 
 	@When("^User Updates Scenario with Simple String$")
-	public void userupdatesscenariowithsimplestring() throws IOException {
+	public void User_Updates_scenario_with_Simple_String() throws IOException {
 
 		Scenario.userupdatescenariowithsimplestring();
 		Scenario.userclicksonsave();
@@ -427,30 +363,28 @@ public class Stepsfile {
 	}
 
 	@When("^User CreatesScenario with TableData$")
-	public void usercreatesscenariowithtabledata() throws IOException, InterruptedException {
+	public void User_Creates_Scenario_with_TableData() throws IOException, InterruptedException {
 		Scenario.usercreatesscenariowithtabledata();
 		Scenario.userclicksonsave();
 		sel.captureScreenshot("Scenario Creation with table data");
 	}
 
 	@When("^User Clicks on Save$")
-	public void userclicksonsave() {
-
+	public void User_Clicks_on_Save() {
 		Scenario.userclicksonsave();
 	}
 
 	@When("^User Clicks on Cancel$")
-	public void userclicksoncancel() {
-
+	public void User_Clicks_on_Cancel() {
 		Scenario.userclicksoncancel();
 	}
 
 	@When("^User Deletes CreatedScenario$")
 
-	public void userdeletescreatedscenario() throws InterruptedException, FileNotFoundException {
-		userlandsintodashboardportalaftertestsuitecreation();
+	public void User_Deletes_CreatedScenario() throws InterruptedException, FileNotFoundException {
+		User_Lands_into_DashboardPortal_After_TestSuiteCreation();
 		Scenario.userclicksonscenariotab();
-		useredirectstoscenariodetailpage();
+		User_redirects_to_Scenario_DetailPage();
 		Scenario.usercreatesscenariowithsimplestring();
 		Scenario.userclicksonsave();
 		Scenario.userseescenariocreatedwithsimplestring();
@@ -458,16 +392,15 @@ public class Stepsfile {
 	}
 
 	@Then("^User does not see Scenario details$")
-	public void userdoesnotseescenariodetails() throws IOException {
+	public void User_does_not_see_Scenario_details() throws IOException {
 		Scenario.userdoesnotseescenariodetails();
 		sel.captureScreenshot("Delete Scenario Verification");
 
 	}
 
 	@Then("^User sees CreateScenario with SimpleString$")
-	public void userseescreatescenariowithsimplestring() throws IOException {
+	public void User_sees_CreateScenario_with_SimpleString() throws IOException {
 		Scenario.userseescenariocreatedwithsimplestring();
-
 		sel.captureScreenshot("Scenario Verification");
 
 	}
@@ -484,7 +417,7 @@ public class Stepsfile {
 	}
 
 	@Then("^User redirects to Scenario DetailPage$")
-	public void useredirectstoscenariodetailpage() throws InterruptedException {
+	public void User_redirects_to_Scenario_DetailPage() throws InterruptedException {
 		By ScenarioDetail = By.xpath("//span[text()='Scenario Library']");
 
 		String btn = sel.getElementString(ScenarioDetail);
@@ -495,138 +428,127 @@ public class Stepsfile {
 	}
 
 	@When("^User Exports CreatedFolder$")
-	public void userexportscreatedfolder() throws InterruptedException, IOException {
+	public void User_Exports_CreatedFolder() throws InterruptedException, IOException {
 		Scenario.userexportsfolder();
 		sel.captureScreenshot("Export Folder");
 	}
 
 	@When("^User Exports FeatureFile$")
-	public void userexportsfeaturefile() throws IOException, InterruptedException {
+	public void User_Exports_FeatureFile() throws IOException, InterruptedException {
 
 		Scenario.userexportsfeaturefile();
 		sel.captureScreenshot("ExportFeatureFile");
 	}
 
 	@When("^User Clicks on Scenario Tab$")
-	public void userclicksonscenariotab() throws InterruptedException {
+	public void User_Clicks_on_Scenariotab() throws InterruptedException {
 		Scenario.userclicksonscenariotab();
 
 	}
 
 	@When("^User Clicks on Create Folder$")
-	public void userclicksoncreatefolder() throws InterruptedException {
+	public void User_Clicks_on_Create_Folder() throws InterruptedException {
 		Scenario.userclicksoncreatefolder();
 
 	}
 
 	@Then("^validate login$")
-	public void verifyLogin() throws InterruptedException {
-
-		loginpage.verifyLogin();
-
+	public void Validate_Login() throws InterruptedException {
+		LoginPage.verifyLogin();
 	}
 
 	@Then("^User redirects to ForgotPassword Page$")
-	public void userredirectstopasswordpage() throws InterruptedException, IOException {
+	public void User_redirects_to_ForgotPassword_Page() throws InterruptedException, IOException {
 
-		Profile.verifyforgotpasswordpage();
+		Profile.verifyForgotPasswordpage();
 		sel.captureScreenshot("Forgot Password Verfication");
 	}
 
 	@When("^User Inputs Emailaddress to recover$")
-	public void userinputsemailtorecover() throws IOException {
+	public void User_Inputs_Emailaddress_to_recover() throws IOException {
 		String RecoveryEmail = JsonReader.readJson("env", "Username");
-		Profile.userinputs_emailrecovery(RecoveryEmail);
-
+		Profile.userInputsEmailRecovery(RecoveryEmail);
 		sel.captureScreenshot("Forgot Password Input");
 	}
 
 	@Then("^User redirects to Create TestPlan Page$")
-	public void userredirectstocreatetestplanpage() {
+	public void User_redirects_to_Create_TestPlan_Page() {
 
-		TestPlan.userredirectstocreateplan();
+		TestPlan.userRedirectsToCreatePlan();
 	}
 
 	@When("^User Clicks on Submit$")
-	public void userclicksonsubmit() {
-		Profile.userclicksonsubmit();
+	public void User_Clicks_on_Submit() {
+		Profile.userClicksOnSubmit();
 	}
 
 	@Then("^User redirects to TestSuiteDetailPage$")
-	public static void userredirectstotestsuitedetailpage() {
-		TestSuite.userredirectstocreatetestsuite();
+	public static void User_redirects_to_TestSuiteDetailPage() {
+		TestSuite.userRedirectsToCreateTestSuite();
 
 	}
 
 	@Then("^User redirects to Create Test Target Page$")
-	public static void userredirectstocreatetesttargetpage() {
-		TestTarget.userredirectstocreatetesttarget();
+	public static void User_redirects_to_Create_Test_Target_Page() {
+		TestTarget.userRedirectsToCreateTestTarget();
 
 	}
 
 	@Then("^User redirects to Edit TestTarget Page$")
-	public void useredirectstoedittargetpage() {
+	public void User_redirects_to_Edit_TestTarget_Page() {
 
-		TestTarget.userredirectstoedittesttargetpage();
+		TestTarget.userRedirectsToEditTestTargetPage();
 	}
 
 	@When("^User Navigates to Profile$")
-	public void usernavigatestoprofile() throws IOException {
+	public void User_Navigates_to_Profile() throws IOException {
 
-		Profile.usernavigatesprofile();
+		Profile.userNavigatesToProfile();
 		sel.captureScreenshot("Profile Page");
 	}
 
 	@When("^User Enter details for Password Change$")
-	public void userenterdetailsforpasswordchange() throws IOException {
+	public void User_Enter_details_for_Password_Change() throws IOException {
 
 		String newpassword = JsonReader.readJson("Profile", "newpassword");
-
 		String Confirmpassword = JsonReader.readJson("Profile", "Confirmpassword");
-
 		String currentpassword = JsonReader.readJson("Profile", "currentpassword");
-
-		Profile.userfillspassworddetailfields(newpassword, Confirmpassword, currentpassword);
-
+		Profile.userFillsPasswordDetailFields(newpassword, Confirmpassword, currentpassword);
 		sel.captureScreenshot("Profile Detail Page");
 	}
 
 	@Then("^User redirects to Profile$")
-	public void useredirectstoprofile() throws InterruptedException {
-
-		Profile.userverifyprofilepage();
+	public void User_redirects_to_Profile() throws InterruptedException {
+		Profile.userVerifiesProfilePage();
 
 	}
 
 	@When("^User Updates TestTarget details$")
-	public void userupdatestesttargetdetails() {
+	public void User_Updates_TestTarget_details() {
 		sUpdateTestTargetname = JsonReader.readJson("TestTarget", "UpdatedName") + new RandomString(4).nextString();
-		TestTarget.userupdatedtesttargetdetails(sUpdateTestTargetname);
+		TestTarget.userUpdatedTestTargetDetails(sUpdateTestTargetname);
 	}
 
 	@Then("^User Sees Created TestTarget details with \"([^\"]*)\"$")
-	public void userseestesttargetdetails(String args1) throws InterruptedException, IOException {
-
+	public void User_Sees_Created_TestTarget_details_with(String args1) throws InterruptedException, IOException {
 		Thread.sleep(4000);
 		String btn = "";
 		if(args1.equals("Workforce Dimensions Timekeeping")) {
 			By TestTarget = By.xpath("//*[text()='" + testTargetConfig.getTestTargetWFDName() + "']");
-			 btn = sel.getElementString(TestTarget);
+			btn = sel.getElementString(TestTarget);
 			Assert.assertEquals(testTargetConfig.getTestTargetWFDName(), btn);
 		}
-			else if(args1.equals("Workforce Central")) {
+		else if(args1.equals("Workforce Central")) {
 			By TestTarget = By.xpath("//*[text()='" + testTargetConfig.getTestTargetWFCName() + "']");
-			 btn = sel.getElementString(TestTarget);
+			btn = sel.getElementString(TestTarget);
 			Assert.assertEquals(testTargetConfig.getTestTargetWFCName(), btn);
 		}
-
 		Reporter.addStepLog("User Created TestTarget Succesfully with  : " + btn);
-
 		sel.captureScreenshot("TestTarget Verification");
 	}
 
 	@Then("^User Does not  Sees TestTarget Deleted$")
-	public void userdoesnotseetesttargetdeleted() throws InterruptedException {
+	public void User_Does_not_Sees_TestTarget_Deleted() throws InterruptedException {
 		Thread.sleep(4000);
 		By TestTarget = By.cssSelector(".bdd-table-body tr td:nth-child(2)");
 		String str = sel.getElementString(By.cssSelector(".bdd-table-body tr:nth-child(3) td:nth-child(2)"));
@@ -637,173 +559,146 @@ public class Stepsfile {
 			System.out.println(wb.getText());
 			targets.add(wb.getText());
 		}
-
 		if (targets.toString().contains(testTargetConfig.getTestTargetWFDName())) {
 
 			Reporter.addStepLog("User Sees Deleted TestTarget Record");
-
 		} else {
 
 			Reporter.addStepLog("User Does not  Sees Deleted TestTarget Record");
 		}
-
 	}
 
 	@Then("^User Sees TestTarget Updated$")
-	public void userseestesttargetupdated() throws InterruptedException {
-
+	public void User_Sees_TestTarget_Updated() throws InterruptedException {
 		Thread.sleep(4000);
 		By TestTarget = By.xpath("//*[text()='" + sUpdateTestTargetname + "']");
 		String btn = sel.getElementString(TestTarget);
-
 		Assert.assertEquals(sUpdateTestTargetname, btn);
-
 		Reporter.addStepLog("User Updated TestTarget Succesfully with  : " + btn);
 	}
 
 	@When("^User Clicks on CreateTestTarget$")
-	public void userclicksoncreatetarget() {
+	public void User_Clicks_on_CreateTestTarget() {
 
-		TestTarget.userclicksoncreatetesttarget();
+		TestTarget.userClicksOnCreateTestTarget();
 	}
 
 	@When("^User Enter details for TestTarget with \"([^\"]*)\"$")
-	public void userenterdetailsfortesttarget(String args1) throws InterruptedException, IOException {
+	public void User_Enter_details_for_TestTarget_with(String args1) throws InterruptedException, IOException {
 
 		if(args1.equals("Workforce Dimensions Timekeeping"))
 			//TestTarget.userfillswfdtesttargetdetails(testTargetConfig.getTestTargetWFDName(),testtargetappkey, testtargetwfdhost, testtargetuname, testtargetpwd,testtargetclientid,testtargetclientsecret,testtargetsftphost,testtargetsftpusername,testtargetsftppassword,testtargetsftpport,testtargetpgppublickey, args1);
-			TestTarget.userfillswfdtesttargetdetails(testTargetConfig, args1);
-			else if(args1.equals("Workforce Central"))
-			TestTarget.userfillswfctesttargetdetails(testTargetConfig, args1);
+			TestTarget.userFillsWFDTestTargetDetails(testTargetConfig, args1);
+		else if(args1.equals("Workforce Central"))
+			TestTarget.userFillsWFCTestTargetDetails(testTargetConfig, args1);
 		sel.captureScreenshot("TestTarget Detail");
 
 	}
 
 	@When("^User Clicks on Cancel in TestTarget$")
-	public void userclicksoncancelintesttarget() {
-
-		TestTarget.userclicksoncancel();
+	public void User_Clicks_on_Cancel_in_TestTarget() {
+		TestTarget.userClicksOnCancel();
 	}
 
 	@When("^User Clicks on Delete TestTarget$")
-	public void userclicksondeletetesttarget() {
-
+	public void User_Clicks_on_Delete_TestTarget() {
 		By deletetestarget = By.xpath("//*[text()='" + testTargetConfig.getTestTargetWFDName() + "']/following::a[@class='edit-test-target'][2]	");
-
 		sel.javascript_click(deletetestarget, "User Clicked on Delete TestTarget");
 
 	}
 
 	@When("^User Navigates to TestTarget CreationPage")
-	public void usernavigatestotesttargetcreationpage() throws InterruptedException {
+	public void User_Navigates_to_TestTarget_CreationPage() throws InterruptedException {
 
-		TestTarget.usernavigatestotesttargettab();
-		TestTarget.userclicksonaddnewtesttarget();
-		TestTarget.userredirectstocreatetesttarget();
+		TestTarget.userNavigatesToTestTargetTab();
+		TestTarget.userClicksOnAddNewTestTarget();
+		TestTarget.userRedirectsToCreateTestTarget();
 	}
 
 	@When("^User Updated TestTargetDetails$")
-	public void userupdatedtesttargetdetails() {
-		TestTarget.userupdatedtesttargetdetails(JsonReader.readJson("TestTarget", "UpdatedName"));
+	public void User_Updated_TestTargetDetails() {
+		TestTarget.userUpdatedTestTargetDetails(JsonReader.readJson("TestTarget", "UpdatedName"));
 
 	}
 
 	@When("^User Clicks on Update Test Target$")
-	public void userclicksonupdatetestarget() {
-		TestTarget.userclicksonupdatetesttarget();
+	public void User_Clicks_on_Update_Tes_Target() {
+		TestTarget.userClicksOnUpdateTestTarget();
 
 	}
 
 	@When("^User Deletes TestTargetCreated$")
-	public void userdeletestestargetcreated() {
-
+	public void User_Deletes_TestTarget_Created() {
 		By edittesttarget = By.xpath("//*[text()='" + testTargetConfig.getTestTargetWFDName() + "']/following::a[@class='edit-test-target'][2]	");
-
 		sel.javascript_click(edittesttarget, "User Clicked on Edit Test Target");
 	}
 
 	@When("^User Clicks on Edit TestTarget$")
-	public void userclicksonedittesttarget() {
-
+	public void User_Clicks_on_Edit_TestTarget() {
 		By edittesttarget = By.xpath("//*[text()='" + testTargetConfig.getTestTargetWFDName() + "']/following::a[@class='edit-test-target'][1]	");
-
 		sel.javascript_click(edittesttarget, "User Clicked on Edit Test Target");
 	}
 
 	@When("^User Edits CreatedTestTarget$")
-	public void usereditscreatedtesttarget() {
+	public void User_Edits_CreatedTestTarget() {
 		By edittesttarget = By.xpath("//*[text()='" + testTargetConfig.getTestTargetWFDName() + "']/following::a[@class='edit-test-target'][1]	");
-
 		sel.javascript_click(edittesttarget, "User Clicked on Edit Test Target");
-
-		TestTarget.userredirectstoedittesttargetpage();
-
+		TestTarget.userRedirectsToEditTestTargetPage();
 		sUpdateTestTargetname = JsonReader.readJson("TestTarget", "UpdatedName") + new RandomString(4).nextString();
-		TestTarget.userupdatedtesttargetdetails(sUpdateTestTargetname);
-		TestTarget.userclicksonupdatetesttarget();
-
+		TestTarget.userUpdatedTestTargetDetails(sUpdateTestTargetname);
+		TestTarget.userClicksOnUpdateTestTarget();
 	}
 
 	@Then("^User see Actionlibrary message$")
-	public void userseeactionlibrarymessage() {
-
-		ActionLibrary.userseeactionlibrarymessage();
+	public void User_see_Actionlibrary_message() {
+		ActionLibrary.userSeeActionMessage();
 	}
 
 	@When("^User Deletes ActionCreated$")
-	public void userdeletesactionlibrarycreated() {
-
-		ActionLibrary.userdeletesactionlibrary();
+	public void User_Deletes_ActionCreated() {
+		ActionLibrary.userDeletesAction();
 	}
 
 	@When("^User Clicks on Submit in ActionCreationPage$")
-	public void userclicksonsubmitinactionlibrary() {
+	public void User_Clicks_on_Submit_in_ActionCreationPage() {
 
-		ActionLibrary.userclicksonsubmit();
+		ActionLibrary.userClicksOnSubmit();
 	}
 
 	@When("^User Updates Created Actions$")
-	public void userupdatescreatedactionlibrary() {
+	public void User_Updates_Created_Actions() {
 
 		String desc = JsonReader.readJson("ActionLibrary", "UpdatedDescription") + new RandomString(4).nextString();
 		UpdatedActionLibrarylabel = JsonReader.readJson("ActionLibrary", "UpdatedLabel")
 				+ new RandomString(4).nextString();
-
-		ActionLibrary.userupdatesactionlibrary(desc, UpdatedActionLibrarylabel);
+		ActionLibrary.userUpdatesAction(desc, UpdatedActionLibrarylabel);
 
 	}
 
 	@Then("^User sees Action Updated$")
-	public void userseeactionlibrayupdated() throws IOException, InterruptedException {
+	public void User_sees_Action_Updated() throws IOException, InterruptedException {
 		Thread.sleep(6000);
 		By ActionLibraryDetail = By.xpath("//div[contains(text(),'" + UpdatedActionLibrarylabel + "')]");
-
 		String btn = sel.getElementString(ActionLibraryDetail);
-
 		Assert.assertEquals(UpdatedActionLibrarylabel, btn);
 		Reporter.addStepLog("User Sees Action Library Updated Correctly with Label :" + UpdatedActionLibrarylabel);
-		sel.captureScreenshot("Action Library Verfication");
+		sel.captureScreenshot("Action Library Verification");
 	}
 
 	@Then("^User sees Action Created$")
-	public void userseesactionlibrarycreated() throws IOException, InterruptedException {
+	public void User_sees_Action_created() throws IOException, InterruptedException {
 
 		Thread.sleep(6000);
 		By ActionLibraryDetail = By.xpath("//div[contains(text(),'" + Actionlibrarylabel + "')]");
-
-
 		String btn = sel.getElementString(ActionLibraryDetail);
 		System.out.println("Value is"+btn);
 		Assert.assertEquals(Actionlibrarylabel, btn);
 		Reporter.addStepLog("User Sees Action Library Created Correctly with Label :" + Actionlibrarylabel);
-
-
 	}
 
 	@When("^User Enter details for Action Creation with TableData \"([^\"]*)\"$")
-	public void userenterdetailsforactionlibrarywithtabledata(String arg1) throws InterruptedException, IOException {
-
-		ActionLibrary.userclicksonaddaction();
+	public void User_Enter_details_for_Action_Creation_with_TableData(String arg1) throws InterruptedException, IOException {
+		ActionLibrary.userClicksOnAddAction();
 		prefix = JsonReader.readJson("ActionLibrary", "prefix") + new RandomString(4).nextString();
 		suffix = JsonReader.readJson("ActionLibrary", "suffix") + new RandomString(4).nextString();
 		DisplayKey = JsonReader.readJson("ActionLibrary", "DisplayKey") + new RandomString(4).nextString();
@@ -811,114 +706,111 @@ public class Stepsfile {
 		String columntype = JsonReader.readJson("ActionLibrary", arg1) + new RandomString(4).nextString();
 		ActionlibraryDescription = JsonReader.readJson("ActionLibrary", "Description")
 				+ new RandomString(4).nextString();
-
-		ActionLibrary.userfillsactionlibrarywithtabledata_Integer(Actionlibrarylabel, ActionlibraryDescription, prefix, suffix,
+		ActionLibrary.userFillsActionWithTableData_Integer(Actionlibrarylabel, ActionlibraryDescription, prefix, suffix,
 				DisplayKey, arg1);
-
-
 	}
 
 	@When("^User Enter details for ActionCreation$")
-	public void userenterdetailsforactionlibrary() throws InterruptedException, IOException {
+	public void User_Enter_details_for_ActionCreation() throws InterruptedException, IOException {
 		Thread.sleep(4000);
-		ActionLibrary.userclicksonaddaction();
+		ActionLibrary.userClicksOnAddAction();
 		Actionlibrarylabel = JsonReader.readJson("ActionLibrary", "Label") + new RandomString(4).nextString();
 		ActionlibraryDescription = JsonReader.readJson("ActionLibrary", "Description")
 				+ new RandomString(4).nextString();
-		ActionLibrary.userfillsactionlibrary(Actionlibrarylabel, ActionlibraryDescription);
+		ActionLibrary.userFillsAction(Actionlibrarylabel, ActionlibraryDescription);
 		sel.captureScreenshot("Action Library Detail");
 	}
 
 	@When("^User Clicks on Cancel in ActionCreationPage$")
-	public void userclicksoncancelinactionlibrary() {
+	public void User_Clicks_on_Cancel_in_ActionCreationPage() {
 
-		ActionLibrary.cancelactionlibrary();
+		ActionLibrary.cancelAction();
 	}
 
 	@When("^User Clicks on NewAction$")
-	public void userclicksonnewaction() throws InterruptedException {
+	public void User_Clicks_on_NewAction() throws InterruptedException {
 
-		ActionLibrary.userclicksonaddaction();
+		ActionLibrary.userClicksOnAddAction();
 
 	}
 
 	@When("^User Enter Logins Details and Clicks on ForgotPassword$")
-	public void userenterslogindetailsandclickonforgotpassword() throws IOException {
-		loginpage.logindetails(JsonReader.readJson("env", "Username"), JsonReader.readJson("env", "Password"));
-		Profile.userclicksonforgotpassword();
+	public void User_Enter_Logins_Details_and_Click_on_ForgotPassword() throws IOException {
+		LoginPage.loginDetails(JsonReader.readJson("env", "Username"), JsonReader.readJson("env", "Password"));
+		Profile.userClicksOnForgotPassword();
 
 		sel.captureScreenshot("Login");
 	}
 
 	@When("^User Enter Logins Details and Clicks on Sign In$")
-	public void userenterloginsdetailsandclickonsignin() throws IOException {
+	public void User_Enter_Logins_Details_and_Clicks_on_Sign_In() throws IOException {
 
-		loginpage.logindetails(JsonReader.readJson("env", "Username"), JsonReader.readJson("env", "Password"));
-		loginpage.click_Signin();
+		LoginPage.loginDetails(JsonReader.readJson("env", "Username"), JsonReader.readJson("env", "Password"));
+		LoginPage.clickSignin();
 		sel.captureScreenshot("Login");
 	}
 
 	@When("^User clicks on Logout$")
-	public void userclicksonlogout() {
-		loginpage.click_logout();
+	public void User_clicks_on_Logout() {
+		LoginPage.clickLogout();
 
 	}
 
 	@When("^User clicks on Switch Tenant$")
-	public void userclicksonswitchtenant() {
-		SwitchTenant.userclicksonswitchtenant();
-		SwitchTenant.userredirectstoswitchtenant();
+	public void User_clicks_on_Switch_Tenant() {
+		SwitchTenant.userClicksOnSwitchTenant();
+		SwitchTenant.userRedirectsToSwitchTenant();
 	}
 
 	@When("^User selects Desired Tenant$")
-	public void userselectsdesiredtenant() {
-		SwitchTenant.userselectsdesiredtenant();
+	public void User_selects_Desired_Tenant() {
+		SwitchTenant.userSelectsDesiredTenant();
 
 	}
 
 	@When("^User clicks on NewPersona$")
-	public static void userclicksonnewpersona() {
+	public static void User_clicks_on_NewPersona() {
 
-		Persona.userclicksonnewpersona();
+		Persona.userClicksOnNewPersona();
 	}
 
 
 
 	@When("^User Clicked on Submit$")
-	public void userclickedonsubmit() {
+	public void User_Clicked_on_Submit() {
 
-		Persona.userclick_submit();
+		Persona.userClicksOnSubmit();
 
 	}
 
 	@When("^User selects Persona$")
-	public void userselectpersona() {
-		Persona.user_selectpersonacreated();
+	public void User_selects_Persona() {
+		Persona.userSelectsPersonaCreated();
 
 	}
 
 	@When("^User Clicks on Delete Persona$")
-	public static void userclicksondelete() {
-		Persona.userclicksondelete();
+	public static void User_Clicks_on_Delete_Persona() {
+		Persona.userClicksOnDelete();
 
 	}
 
 	@When("^User edits Persona$")
-	public void usereditspersona() {
-		Persona.user_editpersonadetails(JsonReader.readJson("Persona", "Editlabel"));
+	public void User_edits_Persona() {
+		Persona.userEditsPersonaDetails(JsonReader.readJson("Persona", "Editlabel"));
 
 	}
 
 	@When("^User fills Personadetails$")
-	public static void userfillspersonadetails() throws IOException {
+	public static void User_fills_Personadetails() throws IOException {
 
-		Persona.userfillspersonadetails(JsonReader.readJson("Persona", "label"),
+		Persona.userFillsPersonaDetails(JsonReader.readJson("Persona", "label"),
 				JsonReader.readJson("Persona", "description"), JsonReader.readJson("Persona", "ActivityProfile"),
 				JsonReader.readJson("Persona", "Adjustmentrule"), JsonReader.readJson("Persona", "CategoryProfile"));
 
 	}
 	@Then("^User sees Persona Updated$")
-	public void userseesperonaupdated() throws IOException {
+	public void User_sees_persona_Updated() throws IOException {
 		By PersonaUpdated=By.xpath("//span[text()='EditTestLabel']");
 
 		String  UpdatedPersona= JsonReader.readJson("Persona", "Editlabel");
@@ -929,7 +821,7 @@ public class Stepsfile {
 	}
 
 	@Then("^User does not see Persona Deleted$")
-	public void userdoesnotseepersonadeleted() {
+	public void User_does_not_see_Persona_Deleted() {
 		By PersonaCreated=By.xpath("//span[text()='TestLabel']");
 
 		String btn = sel.getElementString(PersonaCreated);
@@ -937,342 +829,283 @@ public class Stepsfile {
 
 	}
 	@Then("^User sees Persona Created")
-	public void userseespersonacreated() throws IOException {
-
+	public void User_sees_Persona_Created() throws IOException {
 		By PersonaCreated=By.xpath("//span[text()='TestLabel']");
-
-
 		String btn = sel.getElementString(PersonaCreated);
-
 		Assert.assertEquals("TestLabel", btn);
 		Reporter.addStepLog("User sees Persona Created as "+btn);
 		sel.captureScreenshot("Persona Verification");
-
 	}
 
 	@When("^User Clicks on Submit in CreatePersonaPage$")
-	public void userclicksonsubmitincreatepersonapage() {
-
-		Persona.userclicksonsubmitincreatepersonapage();
+	public void User_Clicks_on_Submit_in_CreatePersonaPage() {
+		Persona.userClicksOnSubmitInCreatePersonaPage();
 	}
 
 	@When("^User Clicks on AddTestSuite$")
-	public void userclicksonaddtestsuite() throws InterruptedException {
-
-		TestSuite.userclicksonaddnewtestsuite();
-
+	public void User_Clicks_on_AddTestSuite() throws InterruptedException {
+		TestSuite.userClicksOnAddNewTestSuite();
 	}
 
 	@When("^User Navigates to TestSuite CreationPage$")
-	public void usernavigatestotestsuitecreationpage() throws InterruptedException {
-		TestSuite.userclicksonaddnewtestsuite();
-
+	public void User_Navigates_to_TestSuite_CreationPage() throws InterruptedException {
+		TestSuite.userClicksOnAddNewTestSuite();
 		userredirectstocreatetestsuite();
 	}
 
 	@Then("^User sees TestSuite Updated$")
-	public void userseestestsuiteupdated() throws InterruptedException {
-
+	public void User_sees_TestSuite_Updated() throws InterruptedException {
 		Thread.sleep(4000);
 		By TestSuiteCreated = By.xpath("//h2[text()='" + Updatetestsuitetitle + "']");
 		String btn = sel.getElementString(TestSuiteCreated);
-
 		Assert.assertEquals(Updatetestsuitetitle, btn);
 		Reporter.addStepLog("User See  TestSuite Updated Succesfully with title : " + btn);
-
 	}
 
 	@When("^User Updates Test Suite Details$")
-	public void userupdatestestsuitedetails() throws InterruptedException {
+	public void User_Updates_Test_Suite_Details() throws InterruptedException {
 		Thread.sleep(3000);
 		Updatetestsuitetitle = JsonReader.readJson("AddTestSuite", "UpdateTestSuiteTitle")
 				+ new RandomString(4).nextString();
-		TestSuite.userupdatestestsuitedetails(Updatetestsuitetitle);
+		TestSuite.userUpdatesTestSuiteDetails(Updatetestsuitetitle);
 	}
 
 	@When("^User Clicks on Updated Test Suite$")
-	public void userclicksonupdatedtestsuite() {
+	public void User_Clicks_on_Updated_Test_Suite() {
 
-		TestSuite.userclicksonupdatetestsuite();
+		TestSuite.userClicksOnUpdateTestSuite();
 	}
 
 	@When("^User Navigates to ActionLibrary$")
-	public void user_navigates_to_actionlibrary_with() throws Throwable {
+	public void User_Navigates_to_ActionLibrary() throws Throwable {
 
-		ActionLibrary.usernavigatestoactionlibrary_regressiontesting();
+		ActionLibrary.userNavigatesToActionLibrary_RegressionTesting();
 	}
 
 	@When("^User Creates TestSuite with WD \"([^\"]*)\"$")
-	public void user_enter_details_for_creating_testsuite_with_WD(String args2)
+	public void User_Creates_TestSuite_with_WD(String args2)
 			throws InterruptedException, IOException {
-
 		Thread.sleep(4000);
 		title = JsonReader.readJson("AddTestSuite", "TestSuiteTitle") + new RandomString(4).nextString();
-		TestSuite.enteraddtestsuitedetailswithworkforcedimension(title,
+		TestSuite.enterAddTestSuiteDetailsWithWFDVersion(title,
 				JsonReader.readJson("AddTestSuite", "Description"), args2);
 		sel.captureScreenshot("Test Suite Creation Detail");
 	}
 
 	@When("^User Creates Testsuite with \"([^\"]*)\"$")
-	public void user_enter_details_for_creating_testsuite_with(String args2) throws InterruptedException, IOException {
-
+	public void User_Creates_Testsuite_with(String args2) throws InterruptedException, IOException {
 		Thread.sleep(4000);
 		title = JsonReader.readJson("AddTestSuite", "TestSuiteTitle") + new RandomString(4).nextString();
-		TestSuite.enteraddtestsuitedetailswithworkforcentralversion(title,
+		TestSuite.enterAddTestSuiteDetailsWithWFCVersion(title,
 				JsonReader.readJson("AddTestSuite", "Description"), args2);
 		sel.captureScreenshot("Test Suite Creation Detail");
 	}
 
 	@When("^User selects different reviewopts\"([^\"]*)\"$")
-	public void userselectsdifferentreviewopts(String arg1) throws InterruptedException, IOException {
+	public void User_selects_different_reviewopts(String arg1) throws InterruptedException, IOException {
 		Scenario.reviewoptions(arg1, "Review Comments");
 
 	}
 
 	@When("^User Enter Details for Creating Test Suite with \"([^\"]*)\"$")
-	public void user_Enter_Details_for_Creating_Test_Suite_with(String arg1) throws Throwable {
+	public void User_Enter_Details_for_Creating_Test_Suite_with(String arg1) throws Throwable {
 
 		Thread.sleep(4000);
 		title = JsonReader.readJson("AddTestSuite", "TestSuiteTitle");
-		TestSuite.enteraddtestsuitedetails(title, JsonReader.readJson("AddTestSuite", "Description"), arg1);
+		TestSuite.enterAddTestSuiteDetails(title, JsonReader.readJson("AddTestSuite", "Description"), arg1);
 		sel.captureScreenshot("Test Suite Creation Detail");
 	}
 
 	@When("^User Clicks on Cancel in AddTestSuite$")
-	public void userclicksoncancelinaddtestsuite() {
-		TestSuite.userclicksoncancel();
-
+	public void User_Clicks_on_Cancel_in_AddTestSuite() {
+		TestSuite.userClicksOnCancel();
 	}
 
 	@When("^User DeletesTestSuite Created$")
-	public void userdeletestestsuitecreated() throws InterruptedException {
-
-		TestSuite.userclicksontestsuitesettings();
-		TestSuite.userredirectstoupdatetestsuitepage();
-		TestSuite.userclicksondeletetestsuite();
-
+	public void User_DeletesTestSuite_Created() throws InterruptedException {
+		TestSuite.userClicksOnTestSuiteSettings();
+		TestSuite.userRedirectsToUpdateTestSuitePage();
+		TestSuite.userClicksOnDeleteTestSuite();
 	}
 
 	@When("^User Updates TestSuite Created$")
-	public void userupdatestestsuitecreated() throws InterruptedException {
-		TestSuite.userclicksontestsuitesettings();
-		TestSuite.userredirectstoupdatetestsuitepage();
-		userupdatestestsuitedetails();
-		TestSuite.userclicksonupdatetestsuite();
-
+	public void User_Updates_TestSuite_Created() throws InterruptedException {
+		TestSuite.userClicksOnTestSuiteSettings();
+		TestSuite.userRedirectsToUpdateTestSuitePage();
+		User_Updates_Test_Suite_Details();
+		TestSuite.userClicksOnUpdateTestSuite();
 	}
 
 	@When("^User Clicks on TestSuiteSetting$")
-	public void userclicksontestsuitesetting() throws InterruptedException {
+	public void User_Clicks_on_TestSuiteSetting() throws InterruptedException {
 
-		TestSuite.userclicksontestsuitesettings();
-		TestSuite.userredirectstoupdatetestsuitepage();
+		TestSuite.userClicksOnTestSuiteSettings();
+		TestSuite.userRedirectsToUpdateTestSuitePage();
 	}
 
 	@When("^User Clicks on DeleteTestSuite$")
-	public void userclicksondeletetestsuite() {
-		TestSuite.userclicksondeletetestsuite();
+	public void User_Clicks_on_DeleteTestSuite() {
+		TestSuite.userClicksOnDeleteTestSuite();
 
 	}
 
 	@Then("^User redirects to UpdateTestSuite Page$")
-	public void userredirectstoupdatetestsuitepage() {
-		TestSuite.userredirectstoupdatetestsuitepage();
+	public void User_redirects_to_UpdateTestSuite_Page() {
+		TestSuite.userRedirectsToUpdateTestSuitePage();
 
 	}
 
 	@Then("^User Created TestSuite Succesfully$")
-	public void usercreatedtestsuitesuccessfully() throws InterruptedException {
+	public void User_Created_TestSuite_Successfully() throws InterruptedException {
 		Thread.sleep(6000);
 		By TestSuiteCreated = By.xpath("//h2[text()='" + title + "']");
 		String btn = sel.getElementString(TestSuiteCreated);
-
 		Assert.assertEquals(title, btn);
 		Reporter.addStepLog("User Created TestSuite Succesfully with title : " + btn);
-
 	}
 
 	@When("^User Clicks on Create New TestSuite$")
-	public void userclicksoncreatenewtestsuite() throws InterruptedException {
-
-		TestSuite.userclicknewtestsuite();
-
+	public void User_Clicks_on_Create_New_TestSuite() throws InterruptedException {
+		TestSuite.userClickNewTestSuite();
 	}
 
 
 	@When("User selects testsuite")
-	public void userselectstestsuite() {
-		TestPlan.userselecttestsuite();
-
+	public void User_selects_testsuite() {
+		TestPlan.userSelectTestSuite();
 	}
 
 	@When("^User Clicks on TestPlan$")
-	public void userclicksontestplan() throws InterruptedException {
-
-		TestPlan.click_testplantab();
+	public void User_Clicks_on_TestPlan() throws InterruptedException {
+		TestPlan.clickTestPlanTab();
 	}
 
 	@When("^User Clicks on Create TestPlan$")
-	public void userclicksoncreatetestplan() {
-		TestPlan.click_createnewtestplan();
-
+	public void User_Clicks_on_Create_TestPlan() {
+		TestPlan.clickCreateNewTestPlan();
 	}
 
 	@Then("User see TestPlan Created")
-	public void userseetestplancreated() throws InterruptedException, IOException {
-
+	public void User_see_TestPlan_Created() throws InterruptedException, IOException {
 		Thread.sleep(6000);
 		By PlanTab=By.xpath("//a[@id='testPlans']");
 		sel.click(PlanTab, "Plan Tab");
-
 		By TestSuiteCreated = By.xpath("//td[text()='" + JsonReader.readJson("TestPlan", "Name") + "']");
 		String btn = sel.getElementString(TestSuiteCreated);
-
 		Assert.assertEquals(JsonReader.readJson("TestPlan", "Name"), btn);
 		Reporter.addStepLog("User Sees TestPlan Created : " + btn);
 		sel.captureScreenshot();
 	}
-	@When("^User Clicks on CommitTestPlan$")
-	public void userclicksoncommittestplan() {
 
-		TestPlan.click_committestplan();
+	@When("^User Clicks on CommitTestPlan$")
+	public void User_Clicks_on_CommitTestPlan() {
+		TestPlan.clickCommitTestPlan();
 	}
 
 	@When("^User Edits TestPlanDetail$")
-	public void usereditstestplandetails() throws InterruptedException {
-
-		TestPlan.usereditstestplandetails(JsonReader.readJson("TestPlan", "Name"),
+	public void User_Edits_TestPlanDetails() throws InterruptedException {
+		TestPlan.userEditsTestPlanDetails(JsonReader.readJson("TestPlan", "Name"),
 				JsonReader.readJson("TestPlan", "EditDescription"));
-
-
 	}
 
 	@When("^User Clicks on UpdateTestPlan$")
-	public void  userclicksonupdatetestplan() throws InterruptedException {
-
-		TestPlan.click_updatetestplan();
+	public void User_Clicks_on_UpdateTestPlan() throws InterruptedException {
+		TestPlan.clickUpdateTestPlan();
 	}
-	@When("^User Deletes TestPlan$")
-	public void userdeletestestplan() throws IOException {
 
-		TestPlan.click_deletetestplan();
+	@When("^User Deletes TestPlan$")
+	public void User_Deletes_TestPlan() throws IOException {
+		TestPlan.clickDeleteTestPlan();
 	}
 
 	@When("^Enter Details for TestPlanCreation$")
-	public void enterdetailsfortestplancreation() throws InterruptedException, IOException {
-
-
-
-
-		TestPlan.filldetails_testplan(JsonReader.readJson("TestPlan", "Name"),
+	public void Enter_Details_for_TestPlanCreation() throws InterruptedException, IOException {
+		TestPlan.fillDetailsOfTestPlan(JsonReader.readJson("TestPlan", "Name"),
 				JsonReader.readJson("TestPlan", "description"));
 		sel.captureScreenshot();
 	}
 
 	@Then("^User does not see TestPlanDeleted$")
-	public void userdoesnotseetestplandeleted() throws InterruptedException {
+	public void User_does_not_see_TestPlanDeleted() throws InterruptedException {
 		Thread.sleep(6000);
 		String deletedplan=JsonReader.readJson("TestPlan", "DeleteName");
-
 		if(!deletedplan.isEmpty()) {
 			Reporter.addStepLog("User Does not see TestPlan Deleted");
 		} else {
-
 			Reporter.addStepLog("User Sees  TestPlan Deleted");
 		}
-
 	}
+
 	@When("^User Navigates to Persona Workspace$")
-	public void usernavigatestopersonaworkspace() throws InterruptedException {
-
-		Persona.userclicksonpersonaworkspace();
+	public void User_Navigates_to_Persona_workspace() throws InterruptedException {
+		Persona.userClicksOnPersonaWorkspace();
 	}
+
 	@When("^User Navigates to Users Workspace$")
-	public void usernaviagtestousertab() throws InterruptedException, IOException {
-
-		AddNewUser.usernavigatestousertab();
-
+	public void User_Navigates_to_users_Workspace() throws InterruptedException, IOException {
+		AddNewUser.userNavigatesToUserTab();
 	}
 
 	@When("^User select record to edit$")
-	public void userselectsrecrodtoedit() throws InterruptedException, IOException {
-
+	public void User_select_record_to_edit() throws InterruptedException, IOException {
 		Thread.sleep(4000);
-
 		By Select_Record = By.xpath("//td[contains(text(),'" + Uname + "')][1]");
-
-		Selcommands.javascript_click(Select_Record, "Created Record which is " + Uname);
-
-		Selcommands.captureScreenshot();
-
+		SelCommands.javascript_click(Select_Record, "Created Record which is " + Uname);
+		SelCommands.captureScreenshot();
 	}
 
 	@When("^User clicks on Delete User$")
-	public void userclicksondeleteuser() throws InterruptedException, IOException {
-
+	public void User_clicks_on_Delete_user() throws InterruptedException, IOException {
 		Thread.sleep(4000);
-
 		By Delete_Record = By.xpath("/following::*[@id='deleteUserById'][1]");
-		Selcommands.click(Delete_Record, "Delete User Record which is " + Uname);
-		Selcommands.captureScreenshot();//td[contains(text(),'" + Uname + "')][1]
-
+		SelCommands.click(Delete_Record, "Delete User Record which is " + Uname);
+		SelCommands.captureScreenshot();//td[contains(text(),'" + Uname + "')][1]
 	}
 
 	@When("^User Clicks on Add New User$")
-	public void userclicksonaddnewuser() throws InterruptedException {
-
+	public void User_Clicks_on_Add_New_User() throws InterruptedException {
 		AddNewUser.userclicksonaddnewuser();
-
 	}
 
 	@Then("^User sees Created Persona$")
-	public void userseescreatedpersona() throws IOException {
-
+	public void User_sees_Created_Persona() throws IOException {
 		Scenario.userseescreatedpersona();
 	}
-	@Then("User sees Details Updated$")
-	public void userseesdetailsupdated() {
 
+	@Then("User sees Details Updated$")
+	public void User_sees_Details_Updated() {
 		By UpdatedUserRecord=By.xpath("(//td[contains(text(),'" + Uname + "')/following::td[@class='clickable-row attribute-key-col'])[2]");
 		driver.findElement(UpdatedUserRecord).getText();
-
 		String btn = sel.getElementString(UpdatedUserRecord);
 		System.out.println("Value is"+btn);
-
 	}
-	@When("^User Clicks on UpdateUser$")
-	public void userclicksonupdateuser() {
 
-		AddNewUser.click_updateuser();
+	@When("^User Clicks on UpdateUser$")
+	public void User_Clicks_on_UpdateUser() {
+		AddNewUser.clickUpdateUser();
 	}
 
 	@When("^User edits detail in UserPage$")
-	public void usereditsdetailinuserpage() throws IOException {
-
-		AddNewUser.edituserdetails();
+	public void User_edits_detail_in_UserPage() throws IOException {
+		AddNewUser.editUserDetails();
 	}
 
 	@Then("^User redirects to Create User Page$")
-	public void userredirectstocreateuserpage() {
+	public void User_redirects_to_Create_User_Page() {
 		String CreateUser = JsonReader.readJson("AddNewUser", "UserName");
-
 	}
 
 	@Then("^User Created Successfully$")
-	public void usercreatedsuccessfully() throws InterruptedException {
+	public void User_Created_Successfully() throws InterruptedException {
 		Thread.sleep(4000);
-
 		By DesiredUser = By.xpath("(*//td[contains(text(),'" + Uname + "')])[1]");
-
 		String btn = sel.getElementString(DesiredUser);
-
 		Assert.assertEquals(Uname, btn);
 		Reporter.addStepLog("User Created  Succesfully with  : " + Uname);
 	}
 
 	@Then("^User does not see Deleted Record$")
-	public void userdoesnotseeuserdeleted() {
-
+	public void User_does_not_see_Deleted_Record() {
 
 		if(!Uname.isEmpty()) {
 			Reporter.addStepLog("User Deleted  Succesfully with  : " + Uname);
@@ -1280,20 +1113,19 @@ public class Stepsfile {
 		else {
 			Reporter.addStepLog("User does not Get Deleted");
 		}
-
-
 	}
 
 	@When("^User Clicks on Create New User$")
-	public void userclicksoncreatenewuser() {
+	public void User_Clicks_on_Create_New_User() {
+
 		AddNewUser.userclicksoncreatenewuser();
 	}
 
 	@When("^User Enter Details for Adding New User$")
-	public void userenterdetailsforaddingnewuser() throws IOException, InterruptedException {
+	public void User_Enter_Details_for_Adding_New_User() throws IOException, InterruptedException {
 
 		AddNewUser.userclicksonaddnewuser();
-		AddNewUser.userredirectstocreateuser();
+		AddNewUser.userRedirectsToCreateUser();
 		Uname = JsonReader.readJson("AddNewUser", "UserName") + new RandomString(4).nextString();
 		UserEmail = Uname + "@test.com";
 		AddNewUser.userenterdetails(Uname, UserEmail);
@@ -1302,7 +1134,7 @@ public class Stepsfile {
 	}
 
 	@Then("^quit browser$")
-	public void quittingbrowser() {
+	public void quit_browser() {
 		sel.quitBrowser();
 	}
 

@@ -7,18 +7,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cucumber.listener.Reporter;
 
-import cucumber.api.java.en.When;
 import junit.framework.Assert;
-import utilities.Selcommands;
+import utilities.SelCommands;
 
-public class TestSuite extends Selcommands {
+public class TestSuite extends SelCommands {
 
 	public TestSuite(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void userclicksonregressiontestsuite() {
+	public static void userClicksOnRegressionTestSuite() {
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h3[text()='Regression Test Suites']")));
 		By Regression_Suite = By.xpath("//h3[text()='Regression Test Suites']");
@@ -27,7 +26,7 @@ public class TestSuite extends Selcommands {
 	}
 
 	
-	public static void userselectdesiredtestsuitecreated() throws InterruptedException {
+	public static void userSelectDesiredTestSuiteCreated() throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[contains(text(),'Automation WFD')]")));
 		By TestSuiteCreated = By.xpath("//a[contains(text(),'Automation WFD')]");
@@ -38,7 +37,7 @@ public class TestSuite extends Selcommands {
 
 	}
 
-	public static void userclicknewtestsuite() throws InterruptedException {
+	public static void userClickNewTestSuite() throws InterruptedException {
 		Thread.sleep(4000);
 		By CreateNewTestSuite = By.xpath("//button[text()='CREATE NEW TEST SUITE']");
 		// click(CreateNewTestSuite, " Create New TestSuite");
@@ -46,7 +45,7 @@ public class TestSuite extends Selcommands {
 
 	}
 
-	public static void userredirectstoupdatetestsuitepage() {
+	public static void userRedirectsToUpdateTestSuitePage() {
 
 		String title = getElementString(By.xpath("//div[text()='Update Test Suite']"));
 
@@ -55,7 +54,7 @@ public class TestSuite extends Selcommands {
 
 	}
 
-	public static void userredirectstocreatetestsuite() {
+	public static void userRedirectsToCreateTestSuite() {
 
 		String btn = getElementString(By.xpath("//div[text()='Create Test Suite']"));
 		Assert.assertEquals("Create Test Suite", btn);
@@ -63,7 +62,7 @@ public class TestSuite extends Selcommands {
 
 	}
 
-	public static void userclicksonaddnewtestsuite() throws InterruptedException {
+	public static void userClicksOnAddNewTestSuite() throws InterruptedException {
 		Thread.sleep(4000);
 		By AddNewTestSuite = By.xpath(
 				"//div[@class='projects-add-new-btn btn-header ta-form']/div/span/button[contains(text(),'ADD NEW TEST SUITE')]");
@@ -72,7 +71,7 @@ public class TestSuite extends Selcommands {
 
 	}
 
-	public static void userclicksontestsuitesettings() throws InterruptedException {
+	public static void userClicksOnTestSuiteSettings() throws InterruptedException {
 		Thread.sleep(5000);
 		By HomeDropDown = By.xpath("//button[@id='bdd_menu_trigger_button_id']");
 		By TestSuiteSetting = By.xpath("//a[text()='Test Suite Settings']");
@@ -82,35 +81,35 @@ public class TestSuite extends Selcommands {
 		click(TestSuiteSetting, "TestSuiteSetting");
 	}
 
-	public static void userclicksondeletetestsuite() {
+	public static void userClicksOnDeleteTestSuite() {
 
 		By DeleteTestSuite = By.xpath("//span[contains(text(),'DELETE TEST SUITE')]");
 		click(DeleteTestSuite, "Delete Test Suite");
 
 	}
 
-	public static void userupdatestestsuitedetails(String title) {
+	public static void userUpdatesTestSuiteDetails(String title) {
 		By InputTitle = By.xpath("//input[@name='PROJECT_TITLE']");
 
 		type(InputTitle, title, "Title Field");
 
 	}
 
-	public static void userclicksonupdatetestsuite() {
+	public static void userClicksOnUpdateTestSuite() {
 
 		By UpdateTestSuite = By.xpath("//button[@label='UPDATE TEST SUITE']");
 
 		click(UpdateTestSuite, "UpdateTestSuite");
 	}
 
-	public static void userclicksoncancel() {
+	public static void userClicksOnCancel() {
 
 		By Cancel = By.xpath("//span[text()='CANCEL']");
 		click(Cancel, "Cancel button");
 	}
 
-	public static void enteraddtestsuitedetailswithworkforcentralversion(String title, String Description,
-			String WorkforceCentralVersion) throws InterruptedException {
+	public static void enterAddTestSuiteDetailsWithWFCVersion(String title, String Description,
+															  String WorkforceCentralVersion) throws InterruptedException {
 
 		Thread.sleep(4000);
 		By InputTitle = By.xpath("//input[@name='PROJECT_TITLE']");
@@ -157,8 +156,8 @@ public class TestSuite extends Selcommands {
 
 	}
 
-	public static void enteraddtestsuitedetailswithworkforcedimension(String title, String Description,
-			String WorkforceDimensionsversion) throws InterruptedException {
+	public static void enterAddTestSuiteDetailsWithWFDVersion(String title, String Description,
+															  String WorkforceDimensionsversion) throws InterruptedException {
 
 		Thread.sleep(4000);
 		By InputTitle = By.xpath("//input[@name='PROJECT_TITLE']");
@@ -205,7 +204,7 @@ public class TestSuite extends Selcommands {
 
 	}
 
-	public static void enteraddtestsuitedetails(String title, String Description, String typetesting)
+	public static void enterAddTestSuiteDetails(String title, String Description, String typetesting)
 			throws InterruptedException {
 
 		Thread.sleep(4000);

@@ -4,14 +4,13 @@ import java.io.IOException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import com.cucumber.listener.Reporter;
 
 import junit.framework.Assert;
-import utilities.Selcommands;
+import utilities.SelCommands;
 
-public class AddNewUser extends Selcommands {
+public class AddNewUser extends SelCommands {
 
 	public AddNewUser(WebDriver driver) {
 		super(driver);
@@ -19,7 +18,7 @@ public class AddNewUser extends Selcommands {
 	}
 
 	
-	public static void usernavigatestousertab() {
+	public static void userNavigatesToUserTab() {
 		
 		By HomeDropDown=By.xpath("//button[@id='bdd_menu_trigger_button_id']");
 		By Setting=By.xpath("//a[contains(text(),'Settings')]");
@@ -34,7 +33,7 @@ public class AddNewUser extends Selcommands {
 	
 	
 	
-	public static void userredirectstocreateuser() {
+	public static void userRedirectsToCreateUser() {
 		
 		String btn = getElementString(By.xpath("//h2[text()='Create User']"));
 		Assert.assertEquals("Create User", btn);
@@ -45,7 +44,7 @@ public class AddNewUser extends Selcommands {
 	}
 	
 	
-	public static void edituserdetails() throws IOException {
+	public static void editUserDetails() throws IOException {
 		By Role_DropDown=By.xpath("//div[contains(@class,'roles_drop_down')]");
 		By DesiredRole=By.xpath("//div[contains(text(),'admin')]");
 		By Label_Role=By.xpath("//label[text()='Roles']");
@@ -54,12 +53,12 @@ public class AddNewUser extends Selcommands {
 		click(Role_DropDown, "Role Drop Down");
 		click(DesiredRole, "Desired Roles Which is Admin");
 		click(Label_Role, "Desired Label");
-		Selcommands.captureScreenshot();
+		SelCommands.captureScreenshot();
 		
 	}
 	
 	
-	public static void click_updateuser() {
+	public static void clickUpdateUser() {
 		By Update_User=By.xpath("//button[@type='submit']");
 		click(Update_User, "Updated User");
 

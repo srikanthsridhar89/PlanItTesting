@@ -25,11 +25,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cucumber.listener.Reporter;
 
-public class Selcommands {
+public class SelCommands {
 //	public static final String ImagesPath = null;
 	public static WebDriver driver;
 
-	public Selcommands(WebDriver driver) {
+	public SelCommands(WebDriver driver) {
 		this.driver = driver;
 	}
 

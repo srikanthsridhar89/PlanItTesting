@@ -8,9 +8,9 @@ import org.openqa.selenium.WebDriver;
 import com.cucumber.listener.Reporter;
 
 import junit.framework.Assert;
-import utilities.Selcommands;
+import utilities.SelCommands;
 
-public class TestTarget  extends Selcommands {
+public class TestTarget  extends SelCommands {
 
 	public TestTarget(WebDriver driver) {
 		super(driver);
@@ -19,7 +19,7 @@ public class TestTarget  extends Selcommands {
 	
 	 
 	
-public static void usernavigatestotesttargettab() throws InterruptedException {
+public static void userNavigatesToTestTargetTab() throws InterruptedException {
 		Thread.sleep(4000);
 		By HomeDropDown=By.xpath("//button[@id='bdd_menu_trigger_button_id']");
 		By Setting=By.xpath("//a[contains(text(),'Settings')]");
@@ -44,7 +44,7 @@ public static void usernavigatestotesttargettab() throws InterruptedException {
 
 
 
-public static void userclicksonupdatetesttarget() {
+public static void userClicksOnUpdateTestTarget() {
 	
 	By UpdateTestTarget=By.xpath("//button[text()='Update Test Target']");
 	click(UpdateTestTarget, "Update TestTarget");
@@ -53,7 +53,7 @@ public static void userclicksonupdatetesttarget() {
 
 
 
-public static void userupdatedtesttargetdetails(String name) {
+public static void userUpdatedTestTargetDetails(String name) {
 	
 	By Namefield=By.xpath("//input[@id='name']");
 	
@@ -69,21 +69,21 @@ public static void userupdatedtesttargetdetails(String name) {
 }
 	
 
-public static void userredirectstoedittesttargetpage() {
+public static void userRedirectsToEditTestTargetPage() {
 	
 	String btn = getElementString(By.xpath("//*[text()='Edit Test Target']"));
 	Assert.assertEquals("Edit Test Target", btn);
 	Reporter.addStepLog("User Redirects to Edit Test Target Page Successful");
 }
 
-public static void userredirectstocreatetesttarget() {
+public static void userRedirectsToCreateTestTarget() {
 	
 	String btn = getElementString(By.xpath("//h2[text()='Create Test Target']"));
 	Assert.assertEquals("Create Test Target", btn);
 	Reporter.addStepLog("User Redirects to Create Test Target Page Successful");
 }
 	
-	public static void userclicksonaddnewtesttarget() throws InterruptedException {
+	public static void userClicksOnAddNewTestTarget() throws InterruptedException {
 		Thread.sleep(5000);
 		By AddNewTestTarget=By.xpath("//a[contains(@href,'create')]/button[contains(text(),'Target')]");
 		click(AddNewTestTarget, " Add New Test Target");
@@ -93,7 +93,7 @@ public static void userredirectstocreatetesttarget() {
 	
 
 	
-	public static void userfillswfdtesttargetdetails(TestTargetConfig testTargetConfig, String software) throws InterruptedException {
+	public static void userFillsWFDTestTargetDetails(TestTargetConfig testTargetConfig, String software) throws InterruptedException {
 		
 		Thread.sleep(4000);
 		By Name=By.xpath("//input[@name='name']");
@@ -126,7 +126,7 @@ public static void userredirectstocreatetesttarget() {
 		type(DesiredPGPublicKey, testTargetConfig.getTestTargetPGPublicKey(), "SFTP Port Field");
 	}
 
-	public static void userfillswfctesttargetdetails(TestTargetConfig testTargetConfig, String software) throws InterruptedException {
+	public static void userFillsWFCTestTargetDetails(TestTargetConfig testTargetConfig, String software) throws InterruptedException {
 
 		Thread.sleep(4000);
 		By Name=By.xpath("//input[@name='name']");
@@ -143,7 +143,7 @@ public static void userredirectstocreatetesttarget() {
 		type(DesiredPassword, testTargetConfig.getTestTargetWFCPassword(), "Password Field");
 	}
 
-	public static void userclicksoncreatetesttarget() {
+	public static void userClicksOnCreateTestTarget() {
 		
 		By CreateTestTarget=By.xpath("//button[contains(text(),'Create Test Target')]");
 		  click(CreateTestTarget, "CreateTestTarget");
@@ -151,7 +151,7 @@ public static void userredirectstocreatetesttarget() {
 	}
 	
 	
-	public static void userclicksoncancel() {
+	public static void userClicksOnCancel() {
 		By Cancel=By.xpath("//button[contains(text(),'Cancel')]");
 		
 		  click(Cancel, " Cancel");
