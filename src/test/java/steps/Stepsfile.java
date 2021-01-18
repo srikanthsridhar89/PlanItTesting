@@ -3,6 +3,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import bean.EnvironmentConfig;
+import bean.TestSuiteConfig;
 import bean.TestTargetConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.By;
@@ -27,30 +30,18 @@ import utilities.JsonReader;
 import utilities.SelCommands;
 import net.bytebuddy.utility.RandomString;
 
+import static utilities.SelCommands.*;
+
 public class Stepsfile {
 	private static final String String = null;
 	static WebDriver driver;
 	static SelCommands sel = new SelCommands(driver);
 	private TestTargetConfig testTargetConfig = new TestTargetConfig();
+	private EnvironmentConfig environmentConfig = new EnvironmentConfig();
+	private TestSuiteConfig testSuiteConfig = new TestSuiteConfig();
 	public static String title = "";
 	public static String Uname = "";
 	public static String UserEmail = "";
-	//	public static String testTargetConfig.getTestTargetWFDName() = "";
-//	public static String testtargetWFCName = "";
-//	public static String testtargetpwd = "";
-//	public static String testtargetuname = "";
-//	public static String testtargetwfcpwd = "";
-//	public static String testtargetwfcuname = "";
-//	public static String testtargetwfdhost="";
-//	public static String testtargetwfchost="";
-//	public static String testtargetappkey="";
-//	public static String testtargetclientid="";
-//	public static String testtargetclientsecret = "";
-//	public static String testtargetsftphost = "";
-//	public static String testtargetsftpusername = "";
-//	public static String testtargetsftppassword ="";
-//	public static String testtargetsftpport = "";
-//	public static String testtargetpgppublickey = "";
 	public static String Actionlibrarylabel = "";
 	public static String ActionlibraryDescription = "";
 	public static String Updatetestsuitetitle = "";
@@ -67,6 +58,8 @@ public class Stepsfile {
 		ObjectMapper obj = new ObjectMapper();
 		try {
 			testTargetConfig = obj.readValue(JsonReader.getFile("TestTarget"), TestTargetConfig.class);
+			environmentConfig = obj.readValue(JsonReader.getFile("env"), EnvironmentConfig.class);
+			testSuiteConfig = obj.readValue(JsonReader.getFile("TestSuite"), TestSuiteConfig.class);
 		}catch(Exception e){
 			e.printStackTrace();
 			System.exit(1);
@@ -79,8 +72,8 @@ public class Stepsfile {
 
 	@Given("^User launches the Application$")
 	public void userLaunchesApplication() throws FileNotFoundException, InterruptedException {
-		SelCommands.openbrowser(JsonReader.readJson("env", "url"));
-		LoginPage.loginDetails(JsonReader.readJson("env", "Username"), JsonReader.readJson("env", "Password"));
+		openbrowser(environmentConfig);
+		LoginPage.loginDetails(environmentConfig);
 		LoginPage.clickSignin();
 		LoginPage.verifyLogin();
 
@@ -216,8 +209,8 @@ public class Stepsfile {
 	@Given("^User lands into DashboardPortal After TestSuiteCreation$")
 	public void User_Lands_into_DashboardPortal_After_TestSuiteCreation()
 			throws FileNotFoundException, InterruptedException {
-		SelCommands.openbrowser(JsonReader.readJson("env", "url"));
-		LoginPage.loginDetails(JsonReader.readJson("env", "Username"), JsonReader.readJson("env", "Password"));
+		openbrowser(environmentConfig);
+		LoginPage.loginDetails(environmentConfig);
 		LoginPage.clickSignin();
 		TestSuite.userClicksOnRegressionTestSuite();
 		TestSuite.userSelectDesiredTestSuiteCreated();
@@ -226,7 +219,7 @@ public class Stepsfile {
 
 	@Given("^User Launched application$")
 	public void User_Launched_application() throws FileNotFoundException {
-		SelCommands.openbrowser(JsonReader.readJson("env", "url"));
+		openbrowser(environmentConfig);
 	}
 
 	@Then("^User redirects to createuser$")
@@ -571,10 +564,10 @@ public class Stepsfile {
 	@Then("^User Sees TestTarget Updated$")
 	public void User_Sees_TestTarget_Updated() throws InterruptedException {
 		Thread.sleep(4000);
-		By TestTarget = By.xpath("//*[text()='" + sUpdateTestTargetname + "']");
+		By TestTarget = By.xpath("//*[text()='" + testTargetConfig.getUpdateTestTargetName() + "']");
 		String btn = sel.getElementString(TestTarget);
-		Assert.assertEquals(sUpdateTestTargetname, btn);
-		Reporter.addStepLog("User Updated TestTarget Succesfully with  : " + btn);
+		Assert.assertEquals(testTargetConfig.getUpdateTestTargetName(), btn);
+		Reporter.addStepLog("User Updated TestTarget Successfully with  : " + btn);
 	}
 
 	@When("^User Clicks on CreateTestTarget$")
@@ -585,14 +578,11 @@ public class Stepsfile {
 
 	@When("^User Enter details for TestTarget with \"([^\"]*)\"$")
 	public void User_Enter_details_for_TestTarget_with(String args1) throws InterruptedException, IOException {
-
 		if(args1.equals("Workforce Dimensions Timekeeping"))
-			//TestTarget.userfillswfdtesttargetdetails(testTargetConfig.getTestTargetWFDName(),testtargetappkey, testtargetwfdhost, testtargetuname, testtargetpwd,testtargetclientid,testtargetclientsecret,testtargetsftphost,testtargetsftpusername,testtargetsftppassword,testtargetsftpport,testtargetpgppublickey, args1);
 			TestTarget.userFillsWFDTestTargetDetails(testTargetConfig, args1);
 		else if(args1.equals("Workforce Central"))
 			TestTarget.userFillsWFCTestTargetDetails(testTargetConfig, args1);
 		sel.captureScreenshot("TestTarget Detail");
-
 	}
 
 	@When("^User Clicks on Cancel in TestTarget$")
@@ -644,8 +634,7 @@ public class Stepsfile {
 		By edittesttarget = By.xpath("//*[text()='" + testTargetConfig.getTestTargetWFDName() + "']/following::a[@class='edit-test-target'][1]	");
 		sel.javascript_click(edittesttarget, "User Clicked on Edit Test Target");
 		TestTarget.userRedirectsToEditTestTargetPage();
-		sUpdateTestTargetname = JsonReader.readJson("TestTarget", "UpdatedName") + new RandomString(4).nextString();
-		TestTarget.userUpdatedTestTargetDetails(sUpdateTestTargetname);
+		TestTarget.userUpdatedTestTargetDetails(testTargetConfig.getUpdateTestTargetName());
 		TestTarget.userClicksOnUpdateTestTarget();
 	}
 
@@ -736,7 +725,7 @@ public class Stepsfile {
 
 	@When("^User Enter Logins Details and Clicks on ForgotPassword$")
 	public void User_Enter_Logins_Details_and_Click_on_ForgotPassword() throws IOException {
-		LoginPage.loginDetails(JsonReader.readJson("env", "Username"), JsonReader.readJson("env", "Password"));
+		LoginPage.loginDetails(environmentConfig);
 		Profile.userClicksOnForgotPassword();
 
 		sel.captureScreenshot("Login");
@@ -745,7 +734,7 @@ public class Stepsfile {
 	@When("^User Enter Logins Details and Clicks on Sign In$")
 	public void User_Enter_Logins_Details_and_Clicks_on_Sign_In() throws IOException {
 
-		LoginPage.loginDetails(JsonReader.readJson("env", "Username"), JsonReader.readJson("env", "Password"));
+		LoginPage.loginDetails( environmentConfig);
 		LoginPage.clickSignin();
 		sel.captureScreenshot("Login");
 	}
@@ -856,18 +845,16 @@ public class Stepsfile {
 	@Then("^User sees TestSuite Updated$")
 	public void User_sees_TestSuite_Updated() throws InterruptedException {
 		Thread.sleep(4000);
-		By TestSuiteCreated = By.xpath("//h2[text()='" + Updatetestsuitetitle + "']");
+		By TestSuiteCreated = By.xpath("//h2[text()='" + testSuiteConfig.getTestWFDUpdateTestSuiteTitle() + "']");
 		String btn = sel.getElementString(TestSuiteCreated);
-		Assert.assertEquals(Updatetestsuitetitle, btn);
-		Reporter.addStepLog("User See  TestSuite Updated Succesfully with title : " + btn);
+		Assert.assertEquals(testSuiteConfig.getTestWFDUpdateTestSuiteTitle(), btn);
+		Reporter.addStepLog("User See  TestSuite Updated Successfully with title : " + btn);
 	}
 
 	@When("^User Updates Test Suite Details$")
 	public void User_Updates_Test_Suite_Details() throws InterruptedException {
 		Thread.sleep(3000);
-		Updatetestsuitetitle = JsonReader.readJson("AddTestSuite", "UpdateTestSuiteTitle")
-				+ new RandomString(4).nextString();
-		TestSuite.userUpdatesTestSuiteDetails(Updatetestsuitetitle);
+		TestSuite.userUpdatesTestSuiteDetails(testSuiteConfig.getTestWFDUpdateTestSuiteTitle());
 	}
 
 	@When("^User Clicks on Updated Test Suite$")
@@ -882,24 +869,18 @@ public class Stepsfile {
 		ActionLibrary.userNavigatesToActionLibrary_RegressionTesting();
 	}
 
-	@When("^User Creates TestSuite with WD \"([^\"]*)\"$")
-	public void User_Creates_TestSuite_with_WD(String args2)
+	@When("^User Creates TestSuite with \"([^\"]*)\"$")
+	public void User_Creates_TestSuite_with(String KronosVersion)
 			throws InterruptedException, IOException {
 		Thread.sleep(4000);
-		title = JsonReader.readJson("AddTestSuite", "TestSuiteTitle") + new RandomString(4).nextString();
-		TestSuite.enterAddTestSuiteDetailsWithWFDVersion(title,
-				JsonReader.readJson("AddTestSuite", "Description"), args2);
+		if(KronosVersion.equals("Workforce Dimensions Timekeeping - R1"))
+			TestSuite.enterAddTestSuiteDetailsWithWFDVersion(testSuiteConfig, KronosVersion);
+		else if(KronosVersion.equals("Workforce Central - R1"))
+			TestSuite.enterAddTestSuiteDetailsWithWFCVersion(testSuiteConfig, KronosVersion);
+
 		sel.captureScreenshot("Test Suite Creation Detail");
 	}
 
-	@When("^User Creates Testsuite with \"([^\"]*)\"$")
-	public void User_Creates_Testsuite_with(String args2) throws InterruptedException, IOException {
-		Thread.sleep(4000);
-		title = JsonReader.readJson("AddTestSuite", "TestSuiteTitle") + new RandomString(4).nextString();
-		TestSuite.enterAddTestSuiteDetailsWithWFCVersion(title,
-				JsonReader.readJson("AddTestSuite", "Description"), args2);
-		sel.captureScreenshot("Test Suite Creation Detail");
-	}
 
 	@When("^User selects different reviewopts\"([^\"]*)\"$")
 	public void User_selects_different_reviewopts(String arg1) throws InterruptedException, IOException {
@@ -911,8 +892,7 @@ public class Stepsfile {
 	public void User_Enter_Details_for_Creating_Test_Suite_with(String arg1) throws Throwable {
 
 		Thread.sleep(4000);
-		title = JsonReader.readJson("AddTestSuite", "TestSuiteTitle");
-		TestSuite.enterAddTestSuiteDetails(title, JsonReader.readJson("AddTestSuite", "Description"), arg1);
+		TestSuite.enterAddTestSuiteDetails(testSuiteConfig, arg1);
 		sel.captureScreenshot("Test Suite Creation Detail");
 	}
 
@@ -922,10 +902,11 @@ public class Stepsfile {
 	}
 
 	@When("^User DeletesTestSuite Created$")
-	public void User_DeletesTestSuite_Created() throws InterruptedException {
+	public void User_DeletesTestSuite_Created() throws InterruptedException, IOException {
 		TestSuite.userClicksOnTestSuiteSettings();
 		TestSuite.userRedirectsToUpdateTestSuitePage();
 		TestSuite.userClicksOnDeleteTestSuite();
+		sel.captureScreenshot("Test Suite Deleted Successfully");
 	}
 
 	@When("^User Updates TestSuite Created$")
@@ -955,13 +936,22 @@ public class Stepsfile {
 
 	}
 
-	@Then("^User Created TestSuite Succesfully$")
-	public void User_Created_TestSuite_Successfully() throws InterruptedException {
+	@Then("^User Created TestSuite Successfully with \"([^\"]*)\"$")
+	public void User_Created_TestSuite_Successfully(String KronosVersion) throws InterruptedException, IOException {
 		Thread.sleep(6000);
-		By TestSuiteCreated = By.xpath("//h2[text()='" + title + "']");
-		String btn = sel.getElementString(TestSuiteCreated);
-		Assert.assertEquals(title, btn);
-		Reporter.addStepLog("User Created TestSuite Succesfully with title : " + btn);
+		String btn = null;
+		if(KronosVersion.equals("Workforce Dimensions Timekeeping - R1")) {
+			btn = sel.getElementString(By.xpath("//h2[text()='" + testSuiteConfig.getTestSuiteWFDTitle() + "']"));
+			Assert.assertEquals(testSuiteConfig.getTestSuiteWFDTitle(), btn);
+			Reporter.addStepLog("User Created TestSuite Successfully with title : " + btn);
+		}
+		else if(KronosVersion.equals("Workforce Central - R1")) {
+			btn = sel.getElementString(By.xpath("//h2[text()='" + testSuiteConfig.getTestSuiteWFCTitle() + "']"));
+			Assert.assertEquals(testSuiteConfig.getTestSuiteWFCTitle(), btn);
+		}
+		Reporter.addStepLog("User Created TestSuite Successfully with title : " + btn);
+		sel.captureScreenshot("CreateTestSuite");
+
 	}
 
 	@When("^User Clicks on Create New TestSuite$")
@@ -1050,16 +1040,16 @@ public class Stepsfile {
 	public void User_select_record_to_edit() throws InterruptedException, IOException {
 		Thread.sleep(4000);
 		By Select_Record = By.xpath("//td[contains(text(),'" + Uname + "')][1]");
-		SelCommands.javascript_click(Select_Record, "Created Record which is " + Uname);
-		SelCommands.captureScreenshot();
+		javascript_click(Select_Record, "Created Record which is " + Uname);
+		captureScreenshot();
 	}
 
 	@When("^User clicks on Delete User$")
 	public void User_clicks_on_Delete_user() throws InterruptedException, IOException {
 		Thread.sleep(4000);
 		By Delete_Record = By.xpath("/following::*[@id='deleteUserById'][1]");
-		SelCommands.click(Delete_Record, "Delete User Record which is " + Uname);
-		SelCommands.captureScreenshot();//td[contains(text(),'" + Uname + "')][1]
+		click(Delete_Record, "Delete User Record which is " + Uname);
+		captureScreenshot();//td[contains(text(),'" + Uname + "')][1]
 	}
 
 	@When("^User Clicks on Add New User$")

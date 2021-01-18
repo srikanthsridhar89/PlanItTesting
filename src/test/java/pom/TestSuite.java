@@ -1,5 +1,7 @@
 package pom;
 
+import bean.TestSuiteConfig;
+import com.aventstack.extentreports.model.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -40,7 +42,6 @@ public class TestSuite extends SelCommands {
 	public static void userClickNewTestSuite() throws InterruptedException {
 		Thread.sleep(4000);
 		By CreateNewTestSuite = By.xpath("//button[text()='CREATE NEW TEST SUITE']");
-		// click(CreateNewTestSuite, " Create New TestSuite");
 		javascript_click(CreateNewTestSuite, "Create New Test Suite");
 
 	}
@@ -108,7 +109,7 @@ public class TestSuite extends SelCommands {
 		click(Cancel, "Cancel button");
 	}
 
-	public static void enterAddTestSuiteDetailsWithWFCVersion(String title, String Description,
+	public static void enterAddTestSuiteDetailsWithWFCVersion(TestSuiteConfig testSuiteConfig,
 															  String WorkforceCentralVersion) throws InterruptedException {
 
 		Thread.sleep(4000);
@@ -127,13 +128,13 @@ public class TestSuite extends SelCommands {
 		By SelectTarget = By.xpath("//div[contains(text(),'WFC Dev')]");
 
 		By TestSuitePurpose = By.xpath("//div[@id='PROJECT_PRUPOSE']/div");
-		By SelectPurpose = By.xpath("//div[contains(text(),'Functional Testing')]");
+		By SelectPurpose = By.xpath("//div[contains(text(),'Regression Testing')]");
 
 		By Roles = By.xpath("//div[@id='PROJECT_ROLES']/div");
 		By SelectRoles = By.xpath("//div[contains(text(),'developer')]");
 
-		type(InputTitle, title, "Title Field");
-		type(InputDescription, Description, "Description Field");
+		type(InputTitle, testSuiteConfig.getTestSuiteWFCTitle(), "Title Field");
+		type(InputDescription, testSuiteConfig.getTestWFCDescription(), "Description Field");
 
 		click(TestSuiteVendor, " Vendor DropDown");
 		click(SelectVendor, "Desired Vendor as Kronos");
@@ -146,17 +147,14 @@ public class TestSuite extends SelCommands {
 
 		click(TestTarget, "TestTarget Dropdown");
 		click(SelectTarget, "Desired TestTarget ");
-
 		click(TestSuitePurpose, "TestSuitePurpose Dropdown");
-		System.out.println("---->locator   " + SelectPurpose);
 		click(SelectPurpose, "Desired Purpose As Functional Testing");
-
 		click(Roles, "Roles Dropdown");
 		click(SelectRoles, "Desired Roles as Developer");
 
 	}
 
-	public static void enterAddTestSuiteDetailsWithWFDVersion(String title, String Description,
+	public static void enterAddTestSuiteDetailsWithWFDVersion(TestSuiteConfig testSuiteConfig,
 															  String WorkforceDimensionsversion) throws InterruptedException {
 
 		Thread.sleep(4000);
@@ -175,13 +173,13 @@ public class TestSuite extends SelCommands {
 		By SelectTarget = By.xpath("//div[contains(text(),'Test Kronos Tenant w/ Boomi')]");
 
 		By TestSuitePurpose = By.xpath("//div[@id='PROJECT_PRUPOSE']/div");
-		By SelectPurpose = By.xpath("//div[contains(text(),'Functional Testing')]");
+		By SelectPurpose = By.xpath("//div[contains(text(),'Regression Testing')]");
 
 		By Roles = By.xpath("//div[@id='PROJECT_ROLES']/div");
 		By SelectRoles = By.xpath("//div[contains(text(),'developer')]");
 
-		type(InputTitle, title, "Title Field");
-		type(InputDescription, Description, "Description Field");
+		type(InputTitle, testSuiteConfig.getTestSuiteWFDTitle(), "Title Field");
+		type(InputDescription, testSuiteConfig.getTestWFDDescription(), "Description Field");
 
 		click(TestSuiteVendor, " Vendor DropDown");
 		click(SelectVendor, "Desired Vendor as Kronos");
@@ -196,7 +194,6 @@ public class TestSuite extends SelCommands {
 		click(SelectTarget, "Desired TestTarget as Test Kronos Tenant w/ Boomi ");
 
 		click(TestSuitePurpose, "TestSuitePurpose Dropdown");
-		System.out.println("---->locator   " + SelectPurpose);
 		click(SelectPurpose, "Desired Purpose As Functional Testing");
 
 		click(Roles, "Roles Dropdown");
@@ -204,7 +201,7 @@ public class TestSuite extends SelCommands {
 
 	}
 
-	public static void enterAddTestSuiteDetails(String title, String Description, String typetesting)
+	public static void enterAddTestSuiteDetails(TestSuiteConfig testSuiteConfig, String typetesting)
 			throws InterruptedException {
 
 		Thread.sleep(4000);
@@ -229,8 +226,8 @@ public class TestSuite extends SelCommands {
 		By Roles = By.xpath("//div[@id='PROJECT_ROLES']/div");
 		By SelectRoles = By.xpath("//div[contains(text(),'developer')]");
 
-		type(InputTitle, title, "Title Field");
-		type(InputDescription, Description, "Description Field");
+		type(InputTitle, testSuiteConfig.getTestSuiteWFDTitle(), "Title Field");
+		type(InputDescription, testSuiteConfig.getTestWFDDescription(), "Description Field");
 
 		click(TestSuiteVendor, " Vendor DropDown");
 		click(SelectVendor, "Desired Vendor as Kronos");
@@ -245,7 +242,6 @@ public class TestSuite extends SelCommands {
 		click(SelectTarget, "Desired TestTarget as WFC Dev ");
 
 		click(TestSuitePurpose, "TestSuitePurpose Dropdown");
-		System.out.println("---->locator   " + SelectPurpose);
 		click(SelectPurpose, "Desired Purpose As " + typetesting);
 
 		click(Roles, "Roles Dropdown");

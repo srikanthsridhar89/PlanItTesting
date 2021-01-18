@@ -6,14 +6,14 @@ Feature: TestSuite
 	Scenario Outline: Create TestSuite wrt Workforce Dimension  Versions
 		Given User launches the Application
 		When User Navigates to TestSuite CreationPage
-		And User Creates TestSuite with WD "<WorkforceDimensionsversion>"
+		And User Creates TestSuite with "<KronosVersion>"
 		And User Clicks on Create New TestSuite
-		Then User Created TestSuite Succesfully
+		Then User Created TestSuite Successfully with "<KronosVersion>"
 		And quit browser
 
 
 		Examples:
-			|WorkforceDimensionsversion|
+			|KronosVersion|
 			|Workforce Dimensions Timekeeping - R1|
 
 
@@ -23,14 +23,14 @@ Feature: TestSuite
 	Scenario Outline: Create TestSuite wrt Workforce Central  Versions
 		Given User launches the Application
 		When User Navigates to TestSuite CreationPage
-		And User Creates Testsuite with "<WorkforceCentralVersion>"
+		And User Creates TestSuite with "<KronosVersion>"
 		And User Clicks on Create New TestSuite
-		Then User Created TestSuite Succesfully
+		Then User Created TestSuite Successfully with "<KronosVersion>"
 		And quit browser
 
 
 		Examples:
-			|WorkforceCentralVersion|
+			|KronosVersion|
 			|Workforce Central - R1|
 
 
@@ -40,17 +40,15 @@ Feature: TestSuite
 	Scenario Outline: Edit TestSuite
 		Given User launches the Application
 		When User Navigates to TestSuite CreationPage
-		And User Creates TestSuite with WD "<WorkforceDimensionsversion>"
+		And User Creates TestSuite with "<KronosVersion>"
 		And User Clicks on Create New TestSuite
 		And User Updates TestSuite Created
 		Then User sees TestSuite Updated
 		And quit browser
 
 		Examples:
-			|WorkforceDimensionsversion|
+			|KronosVersion|
 			|Workforce Dimensions Timekeeping - R1|
-
-
 
 
 
@@ -60,13 +58,13 @@ Feature: TestSuite
 	Scenario Outline: Cancel TestSuite
 		Given User launches the Application
 		When User Navigates to TestSuite CreationPage
-		And User Creates TestSuite with WD "<WorkforceDimensionsversion>"
+		And User Creates TestSuite with "<KronosVersion>"
 		And User Clicks on Cancel in AddTestSuite
 		Then quit browser
 
 
 		Examples:
-			|WorkforceDimensionsversion|
+			|KronosVersion|
 			|Workforce Dimensions Timekeeping - R1|
 
 
@@ -77,13 +75,13 @@ Feature: TestSuite
 	Scenario Outline: Delete TestSuite
 		Given User launches the Application
 		When User Navigates to TestSuite CreationPage
-		And User Creates TestSuite with WD "<WorkforceDimensionsversion>"
+		And User Creates TestSuite with "<KronosVersion>"
 		And User Clicks on Create New TestSuite
 		And User DeletesTestSuite Created
 		Then quit browser
 
 		Examples:
-			|WorkforceDimensionsversion|
+			|KronosVersion|
 			|Workforce Dimensions Timekeeping - R1|
 
 

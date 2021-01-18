@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import bean.EnvironmentConfig;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -33,7 +34,7 @@ public class SelCommands {
 		this.driver = driver;
 	}
 
-	public static void openbrowser(String url) throws FileNotFoundException {
+	public static void openbrowser(EnvironmentConfig environmentConfig) throws FileNotFoundException {
 
 		System.setProperty("webdriver.chrome.driver","./src/test/resources/drivers/chromedriver");
 		//driver = new ChromeDriver();
@@ -43,9 +44,9 @@ public class SelCommands {
 		options.addArguments("headless");
 		driver = new ChromeDriver(options);
 		
-		driver.get(url);
+		driver.get(environmentConfig.getUrl());
 		driver.manage().window().maximize();
-		Reporter.addStepLog("welcome to " + url);
+		Reporter.addStepLog("welcome to " + environmentConfig.getUrl());
 	}
 
 	public void quitBrowser() {

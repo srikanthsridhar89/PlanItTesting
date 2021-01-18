@@ -41,7 +41,7 @@ Feature: TestTarget
 
 	@ignore
 		@regression
-		@edittesttarget
+		@EditTestTarget
 		@testtarget
 	Scenario Outline: Edit TestTarget
 
@@ -57,7 +57,6 @@ Feature: TestTarget
 		Examples:
 
 			|Software|
-			|Workforce Central|
 			|Workforce Dimensions Timekeeping|
 
 
@@ -65,7 +64,7 @@ Feature: TestTarget
 
 	@ignore
 		@regression
-		@canceltesttarget
+		@CancelTestTarget
 		@testtarget
 	Scenario Outline: Cancel TestTarget
 		Given User launches the Application
@@ -77,13 +76,12 @@ Feature: TestTarget
 		Examples:
 
 			|Software|
-			|Workforce Central|
 			|Workforce Dimensions Timekeeping|
 
 
 	@ignore
 		@regression
-		@deletetesttarget
+		@DeleteTestTarget
 		@testtarget
 	Scenario Outline: Delete TestTarget
 
@@ -99,7 +97,6 @@ Feature: TestTarget
 		Examples:
 
 			|Software|
-			|Workforce Central|
 			|Workforce Dimensions Timekeeping|
 
 	

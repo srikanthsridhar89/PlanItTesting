@@ -1,5 +1,6 @@
 	package pom;
 
+import bean.EnvironmentConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -13,15 +14,15 @@ public class LoginPage extends SelCommands {
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
-	public static void loginDetails(String username, String pwd) {
+	public static void loginDetails(EnvironmentConfig environmentConfig) {
 		By UserName=By.xpath("//input[@id='email']");
 		By Password=By.id("password");
 		
 		
 		
-		type(UserName, username, "User Name Field");
+		type(UserName, environmentConfig.getUserName(), "User Name Field");
 		
-		type(Password, pwd, "Password Field");
+		type(Password, environmentConfig.getPassword(), "Password Field");
 		
 		//captureScreenshot("loginpage");
 		
