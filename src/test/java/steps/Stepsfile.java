@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import bean.EnvironmentConfig;
-import bean.TestSuiteConfig;
-import bean.TestTargetConfig;
+import bean.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -39,16 +37,10 @@ public class Stepsfile {
 	private TestTargetConfig testTargetConfig = new TestTargetConfig();
 	private EnvironmentConfig environmentConfig = new EnvironmentConfig();
 	private TestSuiteConfig testSuiteConfig = new TestSuiteConfig();
-	public static String title = "";
+	private PersonaConfig personaConfig = new PersonaConfig();
+	private ActionLibraryConfig actionLibraryConfig = new ActionLibraryConfig();
 	public static String Uname = "";
 	public static String UserEmail = "";
-	public static String Actionlibrarylabel = "";
-	public static String ActionlibraryDescription = "";
-	public static String Updatetestsuitetitle = "";
-	public static String sUpdateTestTargetname = "";
-	public static String prefix = "";
-	public static String suffix = "";
-	public static String UpdatedActionLibrarylabel = "";
 	public static String dashboard_Personacount="";
 	public static String dashboard_Actionscount="";
 	public static String dashboard_Scenariocount="";
@@ -60,6 +52,8 @@ public class Stepsfile {
 			testTargetConfig = obj.readValue(JsonReader.getFile("TestTarget"), TestTargetConfig.class);
 			environmentConfig = obj.readValue(JsonReader.getFile("env"), EnvironmentConfig.class);
 			testSuiteConfig = obj.readValue(JsonReader.getFile("TestSuite"), TestSuiteConfig.class);
+			personaConfig = obj.readValue(JsonReader.getFile("Persona"), PersonaConfig.class);
+			actionLibraryConfig = obj.readValue(JsonReader.getFile("ActionLibrary"), ActionLibraryConfig.class);
 		}catch(Exception e){
 			e.printStackTrace();
 			System.exit(1);
@@ -132,9 +126,7 @@ public class Stepsfile {
 		By Persona_Tab=By.xpath("//a[@id='personas']");
 		sel.click(Persona_Tab, "Persona Tab");
 		Persona.userClicksOnNewPersona();
-		Persona.userFillsPersonaDetails(JsonReader.readJson("Persona", "label"),
-				JsonReader.readJson("Persona", "description"), JsonReader.readJson("Persona", "ActivityProfile"),
-				JsonReader.readJson("Persona", "Adjustmentrule"), JsonReader.readJson("Persona", "CategoryProfile"));
+		Persona.userFillsPersonaDetails(personaConfig);
 		Persona.userClicksOnSubmit();
 	}
 
@@ -518,8 +510,7 @@ public class Stepsfile {
 
 	@When("^User Updates TestTarget details$")
 	public void User_Updates_TestTarget_details() {
-		sUpdateTestTargetname = JsonReader.readJson("TestTarget", "UpdatedName") + new RandomString(4).nextString();
-		TestTarget.userUpdatedTestTargetDetails(sUpdateTestTargetname);
+		TestTarget.userUpdatedTestTargetDetails(testSuiteConfig.getTestWFCUpdateTestSuiteTitle());
 	}
 
 	@Then("^User Sees Created TestTarget details with \"([^\"]*)\"$")
@@ -656,57 +647,42 @@ public class Stepsfile {
 
 	@When("^User Updates Created Actions$")
 	public void User_Updates_Created_Actions() {
-
-		String desc = JsonReader.readJson("ActionLibrary", "UpdatedDescription") + new RandomString(4).nextString();
-		UpdatedActionLibrarylabel = JsonReader.readJson("ActionLibrary", "UpdatedLabel")
-				+ new RandomString(4).nextString();
-		ActionLibrary.userUpdatesAction(desc, UpdatedActionLibrarylabel);
+		ActionLibrary.userUpdatesAction(actionLibraryConfig.getAcUpdatedDescription(), actionLibraryConfig.getAcUpdatedLabel());
 
 	}
 
 	@Then("^User sees Action Updated$")
 	public void User_sees_Action_Updated() throws IOException, InterruptedException {
 		Thread.sleep(6000);
-		By ActionLibraryDetail = By.xpath("//div[contains(text(),'" + UpdatedActionLibrarylabel + "')]");
+		By ActionLibraryDetail = By.xpath("//div[contains(text(),'" + actionLibraryConfig.getAcUpdatedLabel() + "')]");
 		String btn = sel.getElementString(ActionLibraryDetail);
-		Assert.assertEquals(UpdatedActionLibrarylabel, btn);
-		Reporter.addStepLog("User Sees Action Library Updated Correctly with Label :" + UpdatedActionLibrarylabel);
+		Assert.assertEquals(actionLibraryConfig.getAcUpdatedLabel(), btn);
+		Reporter.addStepLog("User Sees Action Library Updated Correctly with Label :" + actionLibraryConfig.getAcUpdatedLabel());
 		sel.captureScreenshot("Action Library Verification");
 	}
 
 	@Then("^User sees Action Created$")
 	public void User_sees_Action_created() throws IOException, InterruptedException {
 
-		Thread.sleep(6000);
-		By ActionLibraryDetail = By.xpath("//div[contains(text(),'" + Actionlibrarylabel + "')]");
+		Thread.sleep(4000);
+		By ActionLibraryDetail = By.xpath("//div[contains(text(),'" + actionLibraryConfig.getAcLabel() + "')]");
 		String btn = sel.getElementString(ActionLibraryDetail);
-		System.out.println("Value is"+btn);
-		Assert.assertEquals(Actionlibrarylabel, btn);
-		Reporter.addStepLog("User Sees Action Library Created Correctly with Label :" + Actionlibrarylabel);
+		Assert.assertEquals(actionLibraryConfig.getAcLabel(), btn);
+		Reporter.addStepLog("User Sees Action Library Created Correctly with Label :" + actionLibraryConfig.getAcLabel());
 	}
 
 	@When("^User Enter details for Action Creation with TableData \"([^\"]*)\"$")
 	public void User_Enter_details_for_Action_Creation_with_TableData(String arg1) throws InterruptedException, IOException {
 		ActionLibrary.userClicksOnAddAction();
-		prefix = JsonReader.readJson("ActionLibrary", "prefix") + new RandomString(4).nextString();
-		suffix = JsonReader.readJson("ActionLibrary", "suffix") + new RandomString(4).nextString();
-		DisplayKey = JsonReader.readJson("ActionLibrary", "DisplayKey") + new RandomString(4).nextString();
-		Actionlibrarylabel = JsonReader.readJson("ActionLibrary", "Label") + new RandomString(4).nextString();
-		String columntype = JsonReader.readJson("ActionLibrary", arg1) + new RandomString(4).nextString();
-		ActionlibraryDescription = JsonReader.readJson("ActionLibrary", "Description")
-				+ new RandomString(4).nextString();
-		ActionLibrary.userFillsActionWithTableData_Integer(Actionlibrarylabel, ActionlibraryDescription, prefix, suffix,
-				DisplayKey, arg1);
+		ActionLibrary.userFillsActionWithTableData_Integer(actionLibraryConfig.getAcLabel(), actionLibraryConfig.getAcDescription(),
+				actionLibraryConfig.getAcPrefix(), actionLibraryConfig.getAcSuffix(), actionLibraryConfig.getAcDisplayKey(), arg1);
 	}
 
 	@When("^User Enter details for ActionCreation$")
 	public void User_Enter_details_for_ActionCreation() throws InterruptedException, IOException {
 		Thread.sleep(4000);
 		ActionLibrary.userClicksOnAddAction();
-		Actionlibrarylabel = JsonReader.readJson("ActionLibrary", "Label") + new RandomString(4).nextString();
-		ActionlibraryDescription = JsonReader.readJson("ActionLibrary", "Description")
-				+ new RandomString(4).nextString();
-		ActionLibrary.userFillsAction(Actionlibrarylabel, ActionlibraryDescription);
+		ActionLibrary.userFillsAction(actionLibraryConfig.getAcLabel(), actionLibraryConfig.getAcDescription());
 		sel.captureScreenshot("Action Library Detail");
 	}
 
@@ -786,42 +762,35 @@ public class Stepsfile {
 
 	@When("^User edits Persona$")
 	public void User_edits_Persona() {
-		Persona.userEditsPersonaDetails(JsonReader.readJson("Persona", "Editlabel"));
+		Persona.userEditsPersonaDetails(personaConfig.getPersonaEditLabel());
 
 	}
 
 	@When("^User fills Personadetails$")
-	public static void User_fills_Personadetails() throws IOException {
+	public void User_fills_Personadetails() throws IOException {
 
-		Persona.userFillsPersonaDetails(JsonReader.readJson("Persona", "label"),
-				JsonReader.readJson("Persona", "description"), JsonReader.readJson("Persona", "ActivityProfile"),
-				JsonReader.readJson("Persona", "Adjustmentrule"), JsonReader.readJson("Persona", "CategoryProfile"));
+		Persona.userFillsPersonaDetails(personaConfig);
 
 	}
 	@Then("^User sees Persona Updated$")
 	public void User_sees_persona_Updated() throws IOException {
 		By PersonaUpdated=By.xpath("//span[text()='EditTestLabel']");
-
-		String  UpdatedPersona= JsonReader.readJson("Persona", "Editlabel");
 		String btn = sel.getElementString(PersonaUpdated);
-		Assert.assertEquals(UpdatedPersona, btn);
-		Reporter.addStepLog("User sees Persona Updated as"+UpdatedPersona);
+		Assert.assertEquals(personaConfig.getPersonaEditLabel(), btn);
+		Reporter.addStepLog("User sees Persona Updated as"+personaConfig.getPersonaEditLabel());
 		sel.captureScreenshot("Persona Verification");
 	}
 
 	@Then("^User does not see Persona Deleted$")
 	public void User_does_not_see_Persona_Deleted() {
-		By PersonaCreated=By.xpath("//span[text()='TestLabel']");
-
+		By PersonaCreated=By.xpath("//span[text()='AssociatePersona']");
 		String btn = sel.getElementString(PersonaCreated);
-
-
 	}
 	@Then("^User sees Persona Created")
 	public void User_sees_Persona_Created() throws IOException {
-		By PersonaCreated=By.xpath("//span[text()='TestLabel']");
+		By PersonaCreated=By.xpath("//span[text()='AssociatePersona']");
 		String btn = sel.getElementString(PersonaCreated);
-		Assert.assertEquals("TestLabel", btn);
+		Assert.assertEquals("AssociatePersona", btn);
 		Reporter.addStepLog("User sees Persona Created as "+btn);
 		sel.captureScreenshot("Persona Verification");
 	}
@@ -859,13 +828,11 @@ public class Stepsfile {
 
 	@When("^User Clicks on Updated Test Suite$")
 	public void User_Clicks_on_Updated_Test_Suite() {
-
 		TestSuite.userClicksOnUpdateTestSuite();
 	}
 
 	@When("^User Navigates to ActionLibrary$")
 	public void User_Navigates_to_ActionLibrary() throws Throwable {
-
 		ActionLibrary.userNavigatesToActionLibrary_RegressionTesting();
 	}
 

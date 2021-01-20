@@ -281,12 +281,12 @@ public class SelCommands {
 		return window;
 	}
 
-	public static void type(By by, String value, String fiedlName) {
+	public static void type(By by, String value, String fieldName) {
 
 		waitForElementPresent(by, 60);
 		driver.findElement(by).clear();
 		driver.findElement(by).sendKeys(value);
-		Reporter.addStepLog("Setting " + fiedlName + " value As " + value);
+		Reporter.addStepLog("Setting " + fieldName + " value As " + value);
 
 	}
 	

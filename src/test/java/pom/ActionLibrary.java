@@ -51,10 +51,9 @@ public class ActionLibrary extends SelCommands {
 
 	public static void userUpdatesAction(String desc, String label) {
 		WebDriverWait wait = new WebDriverWait(driver, 240);
-	
+
 		By ActionLibraryEdit = By.xpath("//*[@id='ACTION_EDIT_ICON']");
-		
-		
+
 		wait.until(ExpectedConditions.presenceOfElementLocated(ActionLibraryEdit));
 
 		By Descriptionfield = By.xpath("//textarea[@name='ACTION_DESCRIPTION']");
@@ -75,34 +74,32 @@ public class ActionLibrary extends SelCommands {
 	}
 
 	public static void userNavigatesToActionLibrary_RegressionTesting() throws InterruptedException {
-Thread.sleep(4000);
+		Thread.sleep(4000);
 
-TestSuite.userClicksOnRegressionTestSuite();
-TestSuite.userSelectDesiredTestSuiteCreated();
+		TestSuite.userClicksOnRegressionTestSuite();
+		TestSuite.userSelectDesiredTestSuiteCreated();
 		By ActionLibrary = By.xpath("//a[text()='Action Library']");
 		click(ActionLibrary, "Action Library");
 
 	}
 
-	
+
 
 	public static void userClicksOnAddAction() throws InterruptedException {
 		By AddAction = By.xpath("//*[@id='createActionIconId']");
 
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 		wait.until(ExpectedConditions.presenceOfElementLocated(AddAction));
-		
 		click(AddAction, "Add Action");
 	}
-	
-	
+
+
 	public static void userFillsActionWithTableData_String(String label, String Description, String prefix,
 														   String suffix, String DisplayKey, String columntype) throws InterruptedException {
 
 		Thread.sleep(4000);
 		By Labelfield = By.xpath("//input[@id='ACTION_CUSTOM_LABEL']");
 		By DescriptionField = By.xpath("//textarea[@id='ACTION_DESCRIPTION']");
-
 		By Checkbox = By.xpath("//input[@type='checkbox']");
 		By ActionTablelumnDisplayKey = By.xpath("(//INPUT[@id='ACTION_TABLE_COLUMNS_DISPLAY_KEY'])[1]");
 		By ActionTableColumnType = By.cssSelector("#ACTION_TABLE_COLUMNS_TYPE input");
@@ -145,11 +142,11 @@ TestSuite.userSelectDesiredTestSuiteCreated();
 		By Checkbox = By.xpath("//input[@type='checkbox']");
 		By ActionTablelumnDisplayKey = By.xpath("(//INPUT[@id='ACTION_TABLE_COLUMNS_DISPLAY_KEY'])[1]");
 		By ActionTableColumnType = By.cssSelector("#ACTION_TABLE_COLUMNS_TYPE input");
-		
+
 		By ActionTablePrefix = By.xpath("(//input[@placeholder='Prefix'])[1]");
 		By ActionTableSuffix = By.xpath("(//input[@placeholder='Suffix'])[1]");
-By Folder=By.xpath("//div[@id='ACTION_FOLDERS']");
-By DesiredFolder=By.xpath("//div[text()='UAT']");
+		By Folder=By.xpath("//div[@id='ACTION_FOLDERS']");
+		By DesiredFolder=By.xpath("//div[text()='UAT']");
 
 
 
@@ -157,7 +154,7 @@ By DesiredFolder=By.xpath("//div[text()='UAT']");
 		click(Checkbox, "Checkbox");
 
 		type(DescriptionField, Description, "Title Field");
-		
+
 		click(Folder, "Checkbox");
 		click(DesiredFolder, "DesiredFolder as UAT");
 

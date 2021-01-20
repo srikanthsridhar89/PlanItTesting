@@ -1,7 +1,7 @@
 {
 	"WFDName": "Test Kronos Tenant w/ Boomi",
 	"WFCName": "WFC Dev",
-	"UpdatedName":"UpdatedTestAuto",
+	"UpdatedName":"UpdatedWFDTestTargetName",
 	"Username": "SeanIvan",
 	"Password": "Kr0n0s@Cloud",
 	"WFCUsername": "Super",

@@ -1,9 +1,9 @@
 {
-	"label": "TestLabel",
-	"description": "TestDescription",
+	"label": "AssociatePersona",
+	"Description": "TestDescription",
 	"ActivityProfile": "TestActivityProfile",
-	"Adjustmentrule": "TestAdjustmentProfile",
-	"CategoryProfile": "TestCategoryprofile",
-	"Editlabel":"EditTestLabel"
+	"AdjustmentRule": "TestAdjustmentProfile",
+	"CategoryProfile": "TestCategoryProfile",
+	"EditLabel":"EditTestLabel"
 
 }
