@@ -17,7 +17,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<dependencies>
 
 		<!-- https://mvnrepository.com/artifact/selenium-cucumber/selenium-cucumber-java -->
