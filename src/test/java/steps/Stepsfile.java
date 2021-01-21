@@ -24,6 +24,7 @@ import pom.SwitchTenant;
 import pom.TestPlan;
 import pom.TestTarget;
 import pom.LoginPage;
+import sun.lwawt.macosx.CSystemTray;
 import utilities.JsonReader;
 import utilities.SelCommands;
 import net.bytebuddy.utility.RandomString;
@@ -105,17 +106,17 @@ public class Stepsfile {
 		By Persona_Count=By.xpath("(//a[text()='Personas'])[2]/preceding::div[@class='number']");
 		By Action_Count=By.xpath("//a[text()='Actions']/preceding::div[@class='number'][1]");
 		By Scenario_Count=By.xpath("//a[text()='Scenarios']/preceding::div[@class='number'][1]");
-		String personacount = sel.getElementString(Persona_Count);
-		String Actionscount = sel.getElementString(Action_Count);
-		String	Scenariocount = sel.getElementString(Scenario_Count);
-		if(personacount.equals(dashboard_Personacount)) {
-			Reporter.addStepLog("User see Persona Count as" +personacount);
+		String personaCount = sel.getElementString(Persona_Count);
+		String actionsCount = sel.getElementString(Action_Count);
+		String	scenarioCount = sel.getElementString(Scenario_Count);
+		if(personaCount.equals(dashboard_Personacount)) {
+			Reporter.addStepLog("User see Persona Count as" +personaCount);
 		}
-		if(Actionscount.equals(dashboard_Actionscount)) {
-			Reporter.addStepLog("User see Actions Count as" +Actionscount);
+		if(actionsCount.equals(dashboard_Actionscount)) {
+			Reporter.addStepLog("User see Actions Count as" +actionsCount);
 		}
-		if(dashboard_Scenariocount.equals(Scenariocount)) {
-			Reporter.addStepLog("User see Scenario Count" +Scenariocount);
+		if(dashboard_Scenariocount.equals(scenarioCount)) {
+			Reporter.addStepLog("User see Scenario Count" +scenarioCount);
 		}
 		sel.captureScreenshot();
 	}
@@ -130,6 +131,13 @@ public class Stepsfile {
 		Persona.userClicksOnSubmit();
 	}
 
+	@When("^User Copies createdPersona$")
+	public void user_Copies_createdPersona() throws Throwable {
+		Thread.sleep(2000);
+		By personaCopy=By.xpath("//*[@id='copyPersona']");
+		sel.click(personaCopy, "Persona Copy");
+
+	}
 
 	@When("^User Navigates to Actions and Creates Actions$")
 	public void User_Navigates_to_Action_and_Creates_Actions() throws InterruptedException, IOException {
@@ -641,13 +649,12 @@ public class Stepsfile {
 
 	@When("^User Clicks on Submit in ActionCreationPage$")
 	public void User_Clicks_on_Submit_in_ActionCreationPage() {
-
 		ActionLibrary.userClicksOnSubmit();
 	}
 
 	@When("^User Updates Created Actions$")
 	public void User_Updates_Created_Actions() {
-		ActionLibrary.userUpdatesAction(actionLibraryConfig.getAcUpdatedDescription(), actionLibraryConfig.getAcUpdatedLabel());
+		ActionLibrary.userUpdatesAction(actionLibraryConfig);
 
 	}
 
@@ -663,9 +670,8 @@ public class Stepsfile {
 
 	@Then("^User sees Action Created$")
 	public void User_sees_Action_created() throws IOException, InterruptedException {
-
 		Thread.sleep(4000);
-		By ActionLibraryDetail = By.xpath("//div[contains(text(),'" + actionLibraryConfig.getAcLabel() + "')]");
+		By ActionLibraryDetail = By.xpath("//label[contains(text(),'" + actionLibraryConfig.getAcLabel() + "')]");
 		String btn = sel.getElementString(ActionLibraryDetail);
 		Assert.assertEquals(actionLibraryConfig.getAcLabel(), btn);
 		Reporter.addStepLog("User Sees Action Library Created Correctly with Label :" + actionLibraryConfig.getAcLabel());
@@ -674,15 +680,14 @@ public class Stepsfile {
 	@When("^User Enter details for Action Creation with TableData \"([^\"]*)\"$")
 	public void User_Enter_details_for_Action_Creation_with_TableData(String arg1) throws InterruptedException, IOException {
 		ActionLibrary.userClicksOnAddAction();
-		ActionLibrary.userFillsActionWithTableData_Integer(actionLibraryConfig.getAcLabel(), actionLibraryConfig.getAcDescription(),
-				actionLibraryConfig.getAcPrefix(), actionLibraryConfig.getAcSuffix(), actionLibraryConfig.getAcDisplayKey(), arg1);
+		ActionLibrary.userFillsActionWithTableData_Integer(actionLibraryConfig,arg1);
 	}
 
 	@When("^User Enter details for ActionCreation$")
 	public void User_Enter_details_for_ActionCreation() throws InterruptedException, IOException {
 		Thread.sleep(4000);
 		ActionLibrary.userClicksOnAddAction();
-		ActionLibrary.userFillsAction(actionLibraryConfig.getAcLabel(), actionLibraryConfig.getAcDescription());
+		ActionLibrary.userFillsAction(actionLibraryConfig);
 		sel.captureScreenshot("Action Library Detail");
 	}
 
@@ -766,19 +771,28 @@ public class Stepsfile {
 
 	}
 
-	@When("^User fills Personadetails$")
-	public void User_fills_Personadetails() throws IOException {
+	@When("^User fills Persona details$")
+	public void User_fills_Persona_details() throws IOException {
 
 		Persona.userFillsPersonaDetails(personaConfig);
 
 	}
 	@Then("^User sees Persona Updated$")
 	public void User_sees_persona_Updated() throws IOException {
-		By PersonaUpdated=By.xpath("//span[text()='EditTestLabel']");
+		By PersonaUpdated=By.xpath("//span[text()='Associate Persona Edited']");
 		String btn = sel.getElementString(PersonaUpdated);
 		Assert.assertEquals(personaConfig.getPersonaEditLabel(), btn);
 		Reporter.addStepLog("User sees Persona Updated as"+personaConfig.getPersonaEditLabel());
 		sel.captureScreenshot("Persona Verification");
+	}
+
+	@Then("^User sees Persona Copied$")
+	public void User_sees_Persona_Copied() throws IOException {
+		By PersonaCopied=By.xpath("//span[text()='"+ personaConfig.getPersonaLabel() + " (Copy)']");
+		String btn = sel.getElementString(PersonaCopied);
+		Assert.assertTrue(btn,true);
+		Reporter.addStepLog("User sees Persona Copied as"+ btn);
+		sel.captureScreenshot("Duplicate Persona");
 	}
 
 	@Then("^User does not see Persona Deleted$")
@@ -844,7 +858,6 @@ public class Stepsfile {
 			TestSuite.enterAddTestSuiteDetailsWithWFDVersion(testSuiteConfig, KronosVersion);
 		else if(KronosVersion.equals("Workforce Central - R1"))
 			TestSuite.enterAddTestSuiteDetailsWithWFCVersion(testSuiteConfig, KronosVersion);
-
 		sel.captureScreenshot("Test Suite Creation Detail");
 	}
 
@@ -1034,7 +1047,6 @@ public class Stepsfile {
 		By UpdatedUserRecord=By.xpath("(//td[contains(text(),'" + Uname + "')/following::td[@class='clickable-row attribute-key-col'])[2]");
 		driver.findElement(UpdatedUserRecord).getText();
 		String btn = sel.getElementString(UpdatedUserRecord);
-		System.out.println("Value is"+btn);
 	}
 
 	@When("^User Clicks on UpdateUser$")

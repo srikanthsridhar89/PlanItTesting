@@ -3,6 +3,7 @@ package pom;
 import java.io.IOException;
 
 import bean.PersonaConfig;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -18,14 +19,13 @@ public class Persona  extends SelCommands {
 	public static void userClicksOnDelete() {
 		By Delete=By.xpath("//*[@id='delete-persona-image-id']");
 		click(Delete, "Delete");
-
+		Alert alert = driver.switchTo().alert();
+		alert.accept();
 	}
 	public static void userEditsPersonaDetails(String label) {
-
 		By Persona_edit=By.xpath("//*[contains(@class,'icon-edit-persona')]");
 		By Label = By.xpath("//input[@name='label']");
 		click(Persona_edit, "Persona Edit");
-
 		type(Label, label, "Label Field");
 	}
 
@@ -34,18 +34,14 @@ public class Persona  extends SelCommands {
 		By Select_Persona=By.xpath("//span[contains(text(),'TestPersona')]");
 		click(Select_Persona, "Desired Persona");
 	}
+
 	public  static void userClicksOnPersonaWorkspace() throws InterruptedException {
 
 		Thread.sleep(4000);
-
 		TestSuite.userClicksOnRegressionTestSuite();
 		TestSuite.userSelectDesiredTestSuiteCreated();
 		By Persona_Tab=By.xpath("//a[@id='personas']");
-
-
 		click(Persona_Tab, "Persona Tab");
-
-
 	}
 
 
@@ -59,7 +55,6 @@ public class Persona  extends SelCommands {
 	}
 
 	public static void userClicksOnNewPersona() {
-
 		By NewPersona=	By.xpath("//*[@id='createPersonaIconId']");
 		click(NewPersona, "New Persona");
 	}
@@ -87,6 +82,5 @@ public class Persona  extends SelCommands {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 }

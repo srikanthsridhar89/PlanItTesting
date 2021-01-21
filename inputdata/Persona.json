@@ -1,9 +1,9 @@
 {
-	"label": "AssociatePersona",
+	"label": "AssociatePersonaWyatt",
 	"Description": "TestDescription",
 	"ActivityProfile": "TestActivityProfile",
 	"AdjustmentRule": "TestAdjustmentProfile",
 	"CategoryProfile": "TestCategoryProfile",
-	"EditLabel":"EditTestLabel"
+	"EditLabel":"Associate Persona Edited"
 
 }

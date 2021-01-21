@@ -37,7 +37,7 @@ public class SelCommands {
 	public static void openbrowser(EnvironmentConfig environmentConfig) throws FileNotFoundException {
 
 		System.setProperty("webdriver.chrome.driver","./src/test/resources/drivers/chromedriver");
-		//driver = new ChromeDriver();
+//		driver = new ChromeDriver();
 		
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("headless", "--disable-gpu","--ignore-certificate-errors");

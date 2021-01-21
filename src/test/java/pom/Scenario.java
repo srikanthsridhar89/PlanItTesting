@@ -35,7 +35,7 @@ public class Scenario extends SelCommands {
 	public static String sUpdateWhenData = "My overtime for today is approved";
 	public static String sUpdateThenData = "My shift does not have an exception flag";
 	private static By RequirementNotesfield;
-public static String url="";
+	public static String url="";
 
 	public Scenario(WebDriver driver) {
 		super(driver);
@@ -153,42 +153,42 @@ public static String url="";
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#create-scenario-onEnterPress")));
 		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(sTestScenario);
 		action.sendKeys(Keys.ENTER).perform();
-        Reporter.addStepLog("User Creates TestScenario :" + sTestScenario);
+		Reporter.addStepLog("User Creates TestScenario :" + sTestScenario);
 		wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")));
 
 		driver.findElement(By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")).click();
 
-		
+
 		Thread.sleep(4000);
 		By ShareIcon = By.xpath("//button[@class='share-icon']");
 		click(ShareIcon, "ShareIcon");
-		 url=driver.findElement(ShareIcon).getAttribute("data-clipboard-text");
-		
+		url=driver.findElement(ShareIcon).getAttribute("data-clipboard-text");
+
 		((JavascriptExecutor) driver).executeScript("window.open()");
 		ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
 		driver.switchTo().window(tabs.get(1));
 		driver.get(url);
-		
-	
-		
+
+
+
 		//By txt_LinkCopied = By.xpath("//*[text()='Link copied to clipboard']");
 		//String btn = getElementString(txt_LinkCopied);
 		//Assert.assertEquals("Link copied to clipboard", btn);
-			
-		    
+
+
 		Reporter.addStepLog("User Sees LinkCopied Text Correctly");
 	}
 
-	
-	
+
+
 	public static  void userSeeSharedScenario() throws IOException {
-		
+
 		if(!url.isEmpty()) {
 			Reporter.addStepLog("User see Shared Scenario Correctly :"+url);
 		}
 		else {
-			
+
 			Reporter.addStepLog("User does not  see Shared Scenario Correctly");
 		}
 		SelCommands.captureScreenshot();
@@ -480,11 +480,11 @@ public static String url="";
 		driver.findElement(By.xpath("//div[@id='react-select-9-option-4']")).click();
 
 		Reporter.addStepLog("User Selects Then with And  Statement");
-		
-	
-				
-				SelCommands.captureScreenshot();
-		
+
+
+
+		SelCommands.captureScreenshot();
+
 		click(Save, "Save");
 
 	}
@@ -572,17 +572,17 @@ public static String url="";
 
 		}
 	}
-	
+
 	public static void userseescreatedpersona() throws IOException {
-		
-		
+
+
 		WebElement E1 = driver.findElement(By.xpath("//label[contains(text(),'I am an Exempt')]"));
-		
-		
+
+
 		if(E1.getText().contains("Exempt")) {
-		Reporter.addStepLog("User sees Created Persona Correctly"+E1.getText());
+			Reporter.addStepLog("User sees Created Persona Correctly"+E1.getText());
 		}
-		
+
 		else {
 			Reporter.addStepLog("User does not sees Created Persona");
 		}
@@ -616,25 +616,25 @@ public static String url="";
 		javascript_click(ScenarioTab, "Scenario Tab");
 
 	}
-	
-	
+
+
 	public static void userclicksonpersonalink() throws InterruptedException {
 		Thread.sleep(4000);
 		By PersonaLink=By.xpath("//a[@id='viewByPersonaLink']");
 		WebElement ele=driver.findElement(By.xpath("//input[@placeholder='Create New Folder']"));
 		if(ele.isDisplayed()) {
-			
-			
+
+
 			click(PersonaLink, "PersonaLink");
 
 		}
 		else {
-			
+
 			By FolderLink=By.xpath("//*[@id='viewByFolderLink']");
 			click(FolderLink, "FolderLink");
 			click(PersonaLink, "PersonaLink");
 		}
-			}
+	}
 
 	public static void userclicksoncreatefolder() throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, 240);
@@ -685,50 +685,36 @@ public static String url="";
 	}
 
 	public static void user_deletesfolder_excluding_children() throws InterruptedException {
-		Thread.sleep(4000);
-//WebElement folder=driver.findElement(By.xpath("//label[text()='" + sFolderName+ "']/preceding::span[@class='icon-caret']"));
-//folder.click();
 		Thread.sleep(3000);
 		Actions action = new Actions(driver);
 		WebElement Subfolder = driver.findElement(By.xpath("//label[text()='" + sSubFoldername1 + "']"));
-///preceding::span[@class='icon-file'][1]
 		action.contextClick(Subfolder).perform();
 		Thread.sleep(3000);
 		WebElement ele = driver.findElement(
 				By.xpath("(//nav[@class='context-menu']//ul/li[text()='Delete Folder (Excluding Children)'])[1]"));
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();", ele);
-
 		Alert alert = driver.switchTo().alert(); // switch to alert
-
 		String alertMessage = driver.switchTo().alert().getText(); // capture alert message
-
 		System.out.println(alertMessage); // Print Alert Message
 		Thread.sleep(5000);
 		alert.accept();
 		Reporter.addStepLog("User Clicked on Delete Folder ");
-
 	}
 
 	public static void user_deletesfolder_including_children() throws InterruptedException {
 		Thread.sleep(4000);
-
 		Actions action = new Actions(driver);
 		WebElement folder = driver.findElement(
 				By.xpath("//label[text()='" + sFolderName + "']/preceding::span[@class='icon-folder'][1]"));
-
 		action.contextClick(folder).perform();
 		Thread.sleep(3000);
 		WebElement ele = driver.findElement(
 				By.xpath("(//nav[@class='context-menu']//ul/li[text()='Delete Folder (Including Children)'])[1]"));
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();", ele);
-
 		Alert alert = driver.switchTo().alert(); // switch to alert
-
 		String alertMessage = driver.switchTo().alert().getText(); // capture alert message
-
-		System.out.println(alertMessage); // Print Alert Message
 		Thread.sleep(5000);
 		alert.accept();
 		Reporter.addStepLog("User Clicked on Delete Folder ");
@@ -742,20 +728,17 @@ public static String url="";
 		Reporter.addStepLog("User Creates Folder :" + sFolderName);
 		driver.findElement(By.xpath("//label[text()='" + sFolderName + "']/preceding::span[@class='icon-file'][1]"))
 				.click();
-
 		WebDriverWait wait = new WebDriverWait(driver, 180);
 		Actions action = new Actions(driver);
-
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#create-scenario-onEnterPress")));
 		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(sTestScenario);
 		action.sendKeys(Keys.ENTER).perform();
-
 		Reporter.addStepLog("User Creates TestScenario :" + sTestScenario);
 
 	}
 
 	public static void userrenamescreatedfolder() throws InterruptedException, IOException {
-	
+
 		WebDriverWait wait = new WebDriverWait(driver, 180);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + sFolderName + "']/preceding::span[@class='icon-file'][1]")));
 		Thread.sleep(3000);
@@ -766,21 +749,19 @@ public static String url="";
 		Thread.sleep(3000);
 		WebElement folder = driver
 				.findElement(By.xpath("//label[text()='" + sFolderName + "']/preceding::span[@class='icon-file'][1]"));
-
 		action.contextClick(folder).build().perform();
-
 		WebElement ele = driver.findElement(By.xpath("(//nav[@class='context-menu']//ul/li[text()='Rename'])[1]"));
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();", ele);
 		Reporter.addStepLog("User Clicked on Rename");
 		driver.findElement(By.xpath("//input[@class='editable-input-text']")).sendKeys(sParentFolderName);
-		
-		
+
+
 		Reporter.addStepLog("User Renames Parent Folder as "+sParentFolderName);
 		SelCommands.captureScreenshot();
-	
-		
-	
+
+
+
 	}
 
 	public static void usercopiesfolder() throws InterruptedException {
