@@ -1,8 +1,8 @@
 {
-	"WFDTestSuiteTitle": "Automation WFD",
+	"WFDTestSuiteTitle": "Automation WFD Demo",
 	"WFDDescription":"This test suite is created using Selenium automation script",
 	"WFDUpdateTestSuiteTitle":"Automation WFD Title Update",
-	"WFCTestSuiteTitle": "Automation WFC",
+	"WFCTestSuiteTitle": "Automation WFC Demo",
 	"WFCDescription":"This test suite is created using Selenium automation script",
 	"WFCUpdateTestSuiteTitle":"Automation WFC Title Update"
 }

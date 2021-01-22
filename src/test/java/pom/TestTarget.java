@@ -120,7 +120,7 @@ public static void userRedirectsToCreateTestTarget() {
 		type(DesiredSftpUserName, testTargetConfig.getTestTargetSFTPUserName(), "SFTP UserName Field");
 		By DesiredSftpPassword=By.id("sftpPassword");
 		type(DesiredSftpPassword, testTargetConfig.getTestTargetSFTPPassword(), "SFTP Password Field");
-		By DesiredSftpPort=By.id("sftpPortt");
+		By DesiredSftpPort=By.id("sftpPort");
 		type(DesiredSftpPort, testTargetConfig.getTestTargetSFTPPort(), "SFTP Port Field");
 		By DesiredPGPublicKey=By.id("pgpPublicKey");
 		type(DesiredPGPublicKey, testTargetConfig.getTestTargetPGPublicKey(), "SFTP Port Field");

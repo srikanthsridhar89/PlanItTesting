@@ -72,7 +72,6 @@ public class Persona  extends SelCommands {
 		type(Description, personaConfig.getPersonaDescription(), "Description Field");
 		type(Activity_Profile, personaConfig.getPersonaActProfile(), "Activity Profile Field");
 		type(Adjustment_Role, personaConfig.getPersonaAdjRule(), "Adjustment Rule Field");
-		SelCommands.captureScreenshot();
 	}
 
 	public static void userClicksOnSubmitInCreatePersonaPage() {

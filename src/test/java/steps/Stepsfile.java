@@ -51,7 +51,7 @@ public class Stepsfile {
 		ObjectMapper obj = new ObjectMapper();
 		try {
 			testTargetConfig = obj.readValue(JsonReader.getFile("TestTarget"), TestTargetConfig.class);
-			environmentConfig = obj.readValue(JsonReader.getFile("env"), EnvironmentConfig.class);
+			environmentConfig = obj.readValue(JsonReader.getFile("Environment"), EnvironmentConfig.class);
 			testSuiteConfig = obj.readValue(JsonReader.getFile("TestSuite"), TestSuiteConfig.class);
 			personaConfig = obj.readValue(JsonReader.getFile("Persona"), PersonaConfig.class);
 			actionLibraryConfig = obj.readValue(JsonReader.getFile("ActionLibrary"), ActionLibraryConfig.class);
@@ -60,8 +60,6 @@ public class Stepsfile {
 			System.exit(1);
 		}
 	}
-
-	public static String DisplayKey = "";
 
 	public static String sRequirementnotes = "TestRequirement";
 
@@ -708,7 +706,6 @@ public class Stepsfile {
 	public void User_Enter_Logins_Details_and_Click_on_ForgotPassword() throws IOException {
 		LoginPage.loginDetails(environmentConfig);
 		Profile.userClicksOnForgotPassword();
-
 		sel.captureScreenshot("Login");
 	}
 
@@ -717,7 +714,7 @@ public class Stepsfile {
 
 		LoginPage.loginDetails( environmentConfig);
 		LoginPage.clickSignin();
-		sel.captureScreenshot("Login");
+		sel.captureScreenshot("Sign In successful");
 	}
 
 	@When("^User clicks on Logout$")
@@ -744,25 +741,19 @@ public class Stepsfile {
 		Persona.userClicksOnNewPersona();
 	}
 
-
-
 	@When("^User Clicked on Submit$")
 	public void User_Clicked_on_Submit() {
-
 		Persona.userClicksOnSubmit();
-
 	}
 
 	@When("^User selects Persona$")
 	public void User_selects_Persona() {
 		Persona.userSelectsPersonaCreated();
-
 	}
 
 	@When("^User Clicks on Delete Persona$")
 	public static void User_Clicks_on_Delete_Persona() {
 		Persona.userClicksOnDelete();
-
 	}
 
 	@When("^User edits Persona$")
@@ -775,6 +766,7 @@ public class Stepsfile {
 	public void User_fills_Persona_details() throws IOException {
 
 		Persona.userFillsPersonaDetails(personaConfig);
+		sel.captureScreenshot("Persona Details entered");
 
 	}
 	@Then("^User sees Persona Updated$")
@@ -920,18 +912,17 @@ public class Stepsfile {
 	public void User_Created_TestSuite_Successfully(String KronosVersion) throws InterruptedException, IOException {
 		Thread.sleep(6000);
 		String btn = null;
-		if(KronosVersion.equals("Workforce Dimensions Timekeeping - R1")) {
-			btn = sel.getElementString(By.xpath("//h2[text()='" + testSuiteConfig.getTestSuiteWFDTitle() + "']"));
-			Assert.assertEquals(testSuiteConfig.getTestSuiteWFDTitle(), btn);
+			if(KronosVersion.equals("Workforce Dimensions Timekeeping - R1")) {
+				btn = sel.getElementString(By.xpath("//h2[text()='" + testSuiteConfig.getTestSuiteWFDTitle() + "']"));
+				Assert.assertEquals(testSuiteConfig.getTestSuiteWFDTitle(), btn);
+				Reporter.addStepLog("User Created TestSuite Successfully with title : " + btn);
+			}
+			else if(KronosVersion.equals("Workforce Central - R1")) {
+				btn = sel.getElementString(By.xpath("//h2[text()='" + testSuiteConfig.getTestSuiteWFCTitle() + "']"));
+				Assert.assertEquals(testSuiteConfig.getTestSuiteWFCTitle(), btn);
+			}
 			Reporter.addStepLog("User Created TestSuite Successfully with title : " + btn);
-		}
-		else if(KronosVersion.equals("Workforce Central - R1")) {
-			btn = sel.getElementString(By.xpath("//h2[text()='" + testSuiteConfig.getTestSuiteWFCTitle() + "']"));
-			Assert.assertEquals(testSuiteConfig.getTestSuiteWFCTitle(), btn);
-		}
-		Reporter.addStepLog("User Created TestSuite Successfully with title : " + btn);
-		sel.captureScreenshot("CreateTestSuite");
-
+			sel.captureScreenshot("TestSuiteCreated");
 	}
 
 	@When("^User Clicks on Create New TestSuite$")
@@ -1057,6 +1048,7 @@ public class Stepsfile {
 	@When("^User edits detail in UserPage$")
 	public void User_edits_detail_in_UserPage() throws IOException {
 		AddNewUser.editUserDetails();
+		sel.captureScreenshot("Role selected");
 	}
 
 	@Then("^User redirects to Create User Page$")

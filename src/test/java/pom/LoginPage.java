@@ -1,4 +1,4 @@
-	package pom;
+package pom;
 
 import bean.EnvironmentConfig;
 import org.openqa.selenium.By;
@@ -17,41 +17,28 @@ public class LoginPage extends SelCommands {
 	public static void loginDetails(EnvironmentConfig environmentConfig) {
 		By UserName=By.xpath("//input[@id='email']");
 		By Password=By.id("password");
-		
-		
-		
 		type(UserName, environmentConfig.getUserName(), "User Name Field");
-		
 		type(Password, environmentConfig.getPassword(), "Password Field");
-		
-		//captureScreenshot("loginpage");
-		
-		
 	}
-	
+
 	public static void clickSignin() {
-		
 		By SignIn=By.id("signIn");
 		click(SignIn, "Sign In");
-
 	}
-	
-	
+
+
 	public static void clickLogout() {
-		
 		By HomeDropDown=By.xpath("//button[@id='bdd_menu_trigger_button_id']");
 		By Logout=By.xpath("//a[text()='Log Out']");
 		click(HomeDropDown, "User Clicked on Home Dropw Down");
 		click(Logout, "User Clicked on Logout");
 	}
-	
+
 	public static void verifyLogin() throws InterruptedException {
-		
 		driver.navigate().refresh();
 		String btn = getElementString(By.cssSelector(".projects-add-new-btn.btn-header button"));
 		Assert.assertEquals("ADD NEW TEST SUITE", btn);
 		Reporter.addStepLog("login verification is successful");
-		
 	}
 
 }

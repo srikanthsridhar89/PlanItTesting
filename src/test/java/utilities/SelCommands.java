@@ -35,10 +35,12 @@ public class SelCommands {
 	}
 
 	public static void openbrowser(EnvironmentConfig environmentConfig) throws FileNotFoundException {
-
 		System.setProperty("webdriver.chrome.driver","./src/test/resources/drivers/chromedriver");
-//		driver = new ChromeDriver();
-		
+
+		//Uncomment the below step to run the tests on Chrome browser
+		//	driver = new ChromeDriver();
+
+		//Uncomment the below step to run the tests on headless browser
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("headless", "--disable-gpu","--ignore-certificate-errors");
 		options.addArguments("headless");
@@ -46,7 +48,7 @@ public class SelCommands {
 		
 		driver.get(environmentConfig.getUrl());
 		driver.manage().window().maximize();
-		Reporter.addStepLog("welcome to " + environmentConfig.getUrl());
+		Reporter.addStepLog("Navigated to " + environmentConfig.getUrl());
 	}
 
 	public void quitBrowser() {
@@ -81,15 +83,16 @@ public class SelCommands {
 		WebDriverWait wait = new WebDriverWait(driver, 120);
 		wait.until(ExpectedConditions.elementToBeClickable(signinlink));
 		driver.findElement(signinlink).click();
-		Reporter.addStepLog("User Clicked on " + element);
+		Reporter.addStepLog("User clicked on " + element);
 	}
 
 	public static void enterText(By wb, String text) {
 		driver.findElement(wb).sendKeys(text);
-		Reporter.addStepLog("User Entered Text as  " + text);
+		Reporter.addStepLog("User entered text as  " + text);
 	}
 
 	public static List<WebElement> getElements(By listOfElements) {
+
 		return driver.findElements(listOfElements);
 	}
 
@@ -97,15 +100,13 @@ public class SelCommands {
 		waitForElementPresent(by, 10);
 		Select select = new Select(driver.findElement(by));
 		select.selectByIndex(index);
-		Reporter.addStepLog("Selected " + index + " Index list from Drop Down");
-
+		Reporter.addStepLog("Selected " + index + " index list from Drop Down");
 	}
 
 	public static void scrollInToViewElement(By by) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView();", driver.findElement(by));
 		Reporter.addStepLog("Scrolling down to Element");
-
 	}
 
 	public static void Drag_Drop(By source, By target) {
@@ -116,7 +117,7 @@ public class SelCommands {
 
 	public static void submit(By by) {
 		driver.findElement(by).submit();
-		Reporter.addStepLog("Submitting the Form");
+		Reporter.addStepLog("Submitting the form");
 
 	}
 
@@ -135,9 +136,7 @@ public class SelCommands {
 		File oDest = new File(path);
 		try {
 			FileUtils.copyFile(oScnShot, oDest);
-
 			Reporter.addScreenCaptureFromPath(path, "hello123");
-//Reporter.("Details", MediaEntityBuilder.createScreenCaptureFromPath(Paths.get("").toAbsolutePath().toString() + "/screenshotFolder/screenshot.png").build());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -164,8 +163,7 @@ public class SelCommands {
 		} catch (Exception e) {
 			javascript_click(by, fieldName);
 		}
-
-		Reporter.addStepLog("User Clicks on " + fieldName);
+		Reporter.addStepLog("User clicks on " + fieldName);
 
 	}
 
@@ -173,7 +171,7 @@ public class SelCommands {
 		waitForElementPresent(by, 10);
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();", driver.findElement(by));
-		Reporter.addStepLog("User Clicks on " + fieldName);
+		Reporter.addStepLog("User clicks on " + fieldName);
 	}
 
 	public static void ScrollintoView(WebElement ele) {
@@ -190,7 +188,7 @@ public class SelCommands {
 
 	public static String getTitle() {
 		String title = driver.getTitle();
-		Reporter.addStepLog("Getting Title of Window" + title);
+		Reporter.addStepLog("Getting title of window" + title);
 
 		return title;
 	}
@@ -213,7 +211,7 @@ public class SelCommands {
 		waitForElementPresent(by, 10);
 		String attributeValue = driver.findElement(by).getAttribute(attributeName);
 
-		Reporter.addStepLog("Getting Text" + attributeValue);
+		Reporter.addStepLog("Getting text" + attributeValue);
 		return attributeValue;
 	}
 
@@ -222,7 +220,7 @@ public class SelCommands {
 		try {
 			waitForElementPresent(by, 10);
 			visible = driver.findElement(by).isDisplayed();
-			Reporter.addStepLog("Checking " + fieldName + "is Displayed");
+			Reporter.addStepLog("Checking " + fieldName + "is displayed");
 
 		} catch (Exception e) {
 			visible = false;
@@ -271,7 +269,7 @@ public class SelCommands {
 
 	public void navigate_forward() {
 		driver.navigate().forward();
-		Reporter.addStepLog("Navigating to forword");
+		Reporter.addStepLog("Navigating to forward");
 
 	}
 

@@ -21,7 +21,7 @@ Feature: TestTarget
 
 	@ignore
 		@regression
-		@AddWFCTarget
+		@AddWFCTestTarget
 		@testtarget
 	Scenario Outline: Add NewTestTarget
 

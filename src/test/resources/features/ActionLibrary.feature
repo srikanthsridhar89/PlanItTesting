@@ -50,6 +50,7 @@ Feature: Action Library
 			|File Attachment|
 			|Interval|
 
+	@actionlibrary
 	@UpdateAction
 	Scenario Outline: This Scenario is to UpdateAction
 
@@ -72,7 +73,7 @@ Feature: Action Library
 
 
 
-
+	@actionlibrary
 	@DeleteAction
 	Scenario: This Scenario is to DeleteAction
 		Given User launches the Application

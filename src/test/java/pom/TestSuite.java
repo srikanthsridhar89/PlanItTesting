@@ -65,7 +65,6 @@ public class TestSuite extends SelCommands {
 		Thread.sleep(4000);
 		By AddNewTestSuite = By.xpath(
 				"//div[@class='projects-add-new-btn btn-header ta-form']/div/span/button[contains(text(),'ADD NEW TEST SUITE')]");
-
 		click(AddNewTestSuite, "Add TestSuite button");
 
 	}
@@ -74,9 +73,7 @@ public class TestSuite extends SelCommands {
 		Thread.sleep(5000);
 		By HomeDropDown = By.xpath("//button[@id='bdd_menu_trigger_button_id']");
 		By TestSuiteSetting = By.xpath("//a[text()='Test Suite Settings']");
-
 		click(HomeDropDown, "Home Drop Down");
-
 		click(TestSuiteSetting, "TestSuiteSetting");
 	}
 
@@ -89,7 +86,6 @@ public class TestSuite extends SelCommands {
 
 	public static void userUpdatesTestSuiteDetails(String title) {
 		By InputTitle = By.xpath("//input[@name='PROJECT_TITLE']");
-
 		type(InputTitle, title, "Title Field");
 
 	}
@@ -97,7 +93,6 @@ public class TestSuite extends SelCommands {
 	public static void userClicksOnUpdateTestSuite() {
 
 		By UpdateTestSuite = By.xpath("//button[@label='UPDATE TEST SUITE']");
-
 		click(UpdateTestSuite, "UpdateTestSuite");
 	}
 
