@@ -7,17 +7,15 @@ import java.util.Date;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
-
 import com.cucumber.listener.ExtentProperties;
 import com.cucumber.listener.Reporter;
-
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/features/",
 		glue= {"steps"},
-		tags= {"@AddWFCTestTarget"},
+		tags= {"@DeleteAction"},
 		format={"json:target/cucumber.json"},
 		plugin = { "com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html"},
 		monochrome = true)

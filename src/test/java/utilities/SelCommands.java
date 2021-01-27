@@ -38,13 +38,13 @@ public class SelCommands {
 		System.setProperty("webdriver.chrome.driver","./src/test/resources/drivers/chromedriver");
 
 		//Uncomment the below step to run the tests on Chrome browser
-		//	driver = new ChromeDriver();
+			driver = new ChromeDriver();
 
 		//Uncomment the below step to run the tests on headless browser
-		ChromeOptions options = new ChromeOptions();
-		options.addArguments("headless", "--disable-gpu","--ignore-certificate-errors");
-		options.addArguments("headless");
-		driver = new ChromeDriver(options);
+//		ChromeOptions options = new ChromeOptions();
+//		options.addArguments("headless", "--disable-gpu","--ignore-certificate-errors");
+//		options.addArguments("headless");
+//		driver = new ChromeDriver(options);
 		
 		driver.get(environmentConfig.getUrl());
 		driver.manage().window().maximize();

@@ -4,7 +4,6 @@
 	"Prefix":"Test_Prefix",
 	"Suffix":"Test_suffix",
 	"DisplayKey":"TestDisplay",
-	"UpdatedLabel":"The test action label is updated",
-	"UpdatedDescription":"Automation action description updated",
-	"ColumnType":"Integer"
+	"UpdatedLabel":"This is a test action is updated",
+	"UpdatedDescription":"Automation action description updated"
 }

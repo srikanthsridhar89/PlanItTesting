@@ -30,9 +30,6 @@ public class TestSuite extends SelCommands {
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[contains(text(),'Automation WFD')]")));
 		By TestSuiteCreated = By.xpath("//a[contains(text(),'Automation WFD')]");
-
-		String s = driver.findElement(TestSuiteCreated).getText();
-		System.out.println("Val is" + s);
 		driver.findElement(TestSuiteCreated).click();
 
 	}
@@ -81,6 +78,7 @@ public class TestSuite extends SelCommands {
 
 		By DeleteTestSuite = By.xpath("//span[contains(text(),'DELETE TEST SUITE')]");
 		click(DeleteTestSuite, "Delete Test Suite");
+
 
 	}
 

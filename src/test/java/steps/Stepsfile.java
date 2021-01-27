@@ -24,7 +24,6 @@ import pom.SwitchTenant;
 import pom.TestPlan;
 import pom.TestTarget;
 import pom.LoginPage;
-import sun.lwawt.macosx.CSystemTray;
 import utilities.JsonReader;
 import utilities.SelCommands;
 import net.bytebuddy.utility.RandomString;
@@ -641,7 +640,7 @@ public class Stepsfile {
 	}
 
 	@When("^User Deletes ActionCreated$")
-	public void User_Deletes_ActionCreated() {
+	public void User_Deletes_ActionCreated() throws InterruptedException {
 		ActionLibrary.userDeletesAction();
 	}
 
@@ -678,7 +677,7 @@ public class Stepsfile {
 	@When("^User Enter details for Action Creation with TableData \"([^\"]*)\"$")
 	public void User_Enter_details_for_Action_Creation_with_TableData(String arg1) throws InterruptedException, IOException {
 		ActionLibrary.userClicksOnAddAction();
-		ActionLibrary.userFillsActionWithTableData_Integer(actionLibraryConfig,arg1);
+		ActionLibrary.userFillsActionWithTableData(actionLibraryConfig,arg1);
 	}
 
 	@When("^User Enter details for ActionCreation$")
@@ -690,9 +689,10 @@ public class Stepsfile {
 	}
 
 	@When("^User Clicks on Cancel in ActionCreationPage$")
-	public void User_Clicks_on_Cancel_in_ActionCreationPage() {
+	public void User_Clicks_on_Cancel_in_ActionCreationPage() throws IOException {
 
 		ActionLibrary.cancelAction();
+		sel.captureScreenshot("Cancel Action creation");
 	}
 
 	@When("^User Clicks on NewAction$")
@@ -718,15 +718,17 @@ public class Stepsfile {
 	}
 
 	@When("^User clicks on Logout$")
-	public void User_clicks_on_Logout() {
+	public void User_clicks_on_Logout() throws IOException {
 		LoginPage.clickLogout();
+		sel.captureScreenshot("Sign Out successful");
 
 	}
 
 	@When("^User clicks on Switch Tenant$")
-	public void User_clicks_on_Switch_Tenant() {
+	public void User_clicks_on_Switch_Tenant() throws IOException {
 		SwitchTenant.userClicksOnSwitchTenant();
 		SwitchTenant.userRedirectsToSwitchTenant();
+		sel.captureScreenshot("TenantsList");
 	}
 
 	@When("^User selects Desired Tenant$")
@@ -882,10 +884,11 @@ public class Stepsfile {
 	}
 
 	@When("^User Updates TestSuite Created$")
-	public void User_Updates_TestSuite_Created() throws InterruptedException {
+	public void User_Updates_TestSuite_Created() throws InterruptedException, IOException {
 		TestSuite.userClicksOnTestSuiteSettings();
 		TestSuite.userRedirectsToUpdateTestSuitePage();
 		User_Updates_Test_Suite_Details();
+		sel.captureScreenshot("UpdateTestSuite");
 		TestSuite.userClicksOnUpdateTestSuite();
 	}
 
@@ -897,9 +900,9 @@ public class Stepsfile {
 	}
 
 	@When("^User Clicks on DeleteTestSuite$")
-	public void User_Clicks_on_DeleteTestSuite() {
+	public void User_Clicks_on_DeleteTestSuite() throws IOException {
 		TestSuite.userClicksOnDeleteTestSuite();
-
+		sel.captureScreenshot("TestSuiteDeleted");
 	}
 
 	@Then("^User redirects to UpdateTestSuite Page$")

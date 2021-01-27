@@ -2,7 +2,6 @@ Feature: Action Library
 
 	@ignore
 	@regression
-	@actionlibrary
 	@AddAction
 	Scenario: This Scenario is to Add action for Given  without parameters and table columns
 
@@ -16,9 +15,8 @@ Feature: Action Library
 
 
 	@ignore
-	@actionlibrary
 	@regression
-	@cancelaction
+	@CancelAction
 	Scenario: This Scenario is to CancelAction
 
 		Given User launches the Application
@@ -32,7 +30,7 @@ Feature: Action Library
 
 	@regression
 		@actionlibrary
-		@addactionlibrary_table
+		@AddActionWithTableData
 	Scenario Outline: This Scenario is to Add action with Table Columns
 		Given User launches the Application
 		When User Navigates to ActionLibrary
@@ -65,11 +63,7 @@ Feature: Action Library
 		Examples:
 			|type|
 			|Integer|
-			|String|
-			|Date|
-			|Time|
-			|File Attachment|
-			|Interval|
+
 
 
 
