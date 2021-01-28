@@ -12,149 +12,112 @@ import utilities.SelCommands;
 
 public class TestTarget  extends SelCommands {
 
+	private static By homeDropDown =By.xpath("//button[@id='bdd_menu_trigger_button_id']");
+	private static By settings =By.xpath("//a[contains(text(),'Settings')]");
+	private static By testTargetTab =By.xpath("//a[@id='TestTargets']");
+	private static By updateTestTarget =By.xpath("//button[text()='Update Test Target']");
+	private static By nameField =By.xpath("//input[@id='name']");
+	private static By addNewTestTarget =By.xpath("//a[contains(@href,'create')]/button[contains(text(),'Target')]");
+	private static By name =By.xpath("//input[@name='name']");
+	private static By softwareDropdown =By.xpath("//i[@class='dropdown icon']");
+	private static By desiredAppKey =By.id("appKey");
+	private static By desiredHost =By.id("host");
+	private static By desiredUsername =By.id("username");
+	private static By desiredPassword =By.id("password");
+	private static By desiredClientID =By.id("clientId");
+	private static By desiredClientSecret =By.id("clientSecret");
+	private static By desiredSftpHost =By.id("sftpHost");
+	private static By desiredSftpUserName =By.id("sftpUsername");
+	private static By desiredSftpPassword =By.id("sftpPassword");
+	private static By desiredSftpPort =By.id("sftpPort");
+	private static By desiredPGPublicKey =By.id("pgpPublicKey");
+	private static By createTestTarget =By.xpath("//button[contains(text(),'Create Test Target')]");
+	private static By cancel =By.xpath("//button[contains(text(),'Cancel')]");
+
 	public TestTarget(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
-	
-	 
-	
-public static void userNavigatesToTestTargetTab() throws InterruptedException {
+
+	public static void userNavigatesToTestTargetTab() throws InterruptedException {
 		Thread.sleep(4000);
-		By HomeDropDown=By.xpath("//button[@id='bdd_menu_trigger_button_id']");
-		By Setting=By.xpath("//a[contains(text(),'Settings')]");
-	//	By TestTarget_Tab=By.xpath("//a[text()='Test Targets']");
-		By TestTarget_Tab=By.xpath("//a[@id='TestTargets']");
-		
-		
 		try {
-			click(HomeDropDown, " Home Drop Down");
-			click(Setting, " Setting");
-			click(TestTarget_Tab, " TestTarget Tab");
+			click(homeDropDown, " Home Drop Down");
+			click(settings, " Setting");
+			click(testTargetTab, " TestTarget Tab");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			driver.quit();
 		}
+	}
 
-		
+	public static void userClicksOnUpdateTestTarget() {
+		click(updateTestTarget, "Update TestTarget");
+	}
+
+	public static void userUpdatedTestTargetDetails(String name) {
+		type(nameField, name, "Name Field");
+		click(nameField, "Namefield");
+		click(desiredHost, "Hostname");
 	}
 
 
+	public static void userRedirectsToEditTestTargetPage() {
+		String btn = getElementString(By.xpath("//*[text()='Edit Test Target']"));
+		Assert.assertEquals("Edit Test Target", btn);
+		Reporter.addStepLog("User Redirects to Edit Test Target Page Successful");
+	}
 
+	public static void userRedirectsToCreateTestTarget() {
+		String btn = getElementString(By.xpath("//h2[text()='Create Test Target']"));
+		Assert.assertEquals("Create Test Target", btn);
+		Reporter.addStepLog("User Redirects to Create Test Target Page Successful");
+	}
 
-
-public static void userClicksOnUpdateTestTarget() {
-	
-	By UpdateTestTarget=By.xpath("//button[text()='Update Test Target']");
-	click(UpdateTestTarget, "Update TestTarget");
-}
-
-
-
-
-public static void userUpdatedTestTargetDetails(String name) {
-	
-	By Namefield=By.xpath("//input[@id='name']");
-	
-	
-	   type(Namefield, name, "Name Field");
-	   
-	   click(Namefield, "Namefield");
-	   
-	   By Hostname=By.xpath("//input[@id='host']");
-	   
-		
-	   click(Hostname, "Hostname");
-}
-	
-
-public static void userRedirectsToEditTestTargetPage() {
-	
-	String btn = getElementString(By.xpath("//*[text()='Edit Test Target']"));
-	Assert.assertEquals("Edit Test Target", btn);
-	Reporter.addStepLog("User Redirects to Edit Test Target Page Successful");
-}
-
-public static void userRedirectsToCreateTestTarget() {
-	
-	String btn = getElementString(By.xpath("//h2[text()='Create Test Target']"));
-	Assert.assertEquals("Create Test Target", btn);
-	Reporter.addStepLog("User Redirects to Create Test Target Page Successful");
-}
-	
 	public static void userClicksOnAddNewTestTarget() throws InterruptedException {
 		Thread.sleep(5000);
-		By AddNewTestTarget=By.xpath("//a[contains(@href,'create')]/button[contains(text(),'Target')]");
-		click(AddNewTestTarget, " Add New Test Target");
-		
+		click(addNewTestTarget, " Add New Test Target");
 	}
-	
-	
 
-	
 	public static void userFillsWFDTestTargetDetails(TestTargetConfig testTargetConfig, String software) throws InterruptedException {
-		
+
 		Thread.sleep(4000);
-		By Name=By.xpath("//input[@name='name']");
-		type(Name, testTargetConfig.getTestTargetWFDName(), "Name Field");
-		By softwaredropdown=By.xpath("//i[@class='dropdown icon']");
+		type(name, testTargetConfig.getTestTargetWFDName(), "Name Field");
 		By DesiredSoftware=By.xpath("//div[contains(text(),'" + software + "')]");
-		click(softwaredropdown, "Software Drop Down");
+		click(softwareDropdown, "Software Drop Down");
 		javascript_click(DesiredSoftware, "Desired Software");
-		By DesiredAppKey=By.id("appKey");
-		type(DesiredAppKey, testTargetConfig.getTestTargetAppkey(), "AppKey Field");
-		By DesiredHost=By.id("host");
-		type(DesiredHost, testTargetConfig.getTestTargetWFDHost(), "Host Field");
-		By DesiredUsername=By.id("username");
-		type(DesiredUsername, testTargetConfig.getTestTargetUserName(), "Username Field");
-		By DesiredPassword=By.id("password");
-		type(DesiredPassword, testTargetConfig.getTestTargetPassword(), "Password Field");
-		By DesiredClientID=By.id("clientId");
-		type(DesiredClientID, testTargetConfig.getTestTargetClientId(), "Client ID Field");
-		By DesiredClientSecret=By.id("clientSecret");
-		type(DesiredClientSecret, testTargetConfig.getTestTargetClientSecret(), "client Secret Field");
-		By DesiredSftpHost=By.id("sftpHost");
-		type(DesiredSftpHost, testTargetConfig.getTestTargetSFTPHost(), "SFTP Host Field");
-		By DesiredSftpUserName=By.id("sftpUsername");
-		type(DesiredSftpUserName, testTargetConfig.getTestTargetSFTPUserName(), "SFTP UserName Field");
-		By DesiredSftpPassword=By.id("sftpPassword");
-		type(DesiredSftpPassword, testTargetConfig.getTestTargetSFTPPassword(), "SFTP Password Field");
-		By DesiredSftpPort=By.id("sftpPort");
-		type(DesiredSftpPort, testTargetConfig.getTestTargetSFTPPort(), "SFTP Port Field");
-		By DesiredPGPublicKey=By.id("pgpPublicKey");
-		type(DesiredPGPublicKey, testTargetConfig.getTestTargetPGPublicKey(), "SFTP Port Field");
+		type(desiredAppKey, testTargetConfig.getTestTargetAppkey(), "AppKey Field");
+		type(desiredHost, testTargetConfig.getTestTargetWFDHost(), "Host Field");
+		type(desiredUsername, testTargetConfig.getTestTargetUserName(), "Username Field");
+		type(desiredPassword, testTargetConfig.getTestTargetPassword(), "Password Field");
+		type(desiredClientID, testTargetConfig.getTestTargetClientId(), "Client ID Field");
+		type(desiredClientSecret, testTargetConfig.getTestTargetClientSecret(), "client Secret Field");
+		type(desiredSftpHost, testTargetConfig.getTestTargetSFTPHost(), "SFTP Host Field");
+		type(desiredSftpUserName, testTargetConfig.getTestTargetSFTPUserName(), "SFTP UserName Field");
+		type(desiredSftpPassword, testTargetConfig.getTestTargetSFTPPassword(), "SFTP Password Field");
+		type(desiredSftpPort, testTargetConfig.getTestTargetSFTPPort(), "SFTP Port Field");
+		type(desiredPGPublicKey, testTargetConfig.getTestTargetPGPublicKey(), "SFTP Port Field");
 	}
 
 	public static void userFillsWFCTestTargetDetails(TestTargetConfig testTargetConfig, String software) throws InterruptedException {
 
 		Thread.sleep(4000);
-		By Name=By.xpath("//input[@name='name']");
-		type(Name, testTargetConfig.getTestTargetWFCName(), "Name Field");
-		By softwaredropdown=By.xpath("//i[@class='dropdown icon']");
+		type(name, testTargetConfig.getTestTargetWFCName(), "Name Field");
 		By DesiredSoftware=By.xpath("//div[contains(text(),'" + software + "')]");
-		click(softwaredropdown, "Software Drop Down");
+		click(softwareDropdown, "Software Drop Down");
 		javascript_click(DesiredSoftware, "Desired Software");
-		By DesiredHost=By.id("host");
-		type(DesiredHost, testTargetConfig.getTestTargetWFCHost(), "Host Field");
-		By DesiredUsername=By.id("username");
-		type(DesiredUsername, testTargetConfig.getTestTargetWFCUserName(), "Username Field");
-		By DesiredPassword=By.id("password");
-		type(DesiredPassword, testTargetConfig.getTestTargetWFCPassword(), "Password Field");
+		type(desiredHost, testTargetConfig.getTestTargetWFCHost(), "Host Field");
+		type(desiredUsername, testTargetConfig.getTestTargetWFCUserName(), "Username Field");
+		type(desiredPassword, testTargetConfig.getTestTargetWFCPassword(), "Password Field");
 	}
 
 	public static void userClicksOnCreateTestTarget() {
-		
-		By CreateTestTarget=By.xpath("//button[contains(text(),'Create Test Target')]");
-		  click(CreateTestTarget, "CreateTestTarget");
-		
+		click(createTestTarget, "CreateTestTarget");
+
 	}
-	
-	
+
 	public static void userClicksOnCancel() {
-		By Cancel=By.xpath("//button[contains(text(),'Cancel')]");
-		
-		  click(Cancel, " Cancel");
-		
+		click(cancel, " Cancel");
 	}
 }

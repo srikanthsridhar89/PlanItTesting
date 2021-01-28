@@ -1,7 +1,6 @@
 package pom;
 
 import bean.TestSuiteConfig;
-import com.aventstack.extentreports.model.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -12,6 +11,32 @@ import utilities.SelCommands;
 
 public class TestSuite extends SelCommands {
 
+	private static By regressionSuite = By.xpath("//h3[text()='Regression Test Suites']");
+	private static By testSuiteCreated = By.xpath("//a[contains(text(),'Automation WFD')]");
+	private static By createNewTestSuite = By.xpath("//button[text()='CREATE NEW TEST SUITE']");
+	private static By addNewTestSuite = By.xpath(
+			"//div[@class='projects-add-new-btn btn-header ta-form']/div/span/button[contains(text(),'ADD NEW TEST SUITE')]");
+	private static By homeDropDown = By.xpath("//button[@id='bdd_menu_trigger_button_id']");
+	private static By testSuiteSetting = By.xpath("//a[text()='Test Suite Settings']");
+	private static By deleteTestSuite = By.xpath("//span[contains(text(),'DELETE TEST SUITE')]");
+	private static By inputTitle = By.xpath("//input[@name='PROJECT_TITLE']");
+	private static By updateTestSuite = By.xpath("//button[@label='UPDATE TEST SUITE']");
+	private static By inputDescription = By.xpath("//textarea[@id='PROJECT_DESCRIPTION']");
+	private static By testSuiteVendor = By.xpath("//div[@id='PROJECT_VENDOR']/div");
+	private static By selectVendor = By.xpath("//div[contains(text(),'Kronos')]");
+	private static By testActionLibrary = By.xpath("//div[@id='PROJECT_SOFTWARE']/div");
+	private static By wfcActionLibrary = By.xpath("//div[contains(text(),'Workforce Central')]");
+	private static By projectVersion = By.xpath("//div[@id='PROJECT_VERSION']/div");
+	private static By testTarget = By.xpath("//div[@id='PROJECT_TEST_TARGET']/div");
+	private static By selectWFCTarget = By.xpath("//div[contains(text(),'WFC Dev')]");
+	private static By testSuitePurpose = By.xpath("//div[@id='PROJECT_PRUPOSE']/div");
+	private static By selectPurpose = By.xpath("//div[contains(text(),'Regression Testing')]");
+	private static By roles = By.xpath("//div[@id='PROJECT_ROLES']/div");
+	private static By selectRoles = By.xpath("//div[contains(text(),'developer')]");
+	private static By wfdActionLibrary = By.xpath("//div[contains(text(),'Workforce Dimensions Timekeeping')]");
+	private static By selectWFDTarget = By.xpath("//div[contains(text(),'Test Kronos Tenant w/ Boomi')]");
+
+
 	public TestSuite(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -20,78 +45,55 @@ public class TestSuite extends SelCommands {
 	public static void userClicksOnRegressionTestSuite() {
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h3[text()='Regression Test Suites']")));
-		By Regression_Suite = By.xpath("//h3[text()='Regression Test Suites']");
-		driver.findElement(Regression_Suite).click();
+		driver.findElement(regressionSuite).click();
 		Reporter.addStepLog("User Clicked on Regression Test Suite");
 	}
 
-	
+
 	public static void userSelectDesiredTestSuiteCreated() throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[contains(text(),'Automation WFD')]")));
-		By TestSuiteCreated = By.xpath("//a[contains(text(),'Automation WFD')]");
-		driver.findElement(TestSuiteCreated).click();
-
+		driver.findElement(testSuiteCreated).click();
 	}
 
 	public static void userClickNewTestSuite() throws InterruptedException {
 		Thread.sleep(4000);
-		By CreateNewTestSuite = By.xpath("//button[text()='CREATE NEW TEST SUITE']");
-		javascript_click(CreateNewTestSuite, "Create New Test Suite");
-
+		javascript_click(createNewTestSuite, "Create New Test Suite");
 	}
 
 	public static void userRedirectsToUpdateTestSuitePage() {
-
 		String title = getElementString(By.xpath("//div[text()='Update Test Suite']"));
-
 		Assert.assertEquals("Update Test Suite", title);
 		Reporter.addStepLog("User Redirects to UpdateTestSuite Successful");
-
 	}
 
 	public static void userRedirectsToCreateTestSuite() {
-
 		String btn = getElementString(By.xpath("//div[text()='Create Test Suite']"));
 		Assert.assertEquals("Create Test Suite", btn);
 		Reporter.addStepLog("User Redirects to Create TestSuite Page Successful");
-
 	}
 
 	public static void userClicksOnAddNewTestSuite() throws InterruptedException {
 		Thread.sleep(4000);
-		By AddNewTestSuite = By.xpath(
-				"//div[@class='projects-add-new-btn btn-header ta-form']/div/span/button[contains(text(),'ADD NEW TEST SUITE')]");
-		click(AddNewTestSuite, "Add TestSuite button");
-
+		click(addNewTestSuite, "Add TestSuite button");
 	}
 
 	public static void userClicksOnTestSuiteSettings() throws InterruptedException {
 		Thread.sleep(5000);
-		By HomeDropDown = By.xpath("//button[@id='bdd_menu_trigger_button_id']");
-		By TestSuiteSetting = By.xpath("//a[text()='Test Suite Settings']");
-		click(HomeDropDown, "Home Drop Down");
-		click(TestSuiteSetting, "TestSuiteSetting");
+		click(homeDropDown, "Home Drop Down");
+		click(testSuiteSetting, "TestSuiteSetting");
 	}
 
 	public static void userClicksOnDeleteTestSuite() {
-
-		By DeleteTestSuite = By.xpath("//span[contains(text(),'DELETE TEST SUITE')]");
-		click(DeleteTestSuite, "Delete Test Suite");
-
-
+		click(deleteTestSuite, "Delete Test Suite");
 	}
 
 	public static void userUpdatesTestSuiteDetails(String title) {
-		By InputTitle = By.xpath("//input[@name='PROJECT_TITLE']");
-		type(InputTitle, title, "Title Field");
-
+		type(inputTitle, title, "Title Field");
 	}
 
 	public static void userClicksOnUpdateTestSuite() {
-
-		By UpdateTestSuite = By.xpath("//button[@label='UPDATE TEST SUITE']");
-		click(UpdateTestSuite, "UpdateTestSuite");
+		click(updateTestSuite, "UpdateTestSuite");
 	}
 
 	public static void userClicksOnCancel() {
@@ -104,44 +106,21 @@ public class TestSuite extends SelCommands {
 															  String WorkforceCentralVersion) throws InterruptedException {
 
 		Thread.sleep(4000);
-		By InputTitle = By.xpath("//input[@name='PROJECT_TITLE']");
-		By InputDescription = By.xpath("//textarea[@id='PROJECT_DESCRIPTION']");
-		By TestSuiteVendor = By.xpath("//div[@id='PROJECT_VENDOR']/div");
-		By SelectVendor = By.xpath("//div[contains(text(),'Kronos')]");
-
-		By TestActionLibrary = By.xpath("//div[@id='PROJECT_SOFTWARE']/div");
-		By SelectActionLibrary = By.xpath("//div[contains(text(),'Workforce Central')]");
-
-		By ProjectVersion = By.xpath("//div[@id='PROJECT_VERSION']/div");
-		By SelectProjectVersion = By.xpath("//div[contains(text(),'" + WorkforceCentralVersion + "')]");
-
-		By TestTarget = By.xpath("//div[@id='PROJECT_TEST_TARGET']/div");
-		By SelectTarget = By.xpath("//div[contains(text(),'WFC Dev')]");
-
-		By TestSuitePurpose = By.xpath("//div[@id='PROJECT_PRUPOSE']/div");
-		By SelectPurpose = By.xpath("//div[contains(text(),'Regression Testing')]");
-
-		By Roles = By.xpath("//div[@id='PROJECT_ROLES']/div");
-		By SelectRoles = By.xpath("//div[contains(text(),'developer')]");
-
-		type(InputTitle, testSuiteConfig.getTestSuiteWFCTitle(), "Title Field");
-		type(InputDescription, testSuiteConfig.getTestWFCDescription(), "Description Field");
-
-		click(TestSuiteVendor, " Vendor DropDown");
-		click(SelectVendor, "Desired Vendor as Kronos");
-		click(TestActionLibrary, "TestActionLibrary DropDown");
-		click(SelectActionLibrary, "Desired Action library as Workforce Central");
-
-		click(ProjectVersion, "Project Version Dropdown");
-
+		type(inputTitle, testSuiteConfig.getTestSuiteWFCTitle(), "Title Field");
+		type(inputDescription, testSuiteConfig.getTestWFCDescription(), "Description Field");
+		click(testSuiteVendor, " Vendor DropDown");
+		click(selectVendor, "Desired Vendor as Kronos");
+		click(testActionLibrary, "TestActionLibrary DropDown");
+		click(wfcActionLibrary, "Desired Action library as Workforce Central");
+		click(projectVersion, "Project Version Dropdown");
+		By SelectProjectVersion = By.xpath("//div[contains(text(),'" +WorkforceCentralVersion+ "')]");
 		click(SelectProjectVersion, "Desired Project Version : '" + WorkforceCentralVersion + "'");
-
-		click(TestTarget, "TestTarget Dropdown");
-		click(SelectTarget, "Desired TestTarget ");
-		click(TestSuitePurpose, "TestSuitePurpose Dropdown");
-		click(SelectPurpose, "Desired Purpose As Functional Testing");
-		click(Roles, "Roles Dropdown");
-		click(SelectRoles, "Desired Roles as Developer");
+		click(testTarget, "TestTarget Dropdown");
+		click(selectWFCTarget, "Desired TestTarget ");
+		click(testSuitePurpose, "TestSuitePurpose Dropdown");
+		click(selectPurpose, "Desired Purpose As Functional Testing");
+		click(roles, "Roles Dropdown");
+		click(selectRoles, "Desired Roles as Developer");
 
 	}
 
@@ -149,46 +128,21 @@ public class TestSuite extends SelCommands {
 															  String WorkforceDimensionsversion) throws InterruptedException {
 
 		Thread.sleep(4000);
-		By InputTitle = By.xpath("//input[@name='PROJECT_TITLE']");
-		By InputDescription = By.xpath("//textarea[@id='PROJECT_DESCRIPTION']");
-		By TestSuiteVendor = By.xpath("//div[@id='PROJECT_VENDOR']/div");
-		By SelectVendor = By.xpath("//div[contains(text(),'Kronos')]");
-
-		By TestActionLibrary = By.xpath("//div[@id='PROJECT_SOFTWARE']/div");
-		By SelectActionLibrary = By.xpath("//div[contains(text(),'Workforce Dimensions Timekeeping')]");
-
-		By ProjectVersion = By.xpath("//div[@id='PROJECT_VERSION']/div");
-		By SelectProjectVersion = By.xpath("//div[contains(text(),'" + WorkforceDimensionsversion + "')]");
-
-		By TestTarget = By.xpath("//div[@id='PROJECT_TEST_TARGET']/div");
-		By SelectTarget = By.xpath("//div[contains(text(),'Test Kronos Tenant w/ Boomi')]");
-
-		By TestSuitePurpose = By.xpath("//div[@id='PROJECT_PRUPOSE']/div");
-		By SelectPurpose = By.xpath("//div[contains(text(),'Regression Testing')]");
-
-		By Roles = By.xpath("//div[@id='PROJECT_ROLES']/div");
-		By SelectRoles = By.xpath("//div[contains(text(),'developer')]");
-
-		type(InputTitle, testSuiteConfig.getTestSuiteWFDTitle(), "Title Field");
-		type(InputDescription, testSuiteConfig.getTestWFDDescription(), "Description Field");
-
-		click(TestSuiteVendor, " Vendor DropDown");
-		click(SelectVendor, "Desired Vendor as Kronos");
-		click(TestActionLibrary, "TestActionLibrary DropDown");
-		click(SelectActionLibrary, "Desired Action library As Workforce Dimensions Timekeeping");
-
-		click(ProjectVersion, "Project Version Dropdown");
-
+		type(inputTitle, testSuiteConfig.getTestSuiteWFDTitle(), "Title Field");
+		type(inputDescription, testSuiteConfig.getTestWFDDescription(), "Description Field");
+		click(testSuiteVendor, " Vendor DropDown");
+		click(selectVendor, "Desired Vendor as Kronos");
+		click(testActionLibrary, "TestActionLibrary DropDown");
+		click(wfdActionLibrary, "Desired Action library As Workforce Dimensions Timekeeping");
+		click(projectVersion, "Project Version Dropdown");
+		By SelectProjectVersion = By.xpath("//div[contains(text(),'" +WorkforceDimensionsversion+"')]");
 		click(SelectProjectVersion, "Desired Project Version : '" + WorkforceDimensionsversion + "'");
-
-		click(TestTarget, "TestTarget Dropdown");
-		click(SelectTarget, "Desired TestTarget as Test Kronos Tenant w/ Boomi ");
-
-		click(TestSuitePurpose, "TestSuitePurpose Dropdown");
-		click(SelectPurpose, "Desired Purpose As Functional Testing");
-
-		click(Roles, "Roles Dropdown");
-		click(SelectRoles, "Desired Roles as Developer");
+		click(testTarget, "TestTarget Dropdown");
+		click(selectWFDTarget, "Desired TestTarget as Test Kronos Tenant w/ Boomi ");
+		click(testSuitePurpose, "TestSuitePurpose Dropdown");
+		click(selectPurpose, "Desired Purpose As Functional Testing");
+		click(roles, "Roles Dropdown");
+		click(selectRoles, "Desired Roles as Developer");
 
 	}
 
@@ -196,48 +150,22 @@ public class TestSuite extends SelCommands {
 			throws InterruptedException {
 
 		Thread.sleep(4000);
-		By InputTitle = By.xpath("//input[@name='PROJECT_TITLE']");
-		By InputDescription = By.xpath("//textarea[@id='PROJECT_DESCRIPTION']");
-		By TestSuiteVendor = By.xpath("//div[@id='PROJECT_VENDOR']/div");
-		By SelectVendor = By.xpath("//div[contains(text(),'Kronos')]");
-
-		By TestActionLibrary = By.xpath("//div[@id='PROJECT_SOFTWARE']/div");
-		By SelectActionLibrary = By.xpath("//div[contains(text(),'Workforce Dimensions Timekeeping')]");
-
-		By ProjectVersion = By.xpath("//div[@id='PROJECT_VERSION']/div");
-		By SelectProjectVersion = By.xpath("//div[contains(text(),'R1')]");
-
-
-		By TestTarget = By.xpath("//div[@id='PROJECT_TEST_TARGET']/div");
-		By SelectTarget = By.xpath("//div[contains(text(),'Test Kronos Tenant w/ Boomi')]");
-
-		By TestSuitePurpose = By.xpath("//div[@id='PROJECT_PRUPOSE']/div");
-		By SelectPurpose = By.xpath("//div[contains(text(),'" + typetesting + "')]");
-
-		By Roles = By.xpath("//div[@id='PROJECT_ROLES']/div");
-		By SelectRoles = By.xpath("//div[contains(text(),'developer')]");
-
-		type(InputTitle, testSuiteConfig.getTestSuiteWFDTitle(), "Title Field");
-		type(InputDescription, testSuiteConfig.getTestWFDDescription(), "Description Field");
-
-		click(TestSuiteVendor, " Vendor DropDown");
-		click(SelectVendor, "Desired Vendor as Kronos");
-		click(TestActionLibrary, "TestActionLibrary DropDown");
-		click(SelectActionLibrary, "Desired Action library As Workforce Central");
-
-		click(ProjectVersion, "Project Version Dropdown");
-
+		By selectPurpose = By.xpath("//div[contains(text(),'" + typetesting + "')]");
+		type(inputTitle, testSuiteConfig.getTestSuiteWFDTitle(), "Title Field");
+		type(inputDescription, testSuiteConfig.getTestWFDDescription(), "Description Field");
+		click(testSuiteVendor, " Vendor DropDown");
+		click(selectVendor, "Desired Vendor as Kronos");
+		click(testActionLibrary, "TestActionLibrary DropDown");
+		click(wfcActionLibrary, "Desired Action library As Workforce Central");
+		click(projectVersion, "Project Version Dropdown");
+		By SelectProjectVersion = By.xpath("//div[contains(text(),'Workforce Central - R1')]");
 		click(SelectProjectVersion, "Desired Project Version as R1");
-
-		click(TestTarget, "TestTarget Dropdown");
-		click(SelectTarget, "Desired TestTarget as WFC Dev ");
-
-		click(TestSuitePurpose, "TestSuitePurpose Dropdown");
-		click(SelectPurpose, "Desired Purpose As " + typetesting);
-
-		click(Roles, "Roles Dropdown");
-		click(SelectRoles, "Desired Roles as Developer");
-
+		click(testTarget, "TestTarget Dropdown");
+		click(selectWFCTarget, "Desired TestTarget as WFC Dev ");
+		click(testSuitePurpose, "TestSuitePurpose Dropdown");
+		click(selectPurpose, "Desired Purpose As " + typetesting);
+		click(roles, "Roles Dropdown");
+		click(selectRoles, "Desired Roles as Developer");
 	}
 
 }
