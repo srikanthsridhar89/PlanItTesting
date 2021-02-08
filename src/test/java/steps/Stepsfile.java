@@ -39,11 +39,13 @@ public class Stepsfile {
 	private TestSuiteConfig testSuiteConfig = new TestSuiteConfig();
 	private PersonaConfig personaConfig = new PersonaConfig();
 	private ActionLibraryConfig actionLibraryConfig = new ActionLibraryConfig();
+	private ScenarioConfig scenarioConfig = new ScenarioConfig();
 	public static String Uname = "";
 	public static String UserEmail = "";
 	public static String dashboard_Personacount="";
 	public static String dashboard_Actionscount="";
 	public static String dashboard_Scenariocount="";
+	public static String sRequirementnotes = "TestRequirement";
 
 
 	public Stepsfile() {
@@ -54,13 +56,13 @@ public class Stepsfile {
 			testSuiteConfig = obj.readValue(JsonReader.getFile("TestSuite"), TestSuiteConfig.class);
 			personaConfig = obj.readValue(JsonReader.getFile("Persona"), PersonaConfig.class);
 			actionLibraryConfig = obj.readValue(JsonReader.getFile("ActionLibrary"), ActionLibraryConfig.class);
+			scenarioConfig= obj.readValue(JsonReader.getFile("Scenario"), ScenarioConfig.class);
 		}catch(Exception e){
 			e.printStackTrace();
 			System.exit(1);
 		}
 	}
 
-	public static String sRequirementnotes = "TestRequirement";
 
 	@Given("^User launches the application$")
 	public void User_launches_the_application() throws FileNotFoundException, InterruptedException {
@@ -73,13 +75,13 @@ public class Stepsfile {
 
 	@When("^User Creates Folder and Scenario$")
 	public void user_Creates_Folder_and_Scenario() throws InterruptedException, IOException {
-		Scenario.createFolderAndScenario();
+		Scenario.createFolderAndScenario(scenarioConfig);
 		sel.captureScreenshot("Folder and Scenario Creation");
 	}
 
 	@When("^User Searches for Scenario Created$")
 	public void user_Searches_for_Scenario_Created() throws InterruptedException, IOException {
-		Scenario.searchScenario();
+		Scenario.searchScenario(scenarioConfig);
 		sel.captureScreenshot("User Search For Scenario");
 	}
 
@@ -159,17 +161,17 @@ public class Stepsfile {
 
 	@When("^User Creates Scenario with MultipleCondition$")
 	public void User_Creates_Scenario_with_MulipleCondition() throws InterruptedException, IOException {
-		Scenario.createScenarioWithMultipleConditions();
+		Scenario.createScenarioWithMultipleConditions(scenarioConfig);
 	}
 
 	@When("^User CreatesDuplicateTemplate$")
 	public void User_CreatesDuplicateTemplate() {
-		Scenario.duplicateScenario();
+		Scenario.duplicateScenario(scenarioConfig);
 	}
 
 	@When("^User Creates Template$")
 	public void User_Creates_Template() {
-		Scenario.createTemplate();
+		Scenario.createTemplate(scenarioConfig);
 	}
 
 	@Then("^User see SharedScenario$")
@@ -179,20 +181,20 @@ public class Stepsfile {
 	}
 	@When("^User Shares ScenarioLink$")
 	public void User_Shares_Scenariolink() throws IOException, InterruptedException {
-		Scenario.shareScenarioLink();
+		Scenario.shareScenarioLink(scenarioConfig);
 		sel.captureScreenshot("Share Link");
 	}
 
 	@When("^User Cancels CreatedScenario$")
 	public void User_Cancels_CreatedScenario() throws InterruptedException, IOException {
-		Scenario.createScenarioWithSimpleActions();
+		Scenario.createScenarioWithSimpleActions(scenarioConfig);
 		Scenario.clickOnCancel();
 		sel.captureScreenshot("Cancel CreatedScenario");
 	}
 
 	@When("^User Creates RequirementNotes$")
 	public void User_Creates_RequirementNotes() throws IOException {
-		Scenario.createRequirementNotes(sRequirementnotes);
+		Scenario.createRequirementNotes(scenarioConfig,sRequirementnotes);
 		sel.captureScreenshot("Requirement Notes");
 	}
 
@@ -220,7 +222,7 @@ public class Stepsfile {
 
 	@When("^User Copies TestSuite$")
 	public void user_Copies_TestSuite() throws InterruptedException, IOException {
-		Scenario.copyTestSuite();
+		Scenario.copyTestSuite(scenarioConfig);
 		sel.captureScreenshot("Copy TestSuite");
 	}
 
@@ -234,41 +236,41 @@ public class Stepsfile {
 
 	@When("^User renames created folder$")
 	public void User_renames_created_folder() throws InterruptedException, IOException {
-		Scenario.renameCreatedFolder();
+		Scenario.renameCreatedFolder(scenarioConfig);
 		sel.captureScreenshot("RenameFolder");
 	}
 
 	@Then("^User will not see Folder Deleted$")
 	public void User_will_not_see_Folder_Deleted() throws IOException {
-		Scenario.verifyFolderDeleted();
+		Scenario.verifyFolderDeleted(scenarioConfig);
 		sel.captureScreenshot("Delete Folder Verification");
 	}
 
 	@Then("^User sees Parent Folder Deleted$")
 	public void User_sees_Parent_Folder_Deleted() throws IOException, InterruptedException {
 
-		Scenario.verifyParentfolderDeleted();
+		Scenario.verifyParentfolderDeleted(scenarioConfig);
 
 		sel.captureScreenshot("Delete Folder Verification");
 	}
 
 	@Then("^User sees ParentFolder$")
 	public void userseesparentfolder() throws InterruptedException {
-		Scenario.verifyParentFolder();
+		Scenario.verifyParentFolder(scenarioConfig);
 
 	}
 
 	@When("^User Deletes Folder Excluding children")
 	public void User_Deletes_Folder_Excluding_Children() throws InterruptedException, IOException {
 
-		Scenario.user_deletesfolder_excluding_children();
+		Scenario.deleteFolder(scenarioConfig);
 		sel.captureScreenshot("Delete Folder Excluding Children");
 	}
 
 
 	@Then("^User sees folder renamed$")
 	public void User_sees_folder_renamed() throws IOException, InterruptedException {
-		Scenario.verifyFolderRenamed();
+		Scenario.verifyFolderRenamed(scenarioConfig);
 		sel.captureScreenshot("Rename Folder Verification");
 
 	}
@@ -276,19 +278,19 @@ public class Stepsfile {
 	@Then("^User sees Folder Created Successfully$")
 	public void User_sees_Folder_Created_Successfully() throws InterruptedException {
 
-		Scenario.verifyFolderCreated();
+		Scenario.verifyFolderCreated(scenarioConfig);
 	}
 
 	@When("^User creates child folder$")
 	public void User_creates_child_folder() throws IOException, InterruptedException {
-		Scenario.creatChildFolder();
+		Scenario.creatChildFolder(scenarioConfig);
 		sel.captureScreenshot("Child Folder Creation");
 	}
 
 	@When("^User Copies CreatedFolder$")
 	public void User_Copies_CreatedFolder() throws InterruptedException, IOException {
 
-		Scenario.copyFolder();
+		Scenario.copyFolder(scenarioConfig);
 
 		sel.captureScreenshot("Copy Folder");
 	}
@@ -310,7 +312,7 @@ public class Stepsfile {
 	@When("^User Creates SubFolder$")
 	public void User_Cretes_SubFolder() throws InterruptedException, IOException {
 
-		Scenario.createsSubFolder();
+		Scenario.createsSubFolder(scenarioConfig);
 		sel.captureScreenshot("SubFolder Creation");
 	}
 
@@ -326,7 +328,7 @@ public class Stepsfile {
 	@When("^User Updates Scenario with Simple String$")
 	public void User_Updates_scenario_with_Simple_String() throws IOException {
 
-		Scenario.updatesScenarioWithSimpleActions();
+		Scenario.updatesScenarioWithSimpleActions(scenarioConfig);
 		Scenario.clickOnSave();
 		sel.captureScreenshot("Scenario Update");
 	}
@@ -348,7 +350,7 @@ public class Stepsfile {
 		User_Lands_into_DashboardPortal_After_TestSuiteCreation();
 		Scenario.clickOnScenarioTab();
 		User_redirects_to_Scenario_DetailPage();
-		Scenario.createScenarioWithSimpleActions();
+		Scenario.createScenarioWithSimpleActions(scenarioConfig);
 		Scenario.clickOnSave();
 		Scenario.verifyScenarioCreatedWithSimpleActions();
 		Scenario.clickOnDeleteScenario();
@@ -356,7 +358,7 @@ public class Stepsfile {
 
 	@Then("^User does not see Scenario details$")
 	public void User_does_not_see_Scenario_details() throws IOException {
-		Scenario.verfiyScenarioDetails();
+		Scenario.verifyScenarioDetails();
 		sel.captureScreenshot("Delete Scenario Verification");
 
 	}
@@ -385,14 +387,14 @@ public class Stepsfile {
 
 	@When("^User exports created folder$")
 	public void User_exports_created_folder() throws InterruptedException, IOException {
-		Scenario.exportFolder();
+		Scenario.exportFolder(scenarioConfig);
 		sel.captureScreenshot("Export Folder");
 	}
 
 	@When("^User exports feature file$")
 	public void User_exports_feature_file() throws IOException, InterruptedException {
 
-		Scenario.exportFeatureFile();
+		Scenario.exportFeatureFile(scenarioConfig);
 		sel.captureScreenshot("ExportFeatureFile");
 	}
 
@@ -823,7 +825,7 @@ public class Stepsfile {
 
 	@When("^User selects different reviewopts\"([^\"]*)\"$")
 	public void User_selects_different_reviewopts(String arg1) throws InterruptedException, IOException {
-		Scenario.reviewOptions(arg1, "Review Comments");
+		Scenario.reviewOptions(scenarioConfig,arg1, "Review Comments");
 
 	}
 
@@ -1083,14 +1085,14 @@ public class Stepsfile {
 
 	@When("^User creates scenario with simple actions$")
 	public void User_creates_scenario_with_simple_actions() throws InterruptedException, IOException {
-		Scenario.createScenarioWithSimpleActions();
+		Scenario.createScenarioWithSimpleActions(scenarioConfig);
 		Scenario.clickOnSave();
 	}
 
 
 	@Then("^User verifies the scenario created$")
 	public void User_verifies_the_scenario_created() throws IOException {
-		Scenario.verifyScenarioCreated();
+		Scenario.verifyScenarioCreated(scenarioConfig);
 	//	Scenario.verifyScenarioCreatedWithSimpleActions();
 		sel.captureScreenshot("Scenario created");
 	}
@@ -1098,7 +1100,7 @@ public class Stepsfile {
 
 	@When("^User creates scenario with table data$")
 	public void User_creates_scenario_with_table_data() throws IOException, InterruptedException {
-		Scenario.createScenarioWithTableData();
+		Scenario.createScenarioWithTableData(scenarioConfig);
 		Scenario.clickOnSave();
 		sel.captureScreenshot("ScenarioWithTableData");
 	}

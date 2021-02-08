@@ -1,0 +1,14 @@
+{
+"FolderName": "ScenarioWithTableData",
+"ParentFolderName": "ParentFolder",
+"TestScenario": "TestScenario",
+"ChildFolder1": "ChildFolder1",
+"ChildFolder2": "ChildFolder2",
+"GivenAction": "I am <Age> years old as of today",
+"Age" : "31",
+"WhenAction": "The integration <Integration Name> is triggered with the following parameters",
+"Integration":"DN Person Import",
+"Name":"File Name",
+"Value":"100",
+"ThenAction": "All actions were successful"
+}

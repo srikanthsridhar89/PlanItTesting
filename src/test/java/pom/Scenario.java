@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
+import bean.ScenarioConfig;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -17,23 +18,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cucumber.listener.Reporter;
 
-import net.bytebuddy.utility.RandomString;
 import utilities.SelCommands;
 
 public class Scenario extends SelCommands {
 
-	private static String folderName = "TestFolder" + new RandomString(4).nextString();
-	private static String parentFolderName ="ParentFolder"+ new RandomString(4).nextString();
-	private static String testScenario = "TestScenario" + new RandomString(4).nextString();
-	private static String subFoldername1 = "SubFolder1" + new RandomString(4).nextString();
-	private static String subFoldername2 = "SubFolder2" + new RandomString(4).nextString();
-	private static String whenTableData = "I approve my timecard for <Symbolic Period>";
-	private static String thenTableData = "My Pay Code amounts breakdown for day <Day> in the current pay period is";
-	private static String sPayCode = "25";
-	private static String sAmount = "4500";
-	private static String swages = "60";
-	private static String updateWhenData = "My overtime for today is approved";
-	private static String updateThenData = "My shift does not have an exception flag";
+
 	private static By RequirementNotesfield;
 	private static String URL ="";
 	private static By duplicateScenario = By.xpath("//span[@data-tip='Duplicate Scenario']");
@@ -44,20 +33,20 @@ public class Scenario extends SelCommands {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void duplicateScenario() {
+	public static void duplicateScenario(ScenarioConfig scenarioConfig) {
 
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Create New Folder']")));
-		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(folderName);
+		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(scenarioConfig.getFolderName());
 		Actions action = new Actions(driver);
 		action.sendKeys(Keys.ENTER).perform();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + folderName + "']")));
-		driver.findElement(By.xpath("//label[text()='" + folderName + "']")).click();
-		Reporter.addStepLog("User Creates Folder as" + folderName);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")));
+		driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")).click();
+		Reporter.addStepLog("User Creates Folder as" + scenarioConfig.getFolderName());
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#create-scenario-onEnterPress")));
-		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(testScenario);
+		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(scenarioConfig.getTestScenario());
 		action.sendKeys(Keys.ENTER).perform();
-		Reporter.addStepLog("User Creates TestScenario :" + testScenario);
+		Reporter.addStepLog("User Creates TestScenario :" + scenarioConfig.getTestScenario());
 
 		wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")));
@@ -67,21 +56,21 @@ public class Scenario extends SelCommands {
 		driver.findElement(submitButton).click();
 	}
 
-	public static void createTemplate() {
+	public static void createTemplate(ScenarioConfig scenarioConfig) {
 		By CreateTemplateIcon = By.xpath("//span[@data-tip='Create Template']");
 		By CreateTemplateConfirmation = By.xpath("//button[@id='createTemplate']");
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Create New Folder']")));
-		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(folderName);
+		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(scenarioConfig.getFolderName());
 		Actions action = new Actions(driver);
 		action.sendKeys(Keys.ENTER).perform();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + folderName + "']")));
-		driver.findElement(By.xpath("//label[text()='" + folderName + "']")).click();
-		Reporter.addStepLog("User Creates Folder as" + folderName);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")));
+		driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")).click();
+		Reporter.addStepLog("User Creates Folder as" + scenarioConfig.getFolderName());
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#create-scenario-onEnterPress")));
-		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(testScenario);
+		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(scenarioConfig.getTestScenario());
 		action.sendKeys(Keys.ENTER).perform();
-		Reporter.addStepLog("User Creates TestScenario :" + testScenario);
+		Reporter.addStepLog("User Creates TestScenario :" + scenarioConfig.getTestScenario());
 		wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")));
 		driver.findElement(By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")).click();
@@ -94,14 +83,14 @@ public class Scenario extends SelCommands {
 		Reporter.addStepLog("User Selects Given Scenario Statement");
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#react-select-3-input")));
 		action.click(driver.findElement(By.cssSelector("#react-select-3-input"))).perform();
-		driver.findElement(By.cssSelector("#react-select-3-input")).sendKeys(whenTableData);
+		driver.findElement(By.cssSelector("#react-select-3-input")).sendKeys(scenarioConfig.getWhenAction());
 		driver.findElement(By.cssSelector("#react-select-3-input")).sendKeys(Keys.ENTER);
 		Reporter.addStepLog("User Selects When  Scenario Statement");
 		driver.findElement(By.xpath("//span[text()='When']/following::input[@class='editable-input-text']"))
 				.sendKeys("50");
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#react-select-4-input")));
 		action.click(driver.findElement(By.cssSelector("#react-select-4-input"))).perform();
-		driver.findElement(By.cssSelector("#react-select-4-input")).sendKeys(thenTableData);
+		driver.findElement(By.cssSelector("#react-select-4-input")).sendKeys(scenarioConfig.getThenAction());
 		driver.findElement(By.cssSelector("#react-select-4-input")).sendKeys(Keys.ENTER);
 		Reporter.addStepLog("User Selects Then Scenario Statement ");
 		driver.findElement(By.xpath("//span[text()='Then']/following::input[@class='editable-input-text']"))
@@ -109,21 +98,21 @@ public class Scenario extends SelCommands {
 
 	}
 
-	public static void shareScenarioLink() throws InterruptedException {
+	public static void shareScenarioLink(ScenarioConfig scenarioConfig) throws InterruptedException {
 
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Create New Folder']")));
-		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(folderName);
+		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(scenarioConfig.getFolderName());
 		Actions action = new Actions(driver);
 		action.sendKeys(Keys.ENTER).perform();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + folderName + "']")));
-		driver.findElement(By.xpath("//label[text()='" + folderName + "']")).click();
-		Reporter.addStepLog("User Creates Folder as" + folderName);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")));
+		driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")).click();
+		Reporter.addStepLog("User Creates Folder as" + scenarioConfig.getFolderName());
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#create-scenario-onEnterPress")));
-		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(testScenario);
+		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(scenarioConfig.getTestScenario());
 		action.sendKeys(Keys.ENTER).perform();
-		Reporter.addStepLog("User Creates TestScenario :" + testScenario);
+		Reporter.addStepLog("User Creates TestScenario :" + scenarioConfig.getTestScenario());
 		wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")));
 		driver.findElement(By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")).click();
@@ -156,7 +145,7 @@ public class Scenario extends SelCommands {
 		}
 		SelCommands.captureScreenshot();
 	}
-	public static void createRequirementNotes(String Requirementnotes) {
+	public static void createRequirementNotes(ScenarioConfig scenarioConfig,String Requirementnotes) {
 
 		By Save = By.xpath("//button[text()='Save']");
 		By RequirementNotefield = By.xpath("//*[@placeholder='Enter requirements or notes for this folder']");
@@ -165,20 +154,20 @@ public class Scenario extends SelCommands {
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Create New Folder']")));
-		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(folderName);
+		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(scenarioConfig.getFolderName());
 		Actions action = new Actions(driver);
 
 		action.sendKeys(Keys.ENTER).perform();
 
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + folderName + "']")));
-		driver.findElement(By.xpath("//label[text()='" + folderName + "']")).click();
-		Reporter.addStepLog("User Creates Folder as" + folderName);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")));
+		driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")).click();
+		Reporter.addStepLog("User Creates Folder as" + scenarioConfig.getFolderName());
 
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#create-scenario-onEnterPress")));
-		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(testScenario);
+		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(scenarioConfig.getTestScenario());
 		action.sendKeys(Keys.ENTER).perform();
 
-		Reporter.addStepLog("User Creates TestScenario :" + testScenario);
+		Reporter.addStepLog("User Creates TestScenario :" + scenarioConfig.getTestScenario());
 
 		wait.until(ExpectedConditions.presenceOfElementLocated(RequirementNoteToggle));
 		click(RequirementNoteToggle, "Requirement Toggle");
@@ -187,44 +176,44 @@ public class Scenario extends SelCommands {
 		click(Save, "Save button");
 	}
 
-	public static void verifyParentFolder() throws InterruptedException {
+	public static void verifyParentFolder(ScenarioConfig scenarioConfig) throws InterruptedException {
 		Thread.sleep(5000);
-		WebElement Foldername = driver.findElement(By.xpath("//label[text()='" + folderName + "']"));
-		if (Foldername.getText().equals(folderName)) {
-			Reporter.addStepLog("User sees ParentFolder After Deletion : " + folderName);
+		WebElement Foldername = driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']"));
+		if (Foldername.getText().equals(scenarioConfig.getFolderName())) {
+			Reporter.addStepLog("User sees ParentFolder After Deletion : " + scenarioConfig.getFolderName());
 		} else {
 			Reporter.addStepLog("User does not see Folder After Deletion");
 		}
 	}
 
-	public static void searchScenario() throws InterruptedException {
+	public static void searchScenario(ScenarioConfig scenarioConfig) throws InterruptedException {
 		By ScenarioSearch = By.xpath("//div[@class='form-group search-form-input']/input");
 
 		WebElement ele = driver.findElement(ScenarioSearch);
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();", ele);
-		driver.findElement(ScenarioSearch).sendKeys(testScenario);
+		driver.findElement(ScenarioSearch).sendKeys(scenarioConfig.getTestScenario());
 		driver.findElement(ScenarioSearch).sendKeys(Keys.ENTER);
 		Thread.sleep(5000);
-		WebElement Foldername = driver.findElement(By.xpath("//label[text()='" + folderName + "']"));
-		if (Foldername.getText().equals(folderName)) {
-			Reporter.addStepLog("User sees Folder Created After Search : " + folderName);
+		WebElement Foldername = driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']"));
+		if (Foldername.getText().equals(scenarioConfig.getFolderName())) {
+			Reporter.addStepLog("User sees Folder Created After Search : " + scenarioConfig.getFolderName());
 		} else {
 			Reporter.addStepLog("User does not see Folder Created After Search");
 		}
 	}
 
-	public static void verifyFolderDeleted() {
-		if (!folderName.isEmpty()) {
+	public static void verifyFolderDeleted(ScenarioConfig scenarioConfig) {
+		if (!scenarioConfig.getFolderName().isEmpty()) {
 			Reporter.addScenarioLog("User Does not see Folder Deleted ");
 		} else {
 			Reporter.addScenarioLog("User Sees Folder Deleted ");
 		}
 	}
 
-	public static void verifyParentfolderDeleted() throws InterruptedException {
+	public static void verifyParentfolderDeleted(ScenarioConfig scenarioConfig) throws InterruptedException {
 		Thread.sleep(5000);
-		if (folderName.isEmpty()) {
+		if (scenarioConfig.getFolderName().isEmpty()) {
 
 			Reporter.addScenarioLog("User See Parent Folder Deleted");
 		} else {
@@ -233,27 +222,27 @@ public class Scenario extends SelCommands {
 		}
 	}
 
-	public static void creatChildFolder() throws InterruptedException {
+	public static void creatChildFolder(ScenarioConfig scenarioConfig) throws InterruptedException {
 
 		WebDriverWait wait = new WebDriverWait(driver, 180);
 		driver.findElement(By.xpath("//input[@id='new-scenario-folder']")).sendKeys(Keys.ENTER);
 		Actions action = new Actions(driver);
 
-		WebElement ele = driver.findElement(By.xpath("//label[text()='" + folderName + "']"));
+		WebElement ele = driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']"));
 		ele.click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Create New Folder']")));
 		WebElement NewFolder = driver.findElement(By.xpath("//input[@placeholder='Create New Folder']"));
 		action.moveToElement(NewFolder).build().perform();
 		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).click();
-		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(subFoldername1);
+		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(scenarioConfig.getChildFolder1());
 		action.sendKeys(Keys.ENTER).perform();
-		Reporter.addStepLog("User Creates Sub Folder as" + subFoldername1);
+		Reporter.addStepLog("User Creates Sub Folder as" + scenarioConfig.getChildFolder1());
 
 	}
 
-	public static void verifyFolderCreated() throws InterruptedException {
+	public static void verifyFolderCreated(ScenarioConfig scenarioConfig) throws InterruptedException {
 		Thread.sleep(4000);
-		WebElement ele = driver.findElement(By.xpath("//label[text()='" + folderName + "']"));
+		WebElement ele = driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']"));
 		if (ele.isDisplayed()) {
 			Reporter.addStepLog("User sees Folder Created Successfully");
 		} else {
@@ -262,7 +251,7 @@ public class Scenario extends SelCommands {
 		}
 	}
 
-	public static void updatesScenarioWithSimpleActions() {
+	public static void updatesScenarioWithSimpleActions(ScenarioConfig scenarioConfig) {
 		WebDriverWait wait = new WebDriverWait(driver, 180);
 		Actions action = new Actions(driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(
@@ -270,58 +259,66 @@ public class Scenario extends SelCommands {
 		driver.findElement(By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")).click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#react-select-6-input")));
 		action.click(driver.findElement(By.cssSelector("#react-select-6-input"))).perform();
-		driver.findElement(By.cssSelector("#react-select-6-input")).sendKeys(updateWhenData);
+		driver.findElement(By.cssSelector("#react-select-6-input")).sendKeys(scenarioConfig.getWhenAction());
 		driver.findElement(By.cssSelector("#react-select-6-input")).sendKeys(Keys.ENTER);
-		Reporter.addStepLog("User Updates  When  Scenario Statement with  :" + updateWhenData);
+		Reporter.addStepLog("User Updates  When  Scenario Statement with  :" + scenarioConfig.getWhenAction());
 		// driver.findElement(By.xpath("//span[text()='When']/following::input[@class='editable-input-text']"))
 		// .sendKeys("50");
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#react-select-7-input")));
 		action.click(driver.findElement(By.cssSelector("#react-select-7-input"))).perform();
-		driver.findElement(By.cssSelector("#react-select-7-input")).sendKeys(updateThenData);
+		driver.findElement(By.cssSelector("#react-select-7-input")).sendKeys(scenarioConfig.getThenAction());
 		driver.findElement(By.cssSelector("#react-select-7-input")).sendKeys(Keys.ENTER);
-		Reporter.addStepLog("User Updates  Then Scenario Statement with  :" + updateThenData);
+		Reporter.addStepLog("User Updates  Then Scenario Statement with  :" + scenarioConfig.getThenAction());
 
 	}
 
-	public static void createScenarioWithTableData() throws InterruptedException {
+	public static void createScenarioWithTableData(ScenarioConfig scenarioConfig) throws InterruptedException {
 
 		WebDriverWait wait = new WebDriverWait(driver, 240);
-		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(folderName);
+		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(scenarioConfig.getFolderName());
 		Actions action = new Actions(driver);
 		action.sendKeys(Keys.ENTER).perform();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + folderName + "']")));
-		driver.findElement(By.xpath("//label[text()='" + folderName + "']")).click();
-		Reporter.addStepLog("User Creates Folder as" + folderName);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")));
+		driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")).click();
+		Reporter.addStepLog("User Creates Folder as" + scenarioConfig.getFolderName());
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#create-scenario-onEnterPress")));
-		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(testScenario);
+		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(scenarioConfig.getTestScenario());
 		action.sendKeys(Keys.ENTER).perform();
-		Reporter.addStepLog("User Creates TestScenario :" + testScenario);
+		Reporter.addStepLog("User Creates TestScenario :" + scenarioConfig.getTestScenario());
 		wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")));
 		driver.findElement(By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")).click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#react-select-2-input")));
 		action.click(driver.findElement(By.cssSelector("#react-select-2-input"))).perform();
-		driver.findElement(By.cssSelector("#react-select-2-input")).sendKeys("Exempt");
+		//Write code to select actions from drop down
+		//javascript_click();
+		driver.findElement(By.cssSelector("#react-select-2-input")).sendKeys("AssociatePersona");
 		driver.findElement(By.cssSelector("#react-select-2-input")).sendKeys(Keys.ENTER);
+		driver.findElement(By.xpath("//div[@class='step persona-step']/following::div[@class='coordination-steps'][1]")).click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#react-select-3-input")));
+		action.click(driver.findElement(By.xpath("//div[contains(text(),'Select an action...')]"))).perform();
+		driver.findElement(By.xpath("//div[contains(text(),'Select an action...')]")).sendKeys(scenarioConfig.getGivenAction());
 		Reporter.addStepLog("User Selects Given Scenario Statement");
+		driver.findElement(By.xpath("//span[text()='Given']/following::input[@class='editable-input-text']"))
+				.sendKeys("30");
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#react-select-3-input")));
 		action.click(driver.findElement(By.cssSelector("#react-select-3-input"))).perform();
-		driver.findElement(By.cssSelector("#react-select-3-input")).sendKeys(whenTableData);
+		driver.findElement(By.cssSelector("#react-select-3-input")).sendKeys(scenarioConfig.getWhenAction());
 		driver.findElement(By.cssSelector("#react-select-3-input")).sendKeys(Keys.ENTER);
 		Reporter.addStepLog("User Selects When  Scenario Statement");
 		driver.findElement(By.xpath("//span[text()='When']/following::input[@class='editable-input-text']"))
 				.sendKeys("50");
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#react-select-4-input")));
 		action.click(driver.findElement(By.cssSelector("#react-select-4-input"))).perform();
-		driver.findElement(By.cssSelector("#react-select-4-input")).sendKeys(thenTableData);
+		driver.findElement(By.cssSelector("#react-select-4-input")).sendKeys(scenarioConfig.getThenAction());
 		driver.findElement(By.cssSelector("#react-select-4-input")).sendKeys(Keys.ENTER);
 		Reporter.addStepLog("User Selects Then Scenario Statement ");
-		driver.findElement(By.xpath("//span[text()='Then']/following::input[@class='editable-input-text']"))
+		driver.findElement(By.xpath("(//div[contains(@class,'action-select__dropdown-indicator')])[2]"))
 				.sendKeys("60");
 
 	}
 
-	public static void createScenarioWithMultipleConditions() throws InterruptedException, IOException {
+	public static void createScenarioWithMultipleConditions(ScenarioConfig scenarioConfig) throws InterruptedException, IOException {
 
 		By AddPersonaModifier = By.xpath("(//div[@class='add-step-zero-state'])[1]//span");
 		By AddEmployeeAction = By.xpath("(//div[@class='add-step-zero-state']//span)[2]");
@@ -329,16 +326,16 @@ public class Scenario extends SelCommands {
 		By Save = By.xpath("//button[@type='submit']");
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Create New Folder']")));
-		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(folderName);
+		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(scenarioConfig.getFolderName());
 		Actions action = new Actions(driver);
 		action.sendKeys(Keys.ENTER).perform();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + folderName + "']")));
-		driver.findElement(By.xpath("//label[text()='" + folderName + "']")).click();
-		Reporter.addStepLog("User Creates Folder as" + folderName);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")));
+		driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")).click();
+		Reporter.addStepLog("User Creates Folder as" + scenarioConfig.getFolderName());
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#create-scenario-onEnterPress")));
-		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(testScenario);
+		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(scenarioConfig.getTestScenario());
 		action.sendKeys(Keys.ENTER).perform();
-		Reporter.addStepLog("User Creates TestScenario :" + testScenario);
+		Reporter.addStepLog("User Creates TestScenario :" + scenarioConfig.getTestScenario());
 		wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")));
 		driver.findElement(By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")).click();
@@ -382,19 +379,19 @@ public class Scenario extends SelCommands {
 
 	}
 
-	public static void createScenarioWithSimpleActions() throws InterruptedException {
+	public static void createScenarioWithSimpleActions(ScenarioConfig scenarioConfig) throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Create New Folder']")));
-		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(folderName);
+		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(scenarioConfig.getFolderName());
 		Actions action = new Actions(driver);
 		action.sendKeys(Keys.ENTER).perform();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + folderName + "']")));
-		driver.findElement(By.xpath("//label[text()='" + folderName + "']")).click();
-		Reporter.addStepLog("User Creates Folder as" + folderName);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")));
+		driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")).click();
+		Reporter.addStepLog("User Creates Folder as" + scenarioConfig.getFolderName());
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#create-scenario-onEnterPress")));
-		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(testScenario);
+		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(scenarioConfig.getTestScenario());
 		action.sendKeys(Keys.ENTER).perform();
-		Reporter.addStepLog("User Creates TestScenario :" + testScenario);
+		Reporter.addStepLog("User Creates TestScenario :" + scenarioConfig.getTestScenario());
 		wait.until(ExpectedConditions.presenceOfElementLocated(
 				By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")));
 		driver.findElement(By.xpath("//div[@class='scenario-header-icons']/span[@data-tip='Edit Scenario']")).click();
@@ -438,7 +435,7 @@ public class Scenario extends SelCommands {
 		driver.findElement(By.xpath("//span[@data-tip='Delete Scenario']")).click();
 	}
 
-	public static void verfiyScenarioDetails() {
+	public static void verifyScenarioDetails() {
 		WebDriverWait wait = new WebDriverWait(driver, 180);
 		wait.until(ExpectedConditions
 				.presenceOfElementLocated(By.xpath("//span[contains(text(),'All actions were successful')]")));
@@ -485,12 +482,12 @@ public class Scenario extends SelCommands {
 	}
 
 	//Compare scenario title created vs actual
-	public static void verifyScenarioCreated() {
+	public static void verifyScenarioCreated(ScenarioConfig scenarioConfig) {
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 		wait.until(ExpectedConditions
 				.presenceOfElementLocated(By.xpath("//span[contains(text(),'All actions were successful')]")));
 		WebElement actualScenarioName = driver.findElement(By.xpath("//textarea[contains(text(),'TestScenario')]"));
-		if(actualScenarioName.getText().equals(testScenario)){
+		if(actualScenarioName.getText().equals(scenarioConfig.getTestScenario())){
 		 Reporter.addScenarioLog("Scenario is created successfully");
 		}
 		else{
@@ -529,12 +526,12 @@ public class Scenario extends SelCommands {
 		click(CreateFolder, "Create Folder");
 	}
 
-	public static void createsSubFolder() throws InterruptedException {
+	public static void createsSubFolder(ScenarioConfig scenarioConfig) throws InterruptedException {
 		Thread.sleep(4000);
 		// User selects Folder Created
 		WebDriverWait wait = new WebDriverWait(driver, 180);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + folderName + "']")));
-		driver.findElement(By.xpath("//label[text()='" + folderName + "']")).click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")));
+		driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")).click();
 		Reporter.addStepLog("User Selected Folder Created");
 		driver.findElement(By.cssSelector("svg#create-folder-button")).click();
 		Reporter.addStepLog("User Clicked on Create Folder");
@@ -543,24 +540,24 @@ public class Scenario extends SelCommands {
 		action.contextClick(Subfolder).perform();
 		driver.findElement(By.xpath("//*[@class='ta-tree-file']/nav//ul[@class='options']/li[1]")).click();
 		Reporter.addStepLog("User Clicked on Rename");
-		driver.findElement(By.xpath("//ul[@class='ta-tree-node'] //input")).sendKeys(subFoldername1);
-		Reporter.addStepLog("User Inputs Value as" + subFoldername1);
-		driver.findElement(By.xpath("//label[text()='" + folderName + "']")).click();
+		driver.findElement(By.xpath("//ul[@class='ta-tree-node'] //input")).sendKeys(scenarioConfig.getChildFolder1());
+		Reporter.addStepLog("User Inputs Value as" + scenarioConfig.getChildFolder1());
+		driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")).click();
 		driver.findElement(By.cssSelector("svg#create-folder-button")).click();
 		Reporter.addStepLog("User Creates Another Sub Folder");
 		WebElement Subfolder2 = driver.findElement(By.xpath("(//span[@class='icon-file'])[1]"));
 		action.contextClick(Subfolder2).perform();
 		driver.findElement(By.xpath("(//nav//ul[@class='options']/li[1])[2]")).click();
 		Reporter.addStepLog("User Clicked on Rename");
-		driver.findElement(By.xpath("//ul[@class='ta-tree-node'] //input")).sendKeys(subFoldername2);
-		Reporter.addStepLog("User Inputs Value as " + subFoldername2);
+		driver.findElement(By.xpath("//ul[@class='ta-tree-node'] //input")).sendKeys(scenarioConfig.getChildFolder2());
+		Reporter.addStepLog("User Inputs Value as " + scenarioConfig.getChildFolder2());
 
 	}
 
-	public static void user_deletesfolder_excluding_children() throws InterruptedException {
+	public static void deleteFolder(ScenarioConfig scenarioConfig) throws InterruptedException {
 		Thread.sleep(3000);
 		Actions action = new Actions(driver);
-		WebElement Subfolder = driver.findElement(By.xpath("//label[text()='" + subFoldername1 + "']"));
+		WebElement Subfolder = driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getChildFolder1() + "']"));
 		action.contextClick(Subfolder).perform();
 		Thread.sleep(3000);
 		WebElement ele = driver.findElement(
@@ -576,51 +573,51 @@ public class Scenario extends SelCommands {
 	}
 
 
-	public static void createFolderAndScenario() throws InterruptedException {
-		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(folderName);
+	public static void createFolderAndScenario(ScenarioConfig scenarioConfig) throws InterruptedException {
+		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(scenarioConfig.getFolderName());
 		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(Keys.ENTER);
 		Thread.sleep(3000);
-		Reporter.addStepLog("User Creates Folder :" + folderName);
-		driver.findElement(By.xpath("//label[text()='" + folderName + "']/preceding::span[@class='icon-file'][1]"))
+		Reporter.addStepLog("User Creates Folder :" + scenarioConfig.getFolderName());
+		driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']/preceding::span[@class='icon-file'][1]"))
 				.click();
 		WebDriverWait wait = new WebDriverWait(driver, 180);
 		Actions action = new Actions(driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#create-scenario-onEnterPress")));
-		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(testScenario);
+		driver.findElement(By.cssSelector("#create-scenario-onEnterPress")).sendKeys(scenarioConfig.getTestScenario());
 		action.sendKeys(Keys.ENTER).perform();
-		Reporter.addStepLog("User Creates TestScenario :" + testScenario);
+		Reporter.addStepLog("User Creates TestScenario :" + scenarioConfig.getTestScenario());
 
 	}
 
-	public static void renameCreatedFolder() throws InterruptedException, IOException {
+	public static void renameCreatedFolder(ScenarioConfig scenarioConfig) throws InterruptedException, IOException {
 
 		WebDriverWait wait = new WebDriverWait(driver, 180);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + folderName + "']/preceding::span[@class='icon-file'][1]")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']/preceding::span[@class='icon-file'][1]")));
 		Thread.sleep(3000);
-		scrollInToViewElement(By.xpath("//label[text()='" + folderName + "']/preceding::span[@class='icon-file'][1]"));
-		driver.findElement(By.xpath("//label[text()='" + folderName + "']/preceding::span[@class='icon-file'][1]"))
+		scrollInToViewElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']/preceding::span[@class='icon-file'][1]"));
+		driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']/preceding::span[@class='icon-file'][1]"))
 				.click();
 		Actions action = new Actions(driver);
 		Thread.sleep(3000);
 		WebElement folder = driver
-				.findElement(By.xpath("//label[text()='" + folderName + "']/preceding::span[@class='icon-file'][1]"));
+				.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']/preceding::span[@class='icon-file'][1]"));
 		action.contextClick(folder).build().perform();
 		WebElement ele = driver.findElement(By.xpath("(//nav[@class='context-menu']//ul/li[text()='Rename'])[1]"));
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();", ele);
 		Reporter.addStepLog("User Clicked on Rename");
-		driver.findElement(By.xpath("//input[@class='editable-input-text']")).sendKeys(parentFolderName);
-		Reporter.addStepLog("User Renames Parent Folder as "+ parentFolderName);
+		driver.findElement(By.xpath("//input[@class='editable-input-text']")).sendKeys(scenarioConfig.getParentFolder());
+		Reporter.addStepLog("User Renames Parent Folder as "+ scenarioConfig.getParentFolder());
 		SelCommands.captureScreenshot();
 	}
 
-	public static void copyFolder() throws InterruptedException {
+	public static void copyFolder(ScenarioConfig scenarioConfig) throws InterruptedException {
 
 		Thread.sleep(4000);
 
 		Actions action = new Actions(driver);
 		WebElement folder = driver
-				.findElement(By.xpath("//label[text()='" + folderName + "']/preceding::span[@class='icon-file'][1]"));
+				.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']/preceding::span[@class='icon-file'][1]"));
 
 		action.contextClick(folder).perform();
 		Thread.sleep(3000);
@@ -668,7 +665,7 @@ public class Scenario extends SelCommands {
 		Thread.sleep(4000);
 	}
 
-	public static void exportFolder() throws InterruptedException {
+	public static void exportFolder(ScenarioConfig scenarioConfig) throws InterruptedException {
 
 		driver.findElement(By.cssSelector("svg#create-folder-button")).click();
 		Reporter.addStepLog("User Clicked on Create Folder");
@@ -676,7 +673,7 @@ public class Scenario extends SelCommands {
 
 		Actions action = new Actions(driver);
 		WebElement folder = driver.findElement(
-				By.xpath("//label[text()='" + folderName + "']/preceding::span[@class='icon-folder'][1]"));
+				By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']/preceding::span[@class='icon-folder'][1]"));
 
 		action.contextClick(folder).perform();
 
@@ -690,14 +687,14 @@ public class Scenario extends SelCommands {
 
 	}
 
-	public static void exportFeatureFile() throws InterruptedException {
+	public static void exportFeatureFile(ScenarioConfig scenarioConfig) throws InterruptedException {
 
 		driver.findElement(By.cssSelector("svg#create-folder-button")).click();
 		Reporter.addStepLog("User Clicked on Create Folder");
 		Thread.sleep(3000);
 		Actions action = new Actions(driver);
 		WebElement folder = driver.findElement(
-				By.xpath("//label[text()='" + folderName + "']/preceding::span[@class='icon-folder'][1]"));
+				By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']/preceding::span[@class='icon-folder'][1]"));
 		action.contextClick(folder).perform();
 		WebElement ele = driver
 				.findElement(By.xpath("(//nav[@class='context-menu']//ul/li[text()='Export Feature File'])[1]"));
@@ -708,7 +705,7 @@ public class Scenario extends SelCommands {
 		Reporter.addStepLog("User Clicked on Export");
 	}
 
-	public static void copyTestSuite() throws InterruptedException {
+	public static void copyTestSuite(ScenarioConfig scenarioConfig) throws InterruptedException {
 
 		driver.findElement(By.cssSelector("svg#create-folder-button")).click();
 		Reporter.addStepLog("User Clicked on Create Folder");
@@ -716,7 +713,7 @@ public class Scenario extends SelCommands {
 
 		Actions action = new Actions(driver);
 		WebElement folder = driver.findElement(
-				By.xpath("//label[text()='" + folderName + "']/preceding::span[@class='icon-folder'][1]"));
+				By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']/preceding::span[@class='icon-folder'][1]"));
 		action.contextClick(folder).perform();
 		WebElement ele = driver
 				.findElement(By.xpath("(//nav[@class='context-menu']//ul/li[text()='Copy to Test Suite'])[1]"));
@@ -731,7 +728,7 @@ public class Scenario extends SelCommands {
 		driver.findElement(By.xpath("//button[text()='Submit']")).click();
 	}
 
-	public static void reviewOptions(String typeofreviewopts, String Comment) throws InterruptedException, IOException {
+	public static void reviewOptions(ScenarioConfig scenarioConfig, String typeOfReviewOpts, String Comment) throws InterruptedException, IOException {
 
 		By reviewopt = By.xpath("//*[@name='reviewOpt']");
 		By Comments = By.xpath("//textarea[@placeholder='Enter comment about review status']");
@@ -741,14 +738,14 @@ public class Scenario extends SelCommands {
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Create New Folder']")));
-		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(folderName);
+		driver.findElement(By.xpath("//input[@placeholder='Create New Folder']")).sendKeys(scenarioConfig.getFolderName());
 		Actions action = new Actions(driver);
 
 		action.sendKeys(Keys.ENTER).perform();
 
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + folderName + "']")));
-		driver.findElement(By.xpath("//label[text()='" + folderName + "']")).click();
-		Reporter.addStepLog("User Creates Folder as" + folderName);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")));
+		driver.findElement(By.xpath("//label[text()='" + scenarioConfig.getFolderName() + "']")).click();
+		Reporter.addStepLog("User Creates Folder as" + scenarioConfig.getFolderName());
 		Thread.sleep(4000);
 
 		javascript_click(ReviewStatustoggle, "ReviewStatustoggle");
@@ -757,13 +754,13 @@ public class Scenario extends SelCommands {
 		// form[@id='status-form']/select
 
 		By ReviewStatusDrpdown = By.xpath("//form[@id='status-form']/select");
-		By Reviewoptions = By.xpath("//option[text()='" + typeofreviewopts + "']");
+		By Reviewoptions = By.xpath("//option[text()='" + typeOfReviewOpts + "']");
 
 		click(ReviewStatusDrpdown, "Review Status DropDown");
-		click(Reviewoptions, "Desired Review Status As " + typeofreviewopts);
+		click(Reviewoptions, "Desired Review Status As " + typeOfReviewOpts);
 
 		// Select reviewoptions= new Select(driver.findElement(reviewopt));
-		// reviewoptions.selectByVisibleText("'" + typeofreviewopts + "'");
+		// reviewoptions.selectByVisibleText("'" + typeOfReviewOpts + "'");
 		type(Comments, Comment, "Comment Field");
 
 		SelCommands.captureScreenshot();
@@ -792,17 +789,17 @@ public class Scenario extends SelCommands {
 
 	}
 
-	public static void verifyFolderRenamed() throws InterruptedException {
+	public static void verifyFolderRenamed(ScenarioConfig scenarioConfig) throws InterruptedException {
 
 		WebDriverWait wait = new WebDriverWait(driver, 240);
 		wait.until(ExpectedConditions
-				.presenceOfElementLocated(By.xpath("//label[contains(text(),'" + parentFolderName + "')]")));
+				.presenceOfElementLocated(By.xpath("//label[contains(text(),'" + scenarioConfig.getFolderName() + "')]")));
 
-		WebElement userenamed = driver.findElement(By.xpath("//label[contains(text(),'" + parentFolderName + "')]"));
+		WebElement userenamed = driver.findElement(By.xpath("//label[contains(text(),'" + scenarioConfig.getParentFolder() + "')]"));
 
-		if (userenamed.getText().equals(parentFolderName)) {
+		if (userenamed.getText().equals(scenarioConfig.getParentFolder())) {
 
-			Reporter.addStepLog("User sees Folder Renamed as " + parentFolderName);
+			Reporter.addStepLog("User sees Folder Renamed as " + scenarioConfig.getParentFolder());
 		}
 
 		else {
