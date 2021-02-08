@@ -62,8 +62,8 @@ public class Stepsfile {
 
 	public static String sRequirementnotes = "TestRequirement";
 
-	@Given("^User launches the Application$")
-	public void User_Launches_the_Application() throws FileNotFoundException, InterruptedException {
+	@Given("^User launches the application$")
+	public void User_launches_the_application() throws FileNotFoundException, InterruptedException {
 		openbrowser(environmentConfig);
 		LoginPage.loginDetails(environmentConfig);
 		LoginPage.clickSignin();
@@ -232,8 +232,8 @@ public class Stepsfile {
 
 	}
 
-	@When("^User Renames CreatedFolder$")
-	public void User_Renames_CreatedFolder() throws InterruptedException, IOException {
+	@When("^User renames created folder$")
+	public void User_renames_created_folder() throws InterruptedException, IOException {
 		Scenario.renameCreatedFolder();
 		sel.captureScreenshot("RenameFolder");
 	}
@@ -265,15 +265,9 @@ public class Stepsfile {
 		sel.captureScreenshot("Delete Folder Excluding Children");
 	}
 
-	@When("^User Deletes Folder including children$")
-	public void User_Deletes_Folder_including_children() throws InterruptedException, IOException {
-		Scenario.user_deletesfolder_including_children();
-		sel.captureScreenshot("Delete Folder Incluing Children");
 
-	}
-
-	@Then("^User sees FolderRenamed$")
-	public void User_sees_Folder_Renamed() throws IOException, InterruptedException {
+	@Then("^User sees folder renamed$")
+	public void User_sees_folder_renamed() throws IOException, InterruptedException {
 		Scenario.verifyFolderRenamed();
 		sel.captureScreenshot("Rename Folder Verification");
 
@@ -389,58 +383,57 @@ public class Stepsfile {
 
 	}
 
-	@When("^User Exports CreatedFolder$")
-	public void User_Exports_CreatedFolder() throws InterruptedException, IOException {
+	@When("^User exports created folder$")
+	public void User_exports_created_folder() throws InterruptedException, IOException {
 		Scenario.exportFolder();
 		sel.captureScreenshot("Export Folder");
 	}
 
-	@When("^User Exports FeatureFile$")
-	public void User_Exports_FeatureFile() throws IOException, InterruptedException {
+	@When("^User exports feature file$")
+	public void User_exports_feature_file() throws IOException, InterruptedException {
 
 		Scenario.exportFeatureFile();
 		sel.captureScreenshot("ExportFeatureFile");
 	}
 
-	@When("^User Clicks on Scenario Tab$")
-	public void User_Clicks_on_Scenariotab() throws InterruptedException {
+	@When("^User clicks on scenario sab$")
+	public void User_clicks_on_scenario_tab() throws InterruptedException {
 		Scenario.clickOnScenarioTab();
 
 	}
 
-	@When("^User Clicks on Create Folder$")
-	public void User_Clicks_on_Create_Folder() throws InterruptedException {
+	@When("^User clicks on create folder$")
+	public void User_clicks_on_create_folder() throws InterruptedException {
 		Scenario.clicksOnCreateFolder();
 
 	}
 
 	@Then("^validate login$")
-	public void Validate_Login() throws InterruptedException {
+	public void validate_login() throws InterruptedException {
 		LoginPage.verifyLogin();
 	}
 
-	@Then("^User redirects to ForgotPassword Page$")
-	public void User_redirects_to_ForgotPassword_Page() throws InterruptedException, IOException {
+	@Then("^User redirects to forgot password page$")
+	public void User_redirects_to_forgot_password_page() throws InterruptedException, IOException {
 
 		Profile.verifyForgotPasswordpage();
 		sel.captureScreenshot("Forgot Password Verfication");
 	}
 
-	@When("^User Inputs Emailaddress to recover$")
-	public void User_Inputs_Emailaddress_to_recover() throws IOException {
+	@When("^User inputs email address to recover$")
+	public void User_inputs_email_address_to_recover() throws IOException {
 		String RecoveryEmail = JsonReader.readJson("env", "Username");
 		Profile.userInputsEmailRecovery(RecoveryEmail);
 		sel.captureScreenshot("Forgot Password Input");
 	}
 
-	@Then("^User redirects to Create TestPlan Page$")
-	public void User_redirects_to_Create_TestPlan_Page() {
-
+	@Then("^User redirects to create test plan page$")
+	public void User_redirects_to_create_test_plan_page() {
 		TestPlan.userRedirectsToCreatePlan();
 	}
 
-	@When("^User Clicks on Submit$")
-	public void User_Clicks_on_Submit() {
+	@When("^User clicks on submit$")
+	public void User_clicks_on_submit() {
 		Profile.userClicksOnSubmit();
 	}
 
@@ -1097,13 +1090,14 @@ public class Stepsfile {
 
 	@Then("^User verifies the scenario created$")
 	public void User_verifies_the_scenario_created() throws IOException {
-		Scenario.verifyScenarioCreatedWithSimpleActions();
-		sel.captureScreenshot("ScenarioWithSimpleActions");
+		Scenario.verifyScenarioCreated();
+	//	Scenario.verifyScenarioCreatedWithSimpleActions();
+		sel.captureScreenshot("Scenario created");
 	}
 
 
-	@When("^User creates scenario with Table Data$")
-	public void User_creates_scenario_with_Table_Data() throws IOException, InterruptedException {
+	@When("^User creates scenario with table data$")
+	public void User_creates_scenario_with_table_data() throws IOException, InterruptedException {
 		Scenario.createScenarioWithTableData();
 		Scenario.clickOnSave();
 		sel.captureScreenshot("ScenarioWithTableData");

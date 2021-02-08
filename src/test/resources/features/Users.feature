@@ -4,7 +4,7 @@ Feature: User
 @regression
 @edituser
 Scenario: Edit User
-Given User launches the Application
+Given User launches the application
 When User Navigates to Users Workspace
 And User Enter Details for Adding New User
 And User Clicks on Create New User
@@ -19,7 +19,7 @@ Then quit browser
 @regression
 @deleteuser
 Scenario: Delete User
-Given User launches the Application
+Given User launches the application
 When User Navigates to Users Workspace
 And User Enter Details for Adding New User
 And User Clicks on Create New User
@@ -32,7 +32,7 @@ And quit browser
 @regression
 @addnewuser
 Scenario: Add NewUser
-Given User launches the Application
+Given User launches the application
 When User Navigates to Users Workspace
 And User Enter Details for Adding New User
 And User Clicks on Create New User

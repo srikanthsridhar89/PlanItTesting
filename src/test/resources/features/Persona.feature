@@ -5,7 +5,7 @@ Feature:  Persona
   @AddPersona
   Scenario: Create  Persona
 
-    Given User launches the Application
+    Given User launches the application
     When User Navigates to Persona Workspace
     And User clicks on NewPersona
     And User fills Persona details
@@ -19,7 +19,7 @@ Feature:  Persona
   @EditPersona
 
   Scenario: Edit  Persona
-    Given User launches the Application
+    Given User launches the application
     When User Navigates to Persona Workspace
     And User clicks on NewPersona
     And User fills Persona details
@@ -34,7 +34,7 @@ Feature:  Persona
   @CopyPersona
 
   Scenario: Copy  Persona
-    Given User launches the Application
+    Given User launches the application
     When User Navigates to Persona Workspace
     And User clicks on NewPersona
     And User fills Persona details
@@ -50,7 +50,7 @@ Feature:  Persona
   @DeletePersona
 
   Scenario: Delete  Persona
-    Given User launches the Application
+    Given User launches the application
     When User Navigates to Persona Workspace
     And User clicks on NewPersona
     And User fills Persona details

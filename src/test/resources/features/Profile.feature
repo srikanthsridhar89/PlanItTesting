@@ -5,7 +5,7 @@ Feature: Profile
 @profile
 @changepassword
 Scenario: Change Password
-Given User launches the Application
+Given User launches the application
 When User Navigates to Profile
 And User Enter details for Password Change
 Then quit browser
@@ -32,7 +32,7 @@ Then quit browser
 @Logout
 @profile
 Scenario: Logout
-Given User launches the Application
+Given User launches the application
 When User clicks on Logout
 Then quit browser 
 	

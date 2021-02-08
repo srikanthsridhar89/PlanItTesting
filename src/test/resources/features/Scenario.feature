@@ -7,7 +7,7 @@ Feature: Scenario
 	@BeforeClass
 	Scenario: Create a vanilla scenario with no parameters and data tables
 
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
 		And User creates scenario with simple actions
 		Then User verifies the scenario created
@@ -17,20 +17,21 @@ Feature: Scenario
 	@CreateScenarioWithTableData
 	@ignore
 	Scenario: Create scenario with table data
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
-		And User creates scenario with Table Data
-		Then quit browser
+		And User creates scenario with table data
+		Then User verifies the scenario created
+		And quit browser
 
 	@ignore
 	@regression
 	@RenameFolder
-	Scenario: This Scenario is to Rename Root Folder
-		Given User launches the Application
+	Scenario: This scenario is to rename root folder
+		Given User launches the application
 		When User navigates to scenario details page
-		And User creates scenario with simple string
-		And User Renames CreatedFolder
-		Then User sees FolderRenamed
+		And User creates scenario with simple actions
+		And User renames created folder
+		Then User sees folder renamed
 		And quit browser
 
 
@@ -38,12 +39,12 @@ Feature: Scenario
 
 	@exportfeaturefile
 	@scenario
-	Scenario: This Scenario is to Export Root Folder
+	Scenario: This scenario is to export folder
 
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
-		And User creates scenario with simple string
-		And User Exports FeatureFile
+		And User creates scenario with simple actions
+		And User exports feature file
 		Then User sees Exported FeatureFile
 		And quit browser
 
@@ -52,9 +53,9 @@ Feature: Scenario
 	@deletefolder_exclude
 	@scenario1
 	Scenario: This Scenario is to Delete Root Folder Excluding Children
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
-		And User creates scenario with simple string
+		And User creates scenario with simple actions
 		And User creates child folder
 		And User Deletes Folder Excluding children
 		Then User sees ParentFolder
@@ -66,42 +67,30 @@ Feature: Scenario
 	@scenario
 	@Rename
 	Scenario: This Scenario is to Rename a Root Folder
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
-		And User Renames CreatedFolder
-		Then User sees FolderRenamed
+		And User renames created folder
+		Then User sees folder renamed
 		And quit browser
 
 	@parentfolder
 	@scenario
 	Scenario: This Scenario is to Create Root Folder and its Child Folder
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
-		And User Renames CreatedFolder
+		And User renames created folder
 		And User creates child folder
 		Then User sees Folder Created Successfully
 		And quit browser
 
 
 
-	@deletefolder_includingchildren
-	@scenario
-	Scenario: This Scenario is to Delete Root Folder Including Children
-
-		Given User launches the Application
-		When User navigates to scenario details page
-		And User Renames CreatedFolder
-		And User creates child folder
-		And User Deletes Folder including children
-		Then User will not see Folder Deleted
-		And quit browser
-
 
 	@SearchScenario
 	@scenario
 
 	Scenario: This Scenario is to Search Root Folder
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
 		And User Creates Folder and Scenario
 		And User Searches for Scenario Created
@@ -112,9 +101,9 @@ Feature: Scenario
 	@deletefolder_exclude
 	@scenario1
 	Scenario: This Scenario is to Delete Root Folder Excluding Children
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
-		And User Renames CreatedFolder
+		And User renames created folder
 		And User creates child folder
 		And User Deletes Folder Excluding children
 		Then User sees ParentFolder
@@ -123,9 +112,9 @@ Feature: Scenario
 	@copyfolder
 	@scenario
 	Scenario: This Scenario is to Copy Root Folder
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
-		And User Renames CreatedFolder
+		And User renames created folder
 		And User Copies CreatedFolder
 		Then User sees CopiedFolder
 		And quit browser
@@ -136,9 +125,9 @@ Feature: Scenario
 	@scenario
 	Scenario: This Scenario is to CopyTestSuite
 
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
-		And User Renames CreatedFolder
+		And User renames created folder
 		And User Copies TestSuite
 		Then User sees CopiedFolder
 
@@ -146,10 +135,10 @@ Feature: Scenario
 	@scenario
 	Scenario: Export  Folder
 
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
-		And User creates scenario with simple string
-		And User Exports CreatedFolder
+		And User creates scenario with simple actions
+		And User exports created folder
 		Then User sees Exported Folder
 		And quit browser
 
@@ -170,10 +159,10 @@ Feature: Scenario
 	@ignore
 	@scenario
 	Scenario: This Scenario is to Update Scenario with Simple String
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
-		And User creates scenario with simple string
-		And User Updates Scenario with Simple String
+		And User creates scenario with simple actions
+		And User Updates Scenario with Simple Stringbnm,
 		Then quit browser
 
 
@@ -182,7 +171,7 @@ Feature: Scenario
 	@ignore
 	@scenario
 	Scenario: This Scenario is to Cancel Scenario
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
 		And User Cancels CreatedScenario
 		Then quit browser
@@ -190,7 +179,7 @@ Feature: Scenario
 	@CreateScenario_SimpleString_MultipleConditons
 	@ignore
 	Scenario: This Scenarios is to  Create Scenario With MultipleCondition
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
 		And User Creates Scenario with MultipleCondition
 		Then quit browser
@@ -200,7 +189,7 @@ Feature: Scenario
 	@ignore
 	@scenario
 	Scenario: This Scenarios is to CreateRequirementNotes
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
 		And User Creates RequirementNotes
 
@@ -209,7 +198,7 @@ Feature: Scenario
 	@scenario
 
 	Scenario: This Scenarios is to CreateTemplate
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
 		And User Creates Template
 
@@ -220,7 +209,7 @@ Feature: Scenario
 		@reviewopts
 	Scenario Outline: This Scenarios is to Select Different Review Options
 
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
 		And User selects different reviewopts"<typeofreviewopts>"
 		Then quit browser
@@ -239,7 +228,7 @@ Feature: Scenario
 	@scenario
 
 	Scenario: This Scenarios is to Duplicate Template
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
 		And User CreatesDuplicateTemplate
 		Then quit browser
@@ -249,7 +238,7 @@ Feature: Scenario
 
 
 	Scenario: This Scenarios is to See Persona Created
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
 		And User Clicks on Persona Link
 		Then User sees Created Persona
@@ -260,9 +249,9 @@ Feature: Scenario
 	@scenario
 	Scenario: This Scenarios is to Share Scenario Link
 
-		Given User launches the Application
+		Given User launches the application
 		When User navigates to scenario details page
-		And User creates scenario with simple string
+		And User creates scenario with simple actions
 		And User Shares ScenarioLink
 		Then quit browser
 

@@ -6,7 +6,7 @@ Feature: TestTarget
 		@testtarget
 	Scenario Outline: Add NewTestTarget
 
-		Given User launches the Application
+		Given User launches the application
 		When User Navigates to TestTarget CreationPage
 		And User Enter details for TestTarget with "<Software>"
 		And User Clicks on CreateTestTarget
@@ -25,7 +25,7 @@ Feature: TestTarget
 		@testtarget
 	Scenario Outline: Add NewTestTarget
 
-		Given User launches the Application
+		Given User launches the application
 		When User Navigates to TestTarget CreationPage
 		And User Enter details for TestTarget with "<Software>"
 		And User Clicks on CreateTestTarget
@@ -45,7 +45,7 @@ Feature: TestTarget
 		@testtarget
 	Scenario Outline: Edit TestTarget
 
-		Given User launches the Application
+		Given User launches the application
 		When User Navigates to TestTarget CreationPage
 		And User Enter details for TestTarget with "<Software>"
 		And User Clicks on CreateTestTarget
@@ -67,7 +67,7 @@ Feature: TestTarget
 		@CancelTestTarget
 		@testtarget
 	Scenario Outline: Cancel TestTarget
-		Given User launches the Application
+		Given User launches the application
 		When User Navigates to TestTarget CreationPage
 		And User Enter details for TestTarget with "<Software>"
 		And User Clicks on Cancel in TestTarget
@@ -86,7 +86,7 @@ Feature: TestTarget
 	Scenario Outline: Delete TestTarget
 
 
-		Given User launches the Application
+		Given User launches the application
 		When User Navigates to TestTarget CreationPage
 		And User Enter details for TestTarget with "<Software>"
 		And User Clicks on CreateTestTarget

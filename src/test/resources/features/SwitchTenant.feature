@@ -6,7 +6,7 @@ Feature: Switch Tenant
 Scenario: Switch Tenant
 
 
-Given User launches the Application
+Given User launches the application
 When User clicks on Switch Tenant
 And User selects Desired Tenant
 Then quit browser

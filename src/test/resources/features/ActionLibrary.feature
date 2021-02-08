@@ -5,7 +5,7 @@ Feature: Action Library
 	@AddAction
 	Scenario: This Scenario is to Add action for Given  without parameters and table columns
 
-		Given User launches the Application
+		Given User launches the application
 		When User Navigates to ActionLibrary
 		And User Enter details for ActionCreation
 		And User Clicks on Submit in ActionCreationPage
@@ -19,7 +19,7 @@ Feature: Action Library
 	@CancelAction
 	Scenario: This Scenario is to CancelAction
 
-		Given User launches the Application
+		Given User launches the application
 		When User Navigates to ActionLibrary
 		And User Enter details for ActionCreation
 		And User Clicks on Cancel in ActionCreationPage
@@ -32,7 +32,7 @@ Feature: Action Library
 		@actionlibrary
 		@AddActionWithTableData
 	Scenario Outline: This Scenario is to Add action with Table Columns
-		Given User launches the Application
+		Given User launches the application
 		When User Navigates to ActionLibrary
 		And User Enter details for Action Creation with TableData "<type>"
 		And User Clicks on Submit in ActionCreationPage
@@ -52,7 +52,7 @@ Feature: Action Library
 	@UpdateAction
 	Scenario Outline: This Scenario is to UpdateAction
 
-		Given User launches the Application
+		Given User launches the application
 		When User Navigates to ActionLibrary
 		And User Enter details for Action Creation with TableData "<type>"
 		And User Clicks on Submit in ActionCreationPage
@@ -70,7 +70,7 @@ Feature: Action Library
 	@actionlibrary
 	@DeleteAction
 	Scenario: This Scenario is to DeleteAction
-		Given User launches the Application
+		Given User launches the application
 		When User Navigates to ActionLibrary
 		And User Enter details for ActionCreation
 		And User Clicks on Submit in ActionCreationPage
