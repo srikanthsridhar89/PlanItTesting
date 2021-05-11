@@ -2,7 +2,7 @@
 <extentreports>
   <configuration>
     <!-- report theme --> <!-- standard, dark -->
-    <theme>Dark</theme>
+    <theme>Standard,dark</theme>
   
     <!-- document encoding -->  <!-- defaults to UTF-8 -->
     <encoding>UTF-8</encoding>
@@ -24,18 +24,15 @@
     
     <!-- custom javascript -->
     <scripts>
-      <![CDATA[
-        $(document).ready(function() {
-        
-        });
-      ]]>
-    </scripts>
-    
-    <!-- custom styles -->
-    <styles>
     <![CDATA[
-        .data-featherlight-image {   border: 1px solid #f6f7fa;   cursor: zoom-in;    width: 75px; }
-    ]]>
+$(document).ready(function() {
+});
+]]>
+</scripts>
+<!-- custom styles -->
+<styles>
+<![CDATA[
+]]>
 </styles>
-  </configuration>
+</configuration>
 </extentreports>

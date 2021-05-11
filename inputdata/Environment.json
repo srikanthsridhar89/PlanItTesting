@@ -1,7 +1,6 @@
 {
-	"Username": "sachin.narayana@agileasolutions.com",
-	"Password": "Welcome01",
-	"URL": "https://test-qa.testassure.com/login",
-	"Browser": "CHROME",
-	"RemoteMachine": "http://localhost:4444/wd/hub"
+	
+	"URL": "https://jupiter.cloud.planittesting.com",
+	"Browser": "CHROME"
+	
 }

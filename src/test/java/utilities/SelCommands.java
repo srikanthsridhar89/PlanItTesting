@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Set;
 
 import bean.EnvironmentConfig;
+import lombok.Data;
+
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -25,7 +27,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cucumber.listener.Reporter;
-
+@Data
 public class SelCommands {
 //	public static final String ImagesPath = null;
 	public static WebDriver driver;
@@ -34,8 +36,13 @@ public class SelCommands {
 		this.driver = driver;
 	}
 
+
+
 	public static void openbrowser(EnvironmentConfig environmentConfig) throws FileNotFoundException {
-		System.setProperty("webdriver.chrome.driver","./src/test/resources/drivers/chromedriver");
+		
+String driverlocation=System.getProperty("user.dir")+ "\\src"+"\\test"+"\\resources"+"\\drivers"+"\\chromedriver.exe";
+//System.setProperty("webdriver.chrome.driver","C:\\Users\\Srikanth\\Documents\\testassure_selenium (1)\\testassure_selenium\\src\\test\\resources\\drivers\\chromedriver.exe");
+System.setProperty("webdriver.chrome.driver",driverlocation);
 
 		//Uncomment the below step to run the tests on Chrome browser
 			driver = new ChromeDriver();
@@ -56,22 +63,7 @@ public class SelCommands {
 		driver.quit();
 	}
 
-	public void captureScreenshot(String filename) throws IOException {
-		String Base64StringofScreenshot = "";
-		String path = new String(
-				"./target/screenshots/" + filename + ".png");
-		TakesScreenshot oScn = (TakesScreenshot) driver;
-		File oScnShot = oScn.getScreenshotAs(OutputType.FILE);
-		byte[] fileContent = FileUtils.readFileToByteArray(oScnShot);
-		Base64StringofScreenshot = "data:image/png;base64," + Base64.getEncoder().encodeToString(fileContent);
-		File oDest = new File(path);
-		try {
-			FileUtils.copyFile(oScnShot, oDest);
-			Reporter.addScreenCaptureFromPath(path, "Screenshot");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 
 	public static String getElementString(By Locator) {
 
@@ -80,9 +72,17 @@ public class SelCommands {
 	}
 
 	public static void clickElement(By signinlink, String element) {
-		WebDriverWait wait = new WebDriverWait(driver, 120);
+		WebDriverWait wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.elementToBeClickable(signinlink));
 		driver.findElement(signinlink).click();
+		Reporter.addStepLog("User clicked on " + element);
+	}
+	
+	public static void clickElementAndWait(By signinlink, String element) throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(driver, 20);
+		wait.until(ExpectedConditions.elementToBeClickable(signinlink));
+		driver.findElement(signinlink).click();
+		Thread.sleep(2000);
 		Reporter.addStepLog("User clicked on " + element);
 	}
 
@@ -121,26 +121,39 @@ public class SelCommands {
 
 	}
 
-	public static void captureScreenshot() throws IOException {
-		String Base64StringofScreenshot = "";
-		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss");
-		Date date = new Date();
-		System.out.println(formatter.format(date));
-		String path = new String(
-				"./target/screenshots/"
-						+ formatter.format(date) + ".png");
-		TakesScreenshot oScn = (TakesScreenshot) driver;
-		File oScnShot = oScn.getScreenshotAs(OutputType.FILE);
-		byte[] fileContent = FileUtils.readFileToByteArray(oScnShot);
-		Base64StringofScreenshot = "data:image/png;base64," + Base64.getEncoder().encodeToString(fileContent);
-		File oDest = new File(path);
-		try {
-			FileUtils.copyFile(oScnShot, oDest);
-			Reporter.addScreenCaptureFromPath(path, "hello123");
-		} catch (Exception e) {
-			e.printStackTrace();
+	/*
+	 * public static void captureScreenshot() throws IOException { String
+	 * Base64StringofScreenshot = ""; SimpleDateFormat formatter = new
+	 * SimpleDateFormat("ddMMyyyyHHmmss"); Date date = new Date();
+	 * System.out.println(formatter.format(date)); String path = new String(
+	 * "./target/screenshots/" + formatter.format(date) + ".png"); TakesScreenshot
+	 * oScn = (TakesScreenshot) driver; File oScnShot =
+	 * oScn.getScreenshotAs(OutputType.FILE); byte[] fileContent =
+	 * FileUtils.readFileToByteArray(oScnShot); Base64StringofScreenshot =
+	 * "data:image/png;base64," + Base64.getEncoder().encodeToString(fileContent);
+	 * File oDest = new File(path); try { FileUtils.copyFile(oScnShot, oDest);
+	 * Reporter.addScreenCaptureFromPath(path, "hello123"); } catch (Exception e) {
+	 * e.printStackTrace(); } }
+	 */
+	
+	public  static void captureScreenshot(String filename) throws IOException {
+		   String Base64StringofScreenshot = "";
+		   String imagePath = new String(
+		         "./target/screenshots/" + filename + ".png");
+		   String reportPath = new String(
+		         "../screenshots/" + filename + ".png");
+		   TakesScreenshot oScn = (TakesScreenshot) driver;
+		   File oScnShot = oScn.getScreenshotAs(OutputType.FILE);
+		   byte[] fileContent = FileUtils.readFileToByteArray(oScnShot);
+		   Base64StringofScreenshot = "data:image/png;base64," + Base64.getEncoder().encodeToString(fileContent);
+		   File oDest = new File(imagePath);
+		   try {
+		      FileUtils.copyFile(oScnShot, oDest);
+		      Reporter.addScreenCaptureFromPath(reportPath, filename);
+		   } catch (Exception e) {
+		      e.printStackTrace();
+		   }
 		}
-	}
 
 	public static boolean isAlertPresent() {
 		try {
@@ -155,7 +168,7 @@ public class SelCommands {
 
 	public static void click(By by, String fieldName) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, 120);
+			WebDriverWait wait = new WebDriverWait(driver, 20);
 			wait.until(ExpectedConditions.elementToBeClickable(by));
 			wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 			driver.findElement(by).click();
@@ -181,7 +194,7 @@ public class SelCommands {
 	}
 
 	public static void waitForElementPresent(By by, int time) {
-		WebDriverWait wait = new WebDriverWait(driver, 120);
+		WebDriverWait wait = new WebDriverWait(driver, 20);
 
 		wait.until(ExpectedConditions.elementToBeClickable(by));
 	}
