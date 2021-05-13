@@ -37,7 +37,7 @@ public class Shop extends SelCommands {
 	
 	public static void user_clicks_buy_button_1_times_on_fluffybunny() {
 		try {
-			
+			//test commevct
 			WebDriverWait wait = new WebDriverWait(driver, 60);
 			wait.until(ExpectedConditions.presenceOfElementLocated(btn_buy_FluffyBunny));
 			Actions action = new Actions(driver);
