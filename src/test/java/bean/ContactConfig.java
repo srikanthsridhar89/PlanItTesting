@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class ContactConfig {
 
-	@JsonProperty(value ="Forename")
+   @JsonProperty(value ="Forename")
 	private String fornameField;
 
 	@JsonProperty(value ="Surname")
