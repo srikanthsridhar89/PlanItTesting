@@ -1,9 +1,0 @@
-{
-	"Label": "This is a test action",
-	"Description":"Automation action description",
-	"Prefix":"Test_Prefix",
-	"Suffix":"Test_suffix",
-	"DisplayKey":"TestDisplay",
-	"UpdatedLabel":"This is a test action is updated",
-	"UpdatedDescription":"Automation action description updated"
-}

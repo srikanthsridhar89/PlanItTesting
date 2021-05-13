@@ -1,9 +1,0 @@
-{
-	"label": "AssociatePersona",
-	"Description": "TestDescription",
-	"ActivityProfile": "TestActivityProfile",
-	"AdjustmentRule": "TestAdjustmentProfile",
-	"CategoryProfile": "TestCategoryProfile",
-	"EditLabel":"Associate Persona Edited"
-
-}
